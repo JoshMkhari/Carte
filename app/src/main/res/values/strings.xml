@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Carte</string>
+
+
+    <string name="string_navigation_option_restaurant">Restaurants</string>
+    <string name="string_navigation_option_supermarket">Supermarkets</string>
+    <string name="string_navigation_option_attractions">Attractions</string>
+    <string name="string_navigation_option_fast_food">Fast food</string>
+
+
 </resources>
