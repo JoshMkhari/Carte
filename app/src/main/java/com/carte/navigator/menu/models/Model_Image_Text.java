@@ -11,7 +11,7 @@ public class Model_Image_Text {
 
     private final String optionText;
 
-    public Model_Image_Text(String optionText, Context context,int i) {
+    public Model_Image_Text(String optionText) {
         this.optionText = optionText;
     }
 

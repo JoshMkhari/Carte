@@ -11,7 +11,7 @@
     app:layout_behavior="@string/bottom_sheet_behavior"
     android:nestedScrollingEnabled="true"
     app:behavior_hideable = "false"
-    app:behavior_peekHeight = "200dp">
+    app:behavior_peekHeight = "220dp">
     <!-- https://medium.com/@marxallski/from-bottomsheetbehavior-to-anchorsheetbehavior-262ad7997286#.m02n38t27-->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -54,8 +54,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview_destination_filter_options"
                     android:layout_width="match_parent"
-                    android:layout_marginHorizontal="40dp"
-                    android:layout_height="70dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="20dp"
@@ -82,9 +82,10 @@
                         android:padding="15dp">
 
                         <TextView
+                            android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="YOUR COLLECTIONS"
+                            android:text="@string/string_menu_title_collections"
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             app:layout_constraintBottom_toBottomOf="@+id/button"
@@ -102,25 +103,47 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerView"
+                            android:id="@+id/recyclerView_user_collections"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/button"
                             tools:listitem="@layout/recyclerview_user_collections"/>
 
+                        <ImageView
+                            android:id="@+id/imageView_user_collections"
+                            android:layout_width="200dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/image_store_collections_icon"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/recyclerView_user_collections" />
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:scrollHorizontally="false"
+                            android:text="@string/string_menu_subTitle_collections"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView_user_collections"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imageView_user_collections"
+                            app:layout_constraintTop_toTopOf="@+id/imageView_user_collections" />
+
                         <Button
+                            android:id="@+id/button_newCollection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             android:layout_margin="15dp"
                             android:background="@android:color/transparent"
+
                             android:text="New collection"
                             android:textColor="#5fb2ff"
-                            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView_user_collections" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout

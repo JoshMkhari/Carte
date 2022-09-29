@@ -20,9 +20,9 @@ public class Adapter_Destination_Options extends RecyclerView.Adapter<Adapter_De
 
     private final Interface_RecyclerView _interfaceRecyclerView;//(Practical Coding, 2021)
     final LayoutInflater _inflater;
-    final ArrayList<Model_Image_Text> _optionsList;
+    final String[] _optionsList;
 
-    public Adapter_Destination_Options(Interface_RecyclerView _interfaceRecyclerView, Context context, ArrayList<Model_Image_Text> optionsList )
+    public Adapter_Destination_Options(Interface_RecyclerView _interfaceRecyclerView, Context context, String[] optionsList )
     {
         this._interfaceRecyclerView = _interfaceRecyclerView;
         _inflater = LayoutInflater.from(context);
@@ -41,7 +41,7 @@ public class Adapter_Destination_Options extends RecyclerView.Adapter<Adapter_De
     public void onBindViewHolder(@NonNull Adapter_Destination_Options.OptionViewHolder holder, int position) {
 
         //holder.optionImage = _optionsList.get(position).getOptionImage();
-        holder.optionName.setText(_optionsList.get(position).getOptionText());
+        holder.optionName.setText(_optionsList[position]);
         switch (position)
         {
             case 0:
@@ -66,7 +66,7 @@ public class Adapter_Destination_Options extends RecyclerView.Adapter<Adapter_De
 
     @Override
     public int getItemCount() {
-        return _optionsList.size();
+        return 4;
     }
 
     public class OptionViewHolder extends RecyclerView.ViewHolder{

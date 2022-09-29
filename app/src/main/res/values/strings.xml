@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Carte</string>
+    <string name="string_menu_title_collections">YOUR COLLECTIONS</string>
+    <string name="string_menu_subTitle_collections">Save the places you like and take them with you everywhere</string>
 
     <string-array name="string_navigation_options">
         <item>Restaurants</item>
