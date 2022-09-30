@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
             BottomSheetDialog subMenu = new BottomSheetDialog(MainActivity.this);
             subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
             subMenu.setCanceledOnTouchOutside(true);
+            //NavHostFragment navHostFragment =
+              //      (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+           // NavController navController = navHostFragment.getNavController();
 
             findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
                     setGraph(R.navigation.navigation_offline_maps);//(developer Android NavController, n.d)

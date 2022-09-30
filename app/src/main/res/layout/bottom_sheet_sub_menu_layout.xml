@@ -50,12 +50,12 @@
                         android:layout_marginStart="20dp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.fragment.app.FragmentContainerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_container_view_sub_menu"
-                android:name="com.carte.navigator.menu.sub.Fragment_Download_Maps"
-                tools:layout="@layout/fragment_download_maps"
+                android:name="androidx.navigation.fragment.NavHostFragment"
                 app:defaultNavHost="true" />
         </LinearLayout>
 
