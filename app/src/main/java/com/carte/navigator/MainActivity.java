@@ -1,20 +1,24 @@
 package com.carte.navigator;
 
+import static androidx.navigation.fragment.NavHostFragment.findNavController;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
-import com.carte.navigator.menu.models.Model_Image_Text;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements Interface_RecyclerView {
 
@@ -37,7 +41,9 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
         RecyclerView recyclerView_destinationOptions = findViewById(R.id.recyclerview_destination_filter_options);
         RecyclerView recyclerView_userCollections = findViewById(R.id.recyclerView_user_collections);
-        Button button_newCollection = findViewById(R.id.button_newCollection);
+        Button button_newCollection = findViewById(R.id.button_menu_newCollection);
+
+        Button button_downloadMaps = findViewById(R.id.button_menu_download_maps);
 
         recyclerView_destinationOptions.setHasFixedSize(true);
         recyclerView_userCollections.setHasFixedSize(true);
@@ -57,12 +63,24 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         RecyclerView.Adapter<Adapter_Destination_Options.OptionViewHolder> mAdapter = new Adapter_Destination_Options(this, getApplicationContext(),navigationOptions);//(Professor Sluiter, 2020).
         recyclerView_destinationOptions.setAdapter(mAdapter);
 
+        //Remember to code this
         if(tempUserCollections.isEmpty())
         {
             recyclerView_userCollections.setVisibility(View.GONE);
             //button_newCollection.setVisibility(View.GONE);
 
         }
+
+        button_downloadMaps.setOnClickListener(view -> {
+            BottomSheetDialog subMenu = new BottomSheetDialog(MainActivity.this);
+            subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
+            subMenu.setCanceledOnTouchOutside(true);
+
+            findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
+                    setGraph(R.navigation.navigation_offline_maps);//(developer Android NavController, n.d)
+            subMenu.show();
+
+        });
 
 
     }

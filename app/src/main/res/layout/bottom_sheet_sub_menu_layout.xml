@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/sub_menu_bottom_sheet"
@@ -55,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/fragment_container_view_sub_menu"
                 android:name="com.carte.navigator.menu.sub.Fragment_Download_Maps"
-                tools:layout="@layout/fragment_download_maps" />
+                tools:layout="@layout/fragment_download_maps"
+                app:defaultNavHost="true" />
         </LinearLayout>
 
 

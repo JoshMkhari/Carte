@@ -140,12 +140,11 @@
                             app:layout_constraintTop_toTopOf="@+id/imageView_user_collections" />
 
                         <Button
-                            android:id="@+id/button_newCollection"
+                            android:id="@+id/button_menu_newCollection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:background="@android:color/transparent"
-
                             android:text="New collection"
                             android:textColor="#5fb2ff"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -190,22 +189,42 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView_offline_maps"
                             app:layout_constraintTop_toTopOf="@+id/imageView_offline_maps" />
+
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:background="@android:color/transparent"
-                            android:text="Download Maps"
-                            android:textColor="#5fb2ff"
+                            android:id="@+id/button_menu_download_maps"
+                            android:layout_width="180dp"
+                            android:layout_height="50dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                            app:layout_constraintTop_toBottomOf="@+id/textView2"
+                            android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/imageView_menu_download_map"
+                            android:layout_width="50dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/image_download_map_icon"
+                            android:textColor="#5fb2ff"
+                            app:layout_constraintBottom_toBottomOf="@+id/button_menu_download_maps"
+                            app:layout_constraintStart_toStartOf="@+id/button_menu_download_maps"
+                            app:layout_constraintTop_toTopOf="@+id/button_menu_download_maps" />
+
+                        <TextView
+                            android:textColor="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Download maps"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView_menu_download_map"
+                            app:layout_constraintStart_toEndOf="@+id/imageView_menu_download_map"
+                            app:layout_constraintTop_toTopOf="@+id/imageView_menu_download_map" />
 
                         <TextView
                             android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Use app offline"
+                            android:layout_margin="5dp"
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             app:layout_constraintStart_toStartOf="parent"

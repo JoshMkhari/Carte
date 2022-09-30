@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_offline_maps"
+    app:startDestination="@id/fragment_Download_Maps">
+
+    <fragment
+        android:id="@+id/fragment_Download_Maps"
+        android:name="com.carte.navigator.menu.sub.Fragment_Download_Maps"
+        android:label="fragment_download_maps"
+        tools:layout="@layout/fragment_download_maps" >
+        <action
+            android:id="@+id/action_fragment_Download_Maps_to_fragment_Map_Options"
+            app:destination="@id/fragment_Map_Options"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Map_Options"
+        android:name="com.carte.navigator.menu.sub.Fragment_Map_Options"
+        android:label="fragment_map_options"
+        tools:layout="@layout/fragment_map_options" />
+</navigation>
