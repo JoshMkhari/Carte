@@ -1,4 +1,4 @@
-package com.carte.navigator.menu.sub;
+package com.carte.navigator.menu.sub.offline;
 
 import android.os.Bundle;
 
@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.carte.navigator.R;
 
@@ -27,11 +28,12 @@ public class Fragment_Download_Maps extends Fragment {
         Log.d("latestBug", "onCreateView: ");
         View downloadMaps =  inflater.inflate(R.layout.fragment_download_maps, container, false);
 
-        //Button buttonTemp = downloadMaps.findViewById(R.id.button_temp);
 
-        //buttonTemp.setOnClickListener(view -> {
-          // Navigation.findNavController(downloadMaps).navigate(R.id.action_fragment_Download_Maps_to_fragment_Map_Options);
-       // });
+        Button buttonTemp = downloadMaps.findViewById(R.id.button_temp);
+
+        buttonTemp.setOnClickListener(view -> {
+           Navigation.findNavController(downloadMaps).navigate(R.id.action_fragment_Download_Maps_to_fragment_Map_Options);
+        });
 
         return downloadMaps;
     }

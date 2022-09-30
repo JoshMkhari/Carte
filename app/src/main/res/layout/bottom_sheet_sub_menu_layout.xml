@@ -39,6 +39,7 @@
                         android:id="@+id/imageButton_close_sub_menu"/>
 
                     <TextView
+                        android:id="@+id/textView_sub_menu_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Download Maps"

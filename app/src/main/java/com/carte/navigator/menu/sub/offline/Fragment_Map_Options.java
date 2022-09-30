@@ -1,4 +1,4 @@
-package com.carte.navigator.menu.sub;
+package com.carte.navigator.menu.sub.offline;
 
 import android.os.Bundle;
 

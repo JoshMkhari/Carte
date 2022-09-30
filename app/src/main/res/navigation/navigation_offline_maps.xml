@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_Download_Maps"
-        android:name="com.carte.navigator.menu.sub.Fragment_Download_Maps"
+        android:name="com.carte.navigator.menu.sub.offline.Fragment_Download_Maps"
         android:label="fragment_download_maps"
         tools:layout="@layout/fragment_download_maps" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_Map_Options"
-        android:name="com.carte.navigator.menu.sub.Fragment_Map_Options"
+        android:name="com.carte.navigator.menu.sub.offline.Fragment_Map_Options"
         android:label="fragment_map_options"
         tools:layout="@layout/fragment_map_options" />
 </navigation>

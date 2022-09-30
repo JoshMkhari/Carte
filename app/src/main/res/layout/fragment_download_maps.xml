@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".menu.sub.Fragment_Download_Maps"
+    android:layout_height="match_parent"
+    tools:context=".menu.sub.offline.Fragment_Download_Maps"
     android:background="#031f50"
     android:padding="20dp">
 

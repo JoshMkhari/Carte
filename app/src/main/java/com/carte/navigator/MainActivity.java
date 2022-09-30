@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
@@ -37,12 +38,16 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     {
         //Variable Declarations
 
+        BottomSheetDialog subMenu = new BottomSheetDialog(MainActivity.this);
+        subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
+        subMenu.setCanceledOnTouchOutside(true);
+        TextView _textView_sub_menu_title = subMenu.findViewById(R.id.textView_sub_menu_title);
+
         ArrayList<Integer> tempUserCollections = new ArrayList<Integer>();//Will be changed later
 
         RecyclerView recyclerView_destinationOptions = findViewById(R.id.recyclerview_destination_filter_options);
         RecyclerView recyclerView_userCollections = findViewById(R.id.recyclerView_user_collections);
         Button button_newCollection = findViewById(R.id.button_menu_newCollection);
-
         Button button_downloadMaps = findViewById(R.id.button_menu_download_maps);
 
         recyclerView_destinationOptions.setHasFixedSize(true);
@@ -72,17 +77,24 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         }
 
         button_downloadMaps.setOnClickListener(view -> {
-            BottomSheetDialog subMenu = new BottomSheetDialog(MainActivity.this);
-            subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
-            subMenu.setCanceledOnTouchOutside(true);
-            //NavHostFragment navHostFragment =
-              //      (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-           // NavController navController = navHostFragment.getNavController();
+
+
+            assert _textView_sub_menu_title != null;
+            _textView_sub_menu_title.setText("Download Maps");
 
             findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
                     setGraph(R.navigation.navigation_offline_maps);//(developer Android NavController, n.d)
             subMenu.show();
 
+        });
+
+        button_newCollection.setOnClickListener(view -> {
+            assert _textView_sub_menu_title != null;
+            _textView_sub_menu_title.setText("Collections");
+
+            findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
+                    setGraph(R.navigation.navigation_collections);//(developer Android NavController, n.d)
+            subMenu.show();
         });
 
 
@@ -92,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     public void onItemClick(int position) {
         switch (position)
         {
-            //Remember to change string resource to an array
             //Also remove names from icons for Light mode xD
             case 0:
                 Toast.makeText(MainActivity.this,
