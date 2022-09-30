@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".menu.sub.offline.Fragment_Download_Maps"
-    android:background="#031f50"
+    android:background="?colorPrimary"
     android:padding="20dp">
 
 
@@ -16,7 +16,7 @@
         android:text="Internal storage (107 GB)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/white"/>
+        android:textColor="?colorSecondary"/>
 
     <ProgressBar
         android:id="@+id/progressBar_download_map_usedStorage"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Available: 73.92GB"
-        android:textColor="@color/white"
+        android:textColor="?colorSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar_download_map_usedStorage" />
 
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Download via Wi-Fi only"
-        android:textColor="@color/white"
+        android:textColor="?colorSecondary"
         app:layout_constraintBottom_toBottomOf="@+id/switch_download_maps_wifi"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_download_map_divider" />

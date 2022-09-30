@@ -13,13 +13,13 @@
     app:behavior_hideable = "false"
     app:behavior_peekHeight = "220dp">
     <!-- https://medium.com/@marxallski/from-bottomsheetbehavior-to-anchorsheetbehavior-262ad7997286#.m02n38t27-->
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="#031f50"
+        app:cardBackgroundColor="?colorPrimary"
         app:cardCornerRadius="1dp"
         app:cardElevation="20dp">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#031f50"
+                app:cardBackgroundColor="?colorPrimary"
                 app:cardElevation="40dp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Where to?"
-                        android:textColor="@color/white"
+                        android:textColor="?colorSecondary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view_menu_indicator"
@@ -74,13 +74,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:background="?colorPrimary"
                 android:overScrollMode="always">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="#8594af"
+                    android:background="?colorOnPrimary"
                     android:orientation="vertical"
                     android:padding="10dp"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerview_destination_filter_options">
@@ -88,7 +89,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#031f50"
+                        android:background="?colorPrimary"
                         android:padding="15dp">
 
                         <TextView
@@ -96,14 +97,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/string_menu_title_collections"
-                            android:textColor="@color/white"
+                            android:textColor="?colorSecondary"
                             android:textSize="15sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/button"
+                            app:layout_constraintBottom_toBottomOf="@+id/button_menu_collections_seeAll"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/button" />
+                            app:layout_constraintTop_toTopOf="@+id/button_menu_collections_seeAll" />
 
                         <Button
-                            android:id="@+id/button"
+                            android:id="@+id/button_menu_collections_seeAll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
@@ -119,7 +120,7 @@
                             android:layout_marginTop="10dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/button"
+                            app:layout_constraintTop_toBottomOf="@+id/button_menu_collections_seeAll"
                             tools:listitem="@layout/recyclerview_user_collections" />
 
                         <ImageView
@@ -135,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:scrollHorizontally="false"
                             android:text="@string/string_menu_subTitle_collections"
-                            android:textColor="@color/white"
+                            android:textColor="?colorSecondary"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView_user_collections"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView_user_collections"
@@ -159,7 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="#031f50"
+                        android:background="?colorPrimary"
                         android:padding="15dp">
 
                         <TextView
@@ -167,7 +168,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/string_menu_title_offline_maps"
-                            android:textColor="@color/white"
+                            android:textColor="?colorSecondary"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -186,7 +187,7 @@
                             android:layout_height="wrap_content"
                             android:scrollHorizontally="false"
                             android:text="@string/string_menu_subTitle_offline_maps"
-                            android:textColor="@color/white"
+                            android:textColor="?colorSecondary"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView_offline_maps"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView_offline_maps"
@@ -207,7 +208,6 @@
                             android:layout_height="30dp"
                             android:layout_margin="5dp"
                             android:background="@drawable/image_download_map_icon"
-                            android:textColor="#5fb2ff"
                             app:layout_constraintBottom_toBottomOf="@+id/button_menu_download_maps"
                             app:layout_constraintStart_toStartOf="@+id/button_menu_download_maps"
                             app:layout_constraintTop_toTopOf="@+id/button_menu_download_maps" />
@@ -216,7 +216,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Download maps"
-                            android:textColor="@color/white"
+                            android:textColor="#5fb2ff"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView_menu_download_map"
                             app:layout_constraintStart_toEndOf="@+id/imageView_menu_download_map"
                             app:layout_constraintTop_toTopOf="@+id/imageView_menu_download_map" />
@@ -227,7 +227,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:text="Use app offline"
-                            android:textColor="@color/white"
+                            android:textColor="?colorSecondary"
                             android:textSize="20sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/imageView_offline_maps" />
@@ -237,7 +237,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="#031f50"
+                        android:background="?colorPrimary"
                         android:padding="15dp">
 
                         <TextView
@@ -245,7 +245,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/string_menu_title_account_settings"
-                            android:textColor="@color/white"
+                            android:textColor="?colorSecondary"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -268,7 +268,7 @@
                             android:layout_marginVertical="20dp"
                             android:layout_marginStart="32dp"
                             android:text="Settings"
-                            android:textColor="@color/white"
+                            android:textColor="?colorSecondary"
                             android:textSize="20sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/imageButton_user_profile" />
