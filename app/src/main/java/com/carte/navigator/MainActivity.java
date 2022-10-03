@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements Interface_RecyclerView {
 
+    BottomSheetDialog _subMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,25 +34,27 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         //BottomSheetStuff
         setUpBottomSheet();
 
-
     }
 
     private void setUpBottomSheet()
     {
         //Variable Declarations
+        _subMenu = new BottomSheetDialog(MainActivity.this);
 
-        BottomSheetDialog subMenu = new BottomSheetDialog(MainActivity.this);
-        subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
-        subMenu.setCanceledOnTouchOutside(true);
-        TextView _textView_sub_menu_title = subMenu.findViewById(R.id.textView_sub_menu_title);
+        _subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
+        _subMenu.setCanceledOnTouchOutside(true);
+
 
         ArrayList<Integer> tempUserCollections = new ArrayList<Integer>();//Will be changed later
 
         RecyclerView recyclerView_destinationOptions = findViewById(R.id.recyclerview_destination_filter_options);
         RecyclerView recyclerView_userCollections = findViewById(R.id.recyclerView_user_collections);
         RecyclerView recyclerView_account_settings = findViewById(R.id.recyclerView_account_settings);
+
         Button button_newCollection = findViewById(R.id.button_menu_newCollection);
         Button button_downloadMaps = findViewById(R.id.button_menu_download_maps);
+
+        ImageButton imageButton_set_up_profile = findViewById(R.id.imageButton_user_profile);
 
         recyclerView_destinationOptions.setHasFixedSize(true);
         recyclerView_userCollections.setHasFixedSize(true);
@@ -89,24 +93,29 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
     //Can turn into a method im sure
         button_downloadMaps.setOnClickListener(view -> {
+            TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
             assert _textView_sub_menu_title != null;
             _textView_sub_menu_title.setText("Download Maps");
 
             findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
                     setGraph(R.navigation.navigation_offline_maps);//(developer Android NavController, n.d)
-            subMenu.show();
+            _subMenu.show();
 
         });
     //Can turn into a method im sure
         button_newCollection.setOnClickListener(view -> {
+            TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
             assert _textView_sub_menu_title != null;
             _textView_sub_menu_title.setText("Collections");
 
             findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
                     setGraph(R.navigation.navigation_collections);//(developer Android NavController, n.d)
-            subMenu.show();
+            _subMenu.show();
         });
 
+        imageButton_set_up_profile.setOnClickListener(view -> {
+
+        });
 
     }
 
@@ -143,8 +152,23 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
                         "User collections", Toast.LENGTH_LONG).show();
                 break;
             case 2:
-                Toast.makeText(MainActivity.this,
-                        "Account settings", Toast.LENGTH_LONG).show();
+                switch (position)
+                {
+                    case 0:
+                        TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
+
+                        assert _textView_sub_menu_title != null;
+                        _textView_sub_menu_title.setText("Settings");
+
+                        findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
+                                setGraph(R.navigation.navigation_settings);//(developer Android NavController, n.d)
+                        _subMenu.show();
+                        break;
+                    case 1:
+                        Toast.makeText(MainActivity.this,
+                                "Help", Toast.LENGTH_LONG).show();
+                        break;
+                }
                 break;
         }
 
