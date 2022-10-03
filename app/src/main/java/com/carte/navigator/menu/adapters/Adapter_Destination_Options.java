@@ -86,7 +86,7 @@ public class Adapter_Destination_Options extends RecyclerView.Adapter<Adapter_De
                     int pos = getAdapterPosition();
 
                     if(pos != RecyclerView.NO_POSITION){
-                        _interfaceRecyclerView.onItemClick(pos);//(Practical Coding, 2021)
+                        _interfaceRecyclerView.onItemClick(pos,0);//(Practical Coding, 2021)
                     }
                 }
             });

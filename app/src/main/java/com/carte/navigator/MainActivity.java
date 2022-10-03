@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -47,11 +48,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
         RecyclerView recyclerView_destinationOptions = findViewById(R.id.recyclerview_destination_filter_options);
         RecyclerView recyclerView_userCollections = findViewById(R.id.recyclerView_user_collections);
+        RecyclerView recyclerView_account_settings = findViewById(R.id.recyclerView_account_settings);
         Button button_newCollection = findViewById(R.id.button_menu_newCollection);
         Button button_downloadMaps = findViewById(R.id.button_menu_download_maps);
 
         recyclerView_destinationOptions.setHasFixedSize(true);
         recyclerView_userCollections.setHasFixedSize(true);
+        recyclerView_account_settings.setHasFixedSize(true);
 
         //Ensuring the recycler view layout contains 4 item in each row
         RecyclerView.LayoutManager layoutManagerDestination = new StaggeredGridLayoutManager(4, 1);//(Professor Sluiter, 2020).
@@ -60,13 +63,21 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         RecyclerView.LayoutManager layoutManagerCollections = new StaggeredGridLayoutManager(4, 1);//(Professor Sluiter, 2020).
         recyclerView_userCollections.setLayoutManager(layoutManagerCollections);
 
+        RecyclerView.LayoutManager layoutManagerSettings = new StaggeredGridLayoutManager(1,1);
+        recyclerView_account_settings.setLayoutManager(layoutManagerSettings);
+
         //Retrieving navigation option texts
-        String[] navigationOptions = getResources().getStringArray(R.array.string_navigation_options);
+        String[] destination_navigationOptions = getResources().getStringArray(R.array.string_navigation_options);
+        String[] settings_navigationOptions = getResources().getStringArray(R.array.string_settings_options);
 
         //Setting up adapters
         //Destination Options RecyclerView
-        RecyclerView.Adapter<Adapter_Destination_Options.OptionViewHolder> mAdapter = new Adapter_Destination_Options(this, getApplicationContext(),navigationOptions);//(Professor Sluiter, 2020).
-        recyclerView_destinationOptions.setAdapter(mAdapter);
+        RecyclerView.Adapter<Adapter_Destination_Options.OptionViewHolder> adapter_destination_options = new Adapter_Destination_Options(this, getApplicationContext(),destination_navigationOptions);//(Professor Sluiter, 2020).
+        recyclerView_destinationOptions.setAdapter(adapter_destination_options);
+
+        //Account Settings RecyclerView
+        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_account_settings = new Adapter_Account_Settings(this,getApplicationContext(),settings_navigationOptions);//(Professor Sluiter, 2020).
+        recyclerView_account_settings.setAdapter(adapter_account_settings);
 
         //Remember to code this
         if(tempUserCollections.isEmpty())
@@ -76,9 +87,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
         }
 
+    //Can turn into a method im sure
         button_downloadMaps.setOnClickListener(view -> {
-
-
             assert _textView_sub_menu_title != null;
             _textView_sub_menu_title.setText("Download Maps");
 
@@ -87,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
             subMenu.show();
 
         });
-
+    //Can turn into a method im sure
         button_newCollection.setOnClickListener(view -> {
             assert _textView_sub_menu_title != null;
             _textView_sub_menu_title.setText("Collections");
@@ -101,26 +111,42 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     }
 
     @Override
-    public void onItemClick(int position) {
-        switch (position)
+    public void onItemClick(int position, int source) {
+
+        switch (source)
         {
             //Also remove names from icons for Light mode xD
-            case 0:
-                Toast.makeText(MainActivity.this,
-                        "Resrtuaranct", Toast.LENGTH_LONG).show();
+            case 0://Navigation options menu
+                switch (position)
+                {
+                    //Also remove names from icons for Light mode xD
+                    case 0:
+                        Toast.makeText(MainActivity.this,
+                                "Resrtuaranct", Toast.LENGTH_LONG).show();
+                        break;
+                    case 1:
+                        Toast.makeText(MainActivity.this,
+                                "Supermarket", Toast.LENGTH_LONG).show();
+                        break;
+                    case 2:
+                        Toast.makeText(MainActivity.this,
+                                "Attractions", Toast.LENGTH_LONG).show();
+                        break;
+                    case 3:
+                        Toast.makeText(MainActivity.this,
+                                "Fastfood", Toast.LENGTH_LONG).show();
+                        break;
+                }
                 break;
-            case 1:
+            case 1://Collections menu
                 Toast.makeText(MainActivity.this,
-                        "Supermarket", Toast.LENGTH_LONG).show();
+                        "User collections", Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 Toast.makeText(MainActivity.this,
-                        "Attractions", Toast.LENGTH_LONG).show();
-                break;
-            case 3:
-                Toast.makeText(MainActivity.this,
-                        "Fastfood", Toast.LENGTH_LONG).show();
+                        "Account settings", Toast.LENGTH_LONG).show();
                 break;
         }
+
     }
 }

@@ -15,6 +15,11 @@
         <item>Attractions</item>
         <item>Fast food</item>
     </string-array>
+
+    <string-array name="string_settings_options">
+        <item>Settings</item>
+        <item>Help</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
