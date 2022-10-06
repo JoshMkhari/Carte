@@ -113,8 +113,16 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
             _subMenu.show();
         });
 
+        //Can turn into a method im sure
         imageButton_set_up_profile.setOnClickListener(view -> {
+            //if logged in do nothing else show register/login pages
+            TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
+            assert _textView_sub_menu_title != null;
+            _textView_sub_menu_title.setText("Account");
 
+            findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
+                    setGraph(R.navigation.navigation_account);//(developer Android NavController, n.d)
+            _subMenu.show();
         });
 
     }

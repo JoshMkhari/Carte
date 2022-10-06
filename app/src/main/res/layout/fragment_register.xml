@@ -6,27 +6,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".menu.sub.account.Fragment_Register">
 
-    <ImageButton
-        android:id="@+id/RegisterClose_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/ic_baseline_close_24"
-        android:contentDescription="@string/back_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/RegisterTitle_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:text="Sync your data"
-        android:textColor="@color/main_text_color"
+        android:textColor="?colorSecondary"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterClose_button" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/RegisterSubHeading_TextView"

@@ -13,22 +13,10 @@
         <action
             android:id="@+id/action_fragment_Register_to_fragment_Login"
             app:destination="@id/fragment_Login" />
-        <action
-            android:id="@+id/action_fragment_Register_to_fragment_Account_Details"
-            app:destination="@id/fragment_Account_Details" />
     </fragment>
     <fragment
         android:id="@+id/fragment_Login"
         android:name="com.carte.navigator.menu.sub.account.Fragment_Login"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_fragment_Login_to_fragment_Account_Details"
-            app:destination="@id/fragment_Account_Details" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_Account_Details"
-        android:name="com.carte.navigator.menu.sub.account.Fragment_Account_Details"
-        android:label="fragment_account_details"
-        tools:layout="@layout/fragment_account_details" />
+        tools:layout="@layout/fragment_login" />
 </navigation>
