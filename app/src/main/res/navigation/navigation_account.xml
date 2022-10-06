@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_account"
+    app:startDestination="@id/fragment_Register">
+
+    <fragment
+        android:id="@+id/fragment_Register"
+        android:name="com.carte.navigator.menu.sub.account.Fragment_Register"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_fragment_Register_to_fragment_Login"
+            app:destination="@id/fragment_Login" />
+        <action
+            android:id="@+id/action_fragment_Register_to_fragment_Account_Details"
+            app:destination="@id/fragment_Account_Details" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Login"
+        android:name="com.carte.navigator.menu.sub.account.Fragment_Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_fragment_Login_to_fragment_Account_Details"
+            app:destination="@id/fragment_Account_Details" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Account_Details"
+        android:name="com.carte.navigator.menu.sub.account.Fragment_Account_Details"
+        android:label="fragment_account_details"
+        tools:layout="@layout/fragment_account_details" />
+</navigation>
