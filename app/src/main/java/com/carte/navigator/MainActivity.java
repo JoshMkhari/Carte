@@ -45,6 +45,11 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         _subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
         _subMenu.setCanceledOnTouchOutside(true);
 
+        ImageButton _imageButton_close_sub_menu = _subMenu.findViewById(R.id.imageButton_close_sub_menu);
+        assert _imageButton_close_sub_menu != null;
+        _imageButton_close_sub_menu.setOnClickListener(view -> {
+            _subMenu.dismiss();
+        });
 
         ArrayList<Integer> tempUserCollections = new ArrayList<Integer>();//Will be changed later
 
@@ -107,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         button_newCollection.setOnClickListener(view -> {
             TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
             assert _textView_sub_menu_title != null;
+
             _textView_sub_menu_title.setText("Collections");
 
             findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).

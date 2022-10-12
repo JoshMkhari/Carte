@@ -60,7 +60,6 @@ public class Adapter_Account_Settings extends RecyclerView.Adapter<Adapter_Accou
                     holder.subOptionName.setText(Fragment_Units._units_temperature_sub[position]);
                     break;
             }
-            holder.subOptionName.setText(_optionsList[position]);
         }
 
     }

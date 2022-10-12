@@ -69,7 +69,7 @@ public class Fragment_Units extends Fragment implements Interface_RecyclerView {
             {
                 case 0:
                     Toast.makeText(getContext(),
-                            _units_temperature_sub[0], Toast.LENGTH_LONG).show();
+                            "Automatic selected", Toast.LENGTH_LONG).show();
                     break;
                 case 1:
                     Toast.makeText(getContext(),
