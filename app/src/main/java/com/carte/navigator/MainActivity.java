@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -25,7 +26,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements Interface_RecyclerView {
 
-    BottomSheetDialog _subMenu;
+    public static BottomSheetDialog _subMenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
