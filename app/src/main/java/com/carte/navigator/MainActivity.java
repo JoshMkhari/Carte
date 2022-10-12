@@ -19,10 +19,13 @@ import android.widget.Toast;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
+import com.carte.navigator.menu.sub.settings.Fragment_Units;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity implements Interface_RecyclerView {
 
@@ -32,7 +35,15 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //BottomSheetStuff
+        //mapo stuff
+        //Fragment fragment = new Fragment();
+        findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
+                setGraph(R.navigation.navigation_maps);//(developer Android NavController, n.d)
+        //open fragment
+       // getSupportFragmentManager()
+         //       .beginTransaction()
+        //        .replace(R.id.frame_layout_map,fragment)
+        //        .commit();//BottomSheetStuff
         setUpBottomSheet();
 
     }
