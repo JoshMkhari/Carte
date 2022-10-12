@@ -1,3 +1,69 @@
 <resources>
     <string name="app_name">Carte</string>
+
+    <string name="string_menu_title_collections">YOUR COLLECTIONS</string>
+    <string name="string_menu_subTitle_collections">Save the places you like and take them with you everywhere</string>
+
+    <string name="string_menu_title_offline_maps">OFFLINE MAPS</string>
+    <string name="string_menu_subTitle_offline_maps">Search and navigate without a Wi-Fi or mobile network</string>
+
+    <string name="string_menu_title_account_settings">ACCOUNT &amp; SETTINGS</string>
+
+    <string-array name="string_navigation_options">
+        <item>Restaurants</item>
+        <item>Supermarkets</item>
+        <item>Attractions</item>
+        <item>Fast food</item>
+    </string-array>
+
+    <string-array name="string_settings_options">
+        <item>Settings</item>
+        <item>Help</item>
+    </string-array>
+
+    <string-array name="string_settings_general">
+        <item>Fuel type</item>
+        <item>Appearance</item>
+        <item>Units</item>
+    </string-array>
+
+    <string-array name="string_settings_general_sub">
+        <item>Fuel type</item>
+        <item>Appearance</item>
+        <item>Units</item>
+    </string-array>
+
+    <string-array name="string_settings_navigation">
+        <item>Route preferences</item>
+        <item>Speed limit alerts</item>
+    </string-array>
+
+    <string-array name="string_units_distance">
+        <item>Automatic</item>
+        <item>Metric</item>
+        <item>Imperial UK</item>
+        <item>Imperial US</item>
+    </string-array>
+
+    <string-array name="string_units_distance_sub">
+        <item>Based on phone language</item>
+        <item>Meters, kilometers</item>
+        <item>Yards, miles</item>
+        <item>Feet, miles</item>
+    </string-array>
+
+    <string-array name="string_units_temperature">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </string-array>
+
+    <string-array name="string_units_temperature_sub">
+        <item>°C</item>
+        <item>°F</item>
+    </string-array>
+
+    <string name="back_button">Used to navigate back to the previous view</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

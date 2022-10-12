@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_settings"
+    app:startDestination="@id/fragment_Settings">
+
+    <fragment
+        android:id="@+id/fragment_Settings"
+        android:name="com.carte.navigator.menu.sub.Fragment_Settings"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_fragment_Settings_to_fragment_Fuel_Type"
+            app:destination="@id/fragment_Fuel_Type" />
+        <action
+            android:id="@+id/action_fragment_Settings_to_fragment_Appearance"
+            app:destination="@id/fragment_Appearance" />
+        <action
+            android:id="@+id/action_fragment_Settings_to_fragment_Units"
+            app:destination="@id/fragment_Units" />
+        <action
+            android:id="@+id/action_fragment_Settings_to_fragment_Route_Preference"
+            app:destination="@id/fragment_Route_Preference" />
+        <action
+            android:id="@+id/action_fragment_Settings_to_fragment_Speed_Limit_Alert"
+            app:destination="@id/fragment_Speed_Limit_Alert" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Fuel_Type"
+        android:name="com.carte.navigator.menu.sub.settings.Fragment_Fuel_Type"
+        android:label="fragment_fuel_type"
+        tools:layout="@layout/fragment_fuel_type" />
+    <fragment
+        android:id="@+id/fragment_Appearance"
+        android:name="com.carte.navigator.menu.sub.settings.Fragment_Appearance"
+        android:label="fragment_appearance"
+        tools:layout="@layout/fragment_appearance" />
+    <fragment
+        android:id="@+id/fragment_Units"
+        android:name="com.carte.navigator.menu.sub.settings.Fragment_Units"
+        android:label="fragment_units"
+        tools:layout="@layout/fragment_units" />
+    <fragment
+        android:id="@+id/fragment_Route_Preference"
+        android:name="com.carte.navigator.menu.sub.settings.Fragment_Route_Preference"
+        android:label="fragment_route_preference"
+        tools:layout="@layout/fragment_route_preference" />
+    <fragment
+        android:id="@+id/fragment_Speed_Limit_Alert"
+        android:name="com.carte.navigator.menu.sub.settings.Fragment_Speed_Limit_Alert"
+        android:label="fragment_speed_limit_alert"
+        tools:layout="@layout/fragment_speed_limit_alert" />
+</navigation>
