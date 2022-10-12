@@ -27,9 +27,39 @@
         <item>Units</item>
     </string-array>
 
+    <string-array name="string_settings_general_sub">
+        <item>Fuel type</item>
+        <item>Appearance</item>
+        <item>Units</item>
+    </string-array>
+
     <string-array name="string_settings_navigation">
         <item>Route preferences</item>
         <item>Speed limit alerts</item>
+    </string-array>
+
+    <string-array name="string_units_distance">
+        <item>Automatic</item>
+        <item>Metric</item>
+        <item>Imperial UK</item>
+        <item>Imperial US</item>
+    </string-array>
+
+    <string-array name="string_units_distance_sub">
+        <item>Based on phone language</item>
+        <item>Meters, kilometers</item>
+        <item>Yards, miles</item>
+        <item>Feet, miles</item>
+    </string-array>
+
+    <string-array name="string_units_temperature">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </string-array>
+
+    <string-array name="string_units_temperature_sub">
+        <item>°C</item>
+        <item>°F</item>
     </string-array>
 
     <string name="back_button">Used to navigate back to the previous view</string>

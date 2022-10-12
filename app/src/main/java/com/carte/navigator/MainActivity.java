@@ -74,14 +74,14 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         //Retrieving navigation option texts
         String[] destination_navigationOptions = getResources().getStringArray(R.array.string_navigation_options);
         String[] settings_navigationOptions = getResources().getStringArray(R.array.string_settings_options);
-
+        String[] emptySubMenu = {"empty"};
         //Setting up adapters
         //Destination Options RecyclerView
         RecyclerView.Adapter<Adapter_Destination_Options.OptionViewHolder> adapter_destination_options = new Adapter_Destination_Options(this, getApplicationContext(),destination_navigationOptions);//(Professor Sluiter, 2020).
         recyclerView_destinationOptions.setAdapter(adapter_destination_options);
 
         //Account Settings RecyclerView
-        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_account_settings = new Adapter_Account_Settings(this,getApplicationContext(),settings_navigationOptions,2);//(Professor Sluiter, 2020).
+        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_account_settings = new Adapter_Account_Settings(this,getApplicationContext(),settings_navigationOptions,2,false);//(Professor Sluiter, 2020).
         recyclerView_account_settings.setAdapter(adapter_account_settings);
 
         //Remember to code this

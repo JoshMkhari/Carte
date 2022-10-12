@@ -50,13 +50,11 @@ public class Fragment_Settings extends Fragment implements Interface_RecyclerVie
         //Retrieving navigation option texts
         String[] settings_general = getResources().getStringArray(R.array.string_settings_general);
         String[] settings_navigation = getResources().getStringArray(R.array.string_settings_navigation);
-
-
         //Account Settings RecyclerView
-        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_general = new Adapter_Account_Settings(this,getContext(),settings_general,3);//(Professor Sluiter, 2020).
+        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_general = new Adapter_Account_Settings(this,getContext(),settings_general,3,false);//(Professor Sluiter, 2020).
         recyclerView_general_settings.setAdapter(adapter_settings_general);
 
-        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_navigation = new Adapter_Account_Settings(this,getContext(),settings_navigation,4);//(Professor Sluiter, 2020).
+        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_navigation = new Adapter_Account_Settings(this,getContext(),settings_navigation,4,false);//(Professor Sluiter, 2020).
         recyclerView_navigation_settings.setAdapter(adapter_settings_navigation);
         return _settings;
     }

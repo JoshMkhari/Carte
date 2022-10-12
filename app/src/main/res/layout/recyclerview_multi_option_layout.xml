@@ -16,14 +16,15 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:paddingTop="10dp"
         android:id="@+id/textView_option_layout_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:paddingTop="10dp"
+        android:layout_marginStart="10dp"
         android:text="Fuel type"
         android:textColor="?colorSecondary"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView_selected_state"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -31,22 +32,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        android:textColor="?colorOnPrimary"
+        android:paddingBottom="10dp"
+        android:layout_marginStart="10dp"
         android:text="Gasoline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_option_layout_title"
-        android:paddingBottom="10dp"/>
+        android:textColor="?colorOnPrimary"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView_selected_state"
+        app:layout_constraintTop_toBottomOf="@+id/textView_option_layout_title" />
 
-    <ImageButton
-        android:id="@+id/imageButton_option_layout_arrow_click"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <ImageView
+        android:id="@+id/imageView_option_layout_arrow_click"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/ic_baseline_arrow_forward_ios_24"
         app:layout_constraintTop_toTopOf="@+id/textView_option_layout_title" />
+
+    <ImageView
+        android:id="@+id/imageView_selected_state"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/image_selected_radio_button"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
