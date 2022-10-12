@@ -18,12 +18,14 @@ public class Adapter_Account_Settings extends RecyclerView.Adapter<Adapter_Accou
     private final Interface_RecyclerView _interfaceRecyclerView;//(Practical Coding, 2021)
     final LayoutInflater _inflater;
     final String[] _optionsList;
+    final int _source;
 
-    public Adapter_Account_Settings(Interface_RecyclerView _interfaceRecyclerView, Context context, String[] optionsList )
+    public Adapter_Account_Settings(Interface_RecyclerView _interfaceRecyclerView, Context context, String[] optionsList, int source )
     {
         this._interfaceRecyclerView = _interfaceRecyclerView;
         _inflater = LayoutInflater.from(context);
         _optionsList = optionsList;
+        _source = source;
     }
 
 
@@ -64,7 +66,7 @@ public class Adapter_Account_Settings extends RecyclerView.Adapter<Adapter_Accou
                     int pos = getAdapterPosition();
 
                     if(pos != RecyclerView.NO_POSITION){
-                        _interfaceRecyclerView.onItemClick(pos,2);//(Practical Coding, 2021)
+                        _interfaceRecyclerView.onItemClick(pos,_source);//(Practical Coding, 2021)
                     }
                 }
             });
