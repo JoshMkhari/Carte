@@ -19,10 +19,13 @@ import android.widget.Toast;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
+import com.carte.navigator.menu.sub.settings.Fragment_Units;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity implements Interface_RecyclerView {
 
@@ -32,7 +35,15 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //BottomSheetStuff
+        //mapo stuff
+        //Fragment fragment = new Fragment();
+        findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
+                setGraph(R.navigation.navigation_maps);//(developer Android NavController, n.d)
+        //open fragment
+       // getSupportFragmentManager()
+         //       .beginTransaction()
+        //        .replace(R.id.frame_layout_map,fragment)
+        //        .commit();//BottomSheetStuff
         setUpBottomSheet();
 
     }
@@ -58,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         RecyclerView recyclerView_account_settings = findViewById(R.id.recyclerView_account_settings);
 
         Button button_newCollection = findViewById(R.id.button_menu_newCollection);
-        Button button_downloadMaps = findViewById(R.id.button_menu_download_maps);
 
         ImageButton imageButton_set_up_profile = findViewById(R.id.imageButton_user_profile);
 
@@ -97,17 +107,6 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
         }
 
-    //Can turn into a method im sure
-        button_downloadMaps.setOnClickListener(view -> {
-            TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
-            assert _textView_sub_menu_title != null;
-            _textView_sub_menu_title.setText("Download Maps");
-
-            findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
-                    setGraph(R.navigation.navigation_offline_maps);//(developer Android NavController, n.d)
-            _subMenu.show();
-
-        });
     //Can turn into a method im sure
         button_newCollection.setOnClickListener(view -> {
             TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
