@@ -4,23 +4,33 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationRequest;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.Objects;
 
 public class MapsFragment extends Fragment {
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
+        FusedLocationProviderClient fusedLocationClient;
+        Location _currentLocation;
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -32,11 +42,32 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+           // LatLng sydney = new LatLng(-34, 151);
+            //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
+
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(requireActivity(), new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                _currentLocation = location;
+                                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLatitude());
+                                googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+                            }else
+                            {
+                                Toast.makeText(getContext(),
+                                        "Location is null", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+
         }
     };
+
 
     @Nullable
     @Override
