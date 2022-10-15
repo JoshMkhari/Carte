@@ -31,6 +31,7 @@ public class MapsFragment extends Fragment {
 //    https://stackoverflow.com/questions/44646749/change-the-map-type-in-an-android-app
 
     private static GoogleMap _map;
+    public static Location _currentLocation;
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         FusedLocationProviderClient fusedLocationClient;
         Location _currentLocation;
@@ -49,18 +50,19 @@ public class MapsFragment extends Fragment {
             //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             //googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             _map = googleMap;
 
         }
     };
 
-    public static void updateMap(Location location)
+    public static void setUpMap()
     {
-        LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        LatLng currentLocation = new LatLng(_currentLocation.getLatitude(), _currentLocation.getLongitude());
         _map.addMarker(new MarkerOptions().position(currentLocation).title("Current location"));
-        _map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        //_map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
+
     }
 
     @Nullable

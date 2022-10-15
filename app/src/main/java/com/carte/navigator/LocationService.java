@@ -22,6 +22,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -36,7 +37,13 @@ public class LocationService extends Service {
             super.onLocationResult(locationResult);
             if(locationResult.getLastLocation() != null)
             {
-                MapsFragment.updateMap(locationResult.getLastLocation());
+                MapsFragment._currentLocation = locationResult.getLastLocation();
+                if(!changed)
+                {
+                    MapsFragment.setUpMap();
+                    changed = true;
+                }
+
             }
         }
     };
@@ -98,7 +105,7 @@ public class LocationService extends Service {
 
         LocationRequest locationRequest = LocationRequest.create(); //new LocationRequest is deprecated
         locationRequest.setInterval(4000);
-        locationRequest.setFastestInterval(2000);
+        locationRequest.setFastestInterval(3000);
         locationRequest.setPriority(100);//High Accuracy
 
         LocationServices.getFusedLocationProviderClient(this)
