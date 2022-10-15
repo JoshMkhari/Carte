@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_info_directions"
+    app:startDestination="@id/fragment_Marker_Information">
+
+    <fragment
+        android:id="@+id/fragment_Marker_Information"
+        android:name="com.carte.navigator.Fragment_Marker_Information"
+        android:label="fragment_marker_information"
+        tools:layout="@layout/fragment_marker_information" >
+        <action
+            android:id="@+id/action_fragment_Marker_Information_to_fragment_Direction_Options"
+            app:destination="@id/fragment_Direction_Options" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Direction_Options"
+        android:name="com.carte.navigator.Fragment_Direction_Options"
+        android:label="fragment_direction_options"
+        tools:layout="@layout/fragment_direction_options" >
+        <action
+            android:id="@+id/action_fragment_Direction_Options_to_fragment_Start_Directions"
+            app:destination="@id/fragment_Start_Directions" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Start_Directions"
+        android:name="com.carte.navigator.Fragment_Start_Directions"
+        android:label="fragment_start_directions"
+        tools:layout="@layout/fragment_start_directions" />
+</navigation>

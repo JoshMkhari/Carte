@@ -1,5 +1,7 @@
 package com.carte.navigator;
 
+import static androidx.navigation.fragment.NavHostFragment.findNavController;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -69,6 +72,15 @@ public class MapsFragment extends Fragment {
                         .position(latLng)
                         .title("Your marker title")
                         .snippet("Your marker snippet"));
+
+                TextView _textView_sub_menu_title = MainActivity._subMenu.findViewById(R.id.textView_sub_menu_title);
+                assert _textView_sub_menu_title != null;
+
+                _textView_sub_menu_title.setText("Collections");
+
+                findNavController(Objects.requireNonNull(getParentFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
+                        setGraph(R.navigation.navigation_collections);//(developer Android NavController, n.d)
+                MainActivity._subMenu.show();
             });
         }
     };
