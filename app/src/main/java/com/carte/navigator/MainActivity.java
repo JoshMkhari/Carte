@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
                 setGraph(R.navigation.navigation_maps);//(developer Android NavController, n.d)
 
+        LocationService.changed = false;
         //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)

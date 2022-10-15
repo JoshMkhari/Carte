@@ -30,7 +30,7 @@ public class LocationService extends Service {
     public final int REQUEST_CODE = 0;
     public static Location _currentLocation;
     public static CountDownLatch latch = new CountDownLatch(1);
-    boolean changed = false;
+    public static boolean changed = false;
     private final LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(@NonNull LocationResult locationResult) {

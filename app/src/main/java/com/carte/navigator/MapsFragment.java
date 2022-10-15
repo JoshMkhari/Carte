@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationRequest;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,13 +31,16 @@ import java.util.Objects;
 
 public class MapsFragment extends Fragment {
 //Need this later
-//    https://stackoverflow.com/questions/44646749/change-the-map-type-in-an-android-app
+    //Changing map types
+    //    https://stackoverflow.com/questions/44646749/change-the-map-type-in-an-android-app
 
+    //Markers
+    // https://www.geeksforgeeks.org/how-to-add-custom-marker-to-google-maps-in-android/
     private static GoogleMap _map;
     public static Location _currentLocation;
+    static Bitmap _smallMarker;
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-        FusedLocationProviderClient fusedLocationClient;
-        Location _currentLocation;
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -46,23 +52,39 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-           // LatLng sydney = new LatLng(-34, 151);
-            //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-            LatLng sydney = new LatLng(-34, 151);
+            LatLng sydney = new LatLng(30.5595, 22.9375);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             _map = googleMap;
 
+//          https://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
+            int height = 100;
+            int width = 100;
+            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.image_supermarket_icon); //https://stackoverflow.com/questions/53811117/how-to-get-string-from-resources-strings-into-a-fragment
+            Bitmap b = bitmapdraw.getBitmap();
+            _smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+            //https://stackoverflow.com/questions/42401131/add-marker-on-long-press-in-google-maps-api-v3
+            _map.setOnMapLongClickListener(latLng -> {
+                _map.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title("Your marker title")
+                        .snippet("Your marker snippet"));
+            });
         }
     };
+
 
     public static void setUpMap()
     {
         LatLng currentLocation = new LatLng(_currentLocation.getLatitude(), _currentLocation.getLongitude());
-        _map.addMarker(new MarkerOptions().position(currentLocation).title("Current location"));
-        //_map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-        _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
+        //https://stackoverflow.com/questions/14811579/how-to-create-a-custom-shaped-bitmap-marker-with-android-map-api-v2
+        _map.addMarker(new MarkerOptions()
+                .position(currentLocation)
+                .title("Current location")
+                .snippet("Population: 4,627,300")
+                        .icon(BitmapDescriptorFactory.fromBitmap(_smallMarker)));
 
+        _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
     }
 
     @Nullable
