@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationRequest;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ public class MapsFragment extends Fragment {
     private static GoogleMap _map;
     public static Location _currentLocation;
     static Bitmap _smallMarker;
-    HashMap<Integer, Marker> _hashMapMarker;
+    public static HashMap<Integer, Marker> _hashMapMarker;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -66,16 +67,17 @@ public class MapsFragment extends Fragment {
 //          https://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
             int height = 100;
             int width = 100;
-            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.image_supermarket_icon); //https://stackoverflow.com/questions/53811117/how-to-get-string-from-resources-strings-into-a-fragment
+
+            //https://stackoverflow.com/questions/53811117/how-to-get-string-from-resources-strings-into-a-fragment
+            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.image_supermarket_icon);
             Bitmap b = bitmapdraw.getBitmap();
             _smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
             //https://stackoverflow.com/questions/42401131/add-marker-on-long-press-in-google-maps-api-v3
             _map.setOnMapLongClickListener(latLng -> {
-
+                MainActivity._subMenu.dismiss();
                 Marker marker = _map.addMarker(new MarkerOptions()
                         .position(latLng));
-
                 if(_hashMapMarker.isEmpty())
                 {
                     _hashMapMarker.put(0,marker);//0 will always refer to the long click on map
@@ -85,7 +87,7 @@ public class MapsFragment extends Fragment {
                     Marker removeMarker = _hashMapMarker.get(0);
                     assert removeMarker != null;
                     removeMarker.remove();
-                    _hashMapMarker.remove(0);
+                    _hashMapMarker.put(0,marker);//0 will always refer to the long click on map
                 }
 
                 ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);

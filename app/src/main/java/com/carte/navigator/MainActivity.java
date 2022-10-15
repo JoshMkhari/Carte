@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
                 setGraph(R.navigation.navigation_maps);//(developer Android NavController, n.d)
 
         LocationService.changed = false;
-        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
+        //https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(
@@ -83,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
     }
 
+//    https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -238,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
     }
 
+    //https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
     private boolean isLocationServiceRunning(){
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         Log.d("counttt", "isLocationServiceRunning: " + activityManager.getRunningServices(Integer.MAX_VALUE).size());
@@ -254,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         }
         return false;
     }
-
+//https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
     private void startLocationService(){
         Log.d("startLocationService", "the method: ");
 
@@ -266,6 +267,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
     }
 
+    //https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
     private void stopLocationService(){
         if(isLocationServiceRunning()){
             Intent intent = new Intent(getApplicationContext(), LocationService.class);

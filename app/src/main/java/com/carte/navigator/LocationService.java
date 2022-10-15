@@ -25,7 +25,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.concurrent.CountDownLatch;
-
+//https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
 public class LocationService extends Service {
     public final int REQUEST_CODE = 0;
     public static Location _currentLocation;
