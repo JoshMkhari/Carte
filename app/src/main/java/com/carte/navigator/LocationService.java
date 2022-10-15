@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
@@ -22,17 +23,20 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.concurrent.CountDownLatch;
+
 public class LocationService extends Service {
     public final int REQUEST_CODE = 0;
+    public static Location _currentLocation;
+    public static CountDownLatch latch = new CountDownLatch(1);
+    boolean changed = false;
     private final LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(@NonNull LocationResult locationResult) {
             super.onLocationResult(locationResult);
             if(locationResult.getLastLocation() != null)
             {
-                double latitude = locationResult.getLastLocation().getLatitude();
-                double longitude = locationResult.getLastLocation().getLongitude();
-                Log.d("LOCATION_UPDATE", latitude + ", " + longitude);
+                MapsFragment.updateMap(locationResult.getLastLocation());
             }
         }
     };

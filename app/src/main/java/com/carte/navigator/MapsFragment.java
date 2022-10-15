@@ -27,7 +27,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.Objects;
 
 public class MapsFragment extends Fragment {
+//Need this later
+//    https://stackoverflow.com/questions/44646749/change-the-map-type-in-an-android-app
 
+    private static GoogleMap _map;
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         FusedLocationProviderClient fusedLocationClient;
         Location _currentLocation;
@@ -45,29 +48,20 @@ public class MapsFragment extends Fragment {
            // LatLng sydney = new LatLng(-34, 151);
             //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             //googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
-
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(requireActivity(), new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                _currentLocation = location;
-                                LatLng currentLocation = new LatLng(location.getLatitude(), location.getLatitude());
-                                googleMap.addMarker(new MarkerOptions().position(currentLocation).title("Current Location"));
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-                            }else
-                            {
-                                Toast.makeText(getContext(),
-                                        "Location is null", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+            LatLng sydney = new LatLng(-34, 151);
+            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            _map = googleMap;
 
         }
     };
 
+    public static void updateMap(Location location)
+    {
+        LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        _map.addMarker(new MarkerOptions().position(currentLocation).title("Current location"));
+        _map.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+    }
 
     @Nullable
     @Override
