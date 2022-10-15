@@ -1,4 +1,4 @@
-package com.carte.navigator;
+package com.carte.navigator.menu.sub.directions;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.carte.navigator.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_Marker_Information#newInstance} factory method to
+ * Use the {@link Fragment_Direction_Options#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_Marker_Information extends Fragment {
+public class Fragment_Direction_Options extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class Fragment_Marker_Information extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Fragment_Marker_Information() {
+    public Fragment_Direction_Options() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class Fragment_Marker_Information extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Marker_Information.
+     * @return A new instance of fragment Fragment_Direction_Options.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_Marker_Information newInstance(String param1, String param2) {
-        Fragment_Marker_Information fragment = new Fragment_Marker_Information();
+    public static Fragment_Direction_Options newInstance(String param1, String param2) {
+        Fragment_Direction_Options fragment = new Fragment_Direction_Options();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class Fragment_Marker_Information extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_marker_information, container, false);
+        return inflater.inflate(R.layout.fragment_direction_options, container, false);
     }
 }

@@ -1,4 +1,4 @@
-package com.carte.navigator;
+package com.carte.navigator.menu.sub.directions;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.carte.navigator.R;
 
 /**
  * A simple {@link Fragment} subclass.

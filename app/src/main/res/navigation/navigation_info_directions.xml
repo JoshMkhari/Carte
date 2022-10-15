@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_Marker_Information"
-        android:name="com.carte.navigator.Fragment_Marker_Information"
+        android:name="com.carte.navigator.menu.sub.directions.Fragment_Marker_Information"
         android:label="fragment_marker_information"
         tools:layout="@layout/fragment_marker_information" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_Direction_Options"
-        android:name="com.carte.navigator.Fragment_Direction_Options"
+        android:name="com.carte.navigator.menu.sub.directions.Fragment_Direction_Options"
         android:label="fragment_direction_options"
         tools:layout="@layout/fragment_direction_options" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_Start_Directions"
-        android:name="com.carte.navigator.Fragment_Start_Directions"
+        android:name="com.carte.navigator.menu.sub.directions.Fragment_Start_Directions"
         android:label="fragment_start_directions"
         tools:layout="@layout/fragment_start_directions" />
 </navigation>

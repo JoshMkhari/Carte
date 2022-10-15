@@ -4,6 +4,7 @@ import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.app.ActivityManager;
@@ -27,9 +28,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class MapsFragment extends Fragment {
@@ -42,6 +45,7 @@ public class MapsFragment extends Fragment {
     private static GoogleMap _map;
     public static Location _currentLocation;
     static Bitmap _smallMarker;
+    HashMap<Integer, Marker> _hashMapMarker;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -68,18 +72,29 @@ public class MapsFragment extends Fragment {
 
             //https://stackoverflow.com/questions/42401131/add-marker-on-long-press-in-google-maps-api-v3
             _map.setOnMapLongClickListener(latLng -> {
-                _map.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title("Your marker title")
-                        .snippet("Your marker snippet"));
 
-                TextView _textView_sub_menu_title = MainActivity._subMenu.findViewById(R.id.textView_sub_menu_title);
-                assert _textView_sub_menu_title != null;
+                Marker marker = _map.addMarker(new MarkerOptions()
+                        .position(latLng));
 
-                _textView_sub_menu_title.setText("Collections");
+                if(_hashMapMarker.isEmpty())
+                {
+                    _hashMapMarker.put(0,marker);//0 will always refer to the long click on map
+                }
+                else
+                {
+                    Marker removeMarker = _hashMapMarker.get(0);
+                    assert removeMarker != null;
+                    removeMarker.remove();
+                    _hashMapMarker.remove(0);
+                }
 
-                findNavController(Objects.requireNonNull(getParentFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
-                        setGraph(R.navigation.navigation_collections);//(developer Android NavController, n.d)
+                ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
+                assert constraintLayoutTitle != null;
+
+                constraintLayoutTitle.setVisibility(View.GONE);
+
+                findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
+                        setGraph(R.navigation.navigation_info_directions);//(developer Android NavController, n.d)
                 MainActivity._subMenu.show();
             });
         }
@@ -95,7 +110,6 @@ public class MapsFragment extends Fragment {
                 .title("Current location")
                 .snippet("Population: 4,627,300")
                         .icon(BitmapDescriptorFactory.fromBitmap(_smallMarker)));
-
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
     }
 
@@ -104,6 +118,8 @@ public class MapsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        //https://stackoverflow.com/questions/40436277/how-to-remove-specific-marker-on-android-googlemap
+        _hashMapMarker = new HashMap<>();
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 

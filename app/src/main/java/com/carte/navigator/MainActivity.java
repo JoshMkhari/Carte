@@ -16,6 +16,7 @@ import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PackageManagerCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     public static BottomSheetDialog _subMenu;
     //Googles API for location services. Majority of app functions use this class
     FusedLocationProviderClient fusedLocationClient;
+    public static FragmentManager _fragmentManager;
     public static Location _currentLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
         }
 
+        _fragmentManager = getSupportFragmentManager();
     //Can turn into a method im sure
         button_newCollection.setOnClickListener(view -> {
             TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
