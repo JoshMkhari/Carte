@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.carte.navigator.MainActivity;
@@ -36,6 +39,10 @@ import okhttp3.Response;
  */
 public class Fragment_Direction_Options extends Fragment {
 
+    TextView _distance, _time;
+    AutoCompleteTextView _origin, _destination;
+    ImageButton _close;
+    Button _start_Directions;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,13 +51,13 @@ public class Fragment_Direction_Options extends Fragment {
         View direction_options =inflater.inflate(R.layout.fragment_direction_options, container, false);
 
         //button_direction_start
-        //imageButton_close_direction_options_menu
-        //autoCompleteTextView_destination
-        //autoCompleteTextView_origin
-        //textView_distance
-        //textView_Time
 
-
+        _distance = direction_options.findViewById(R.id.textView_distance);
+        _time = direction_options.findViewById(R.id.textView_Time);
+        _origin = direction_options.findViewById(R.id.autoCompleteTextView_origin);
+        _destination = direction_options.findViewById(R.id.autoCompleteTextView_destination);
+        _close = direction_options.findViewById(R.id.imageButton_close_direction_options_menu);
+        _start_Directions = direction_options.findViewById(R.id.button_direction_start);
 
         //https://blog.logrocket.com/a-complete-guide-to-okhttp/
         OkHttpClient client = new OkHttpClient();
@@ -80,10 +87,24 @@ public class Fragment_Direction_Options extends Fragment {
                // Root root = gson.fromJson(response.body(),Root.class);
                Root root = gson.fromJson(response.body().string(),Root.class);
 
-               getActivity().runOnUiThread(new Runnable() {
+               requireActivity().runOnUiThread(new Runnable() {
                    @Override
                    public void run() {
+                       String time, distance;
+                       int duration = root.getRoute().getDuration();
+                       if(duration<60)
+                       {
+                           time = "< 1 min" ;
+                       }else
+                       {
+                           float dur = duration/60f;
+                           time = Math.round(dur) + " min";
+                       }
+                       _time.setText(time);
 
+                       //Check if user is using miles or metres
+                       distance = root.getRoute().getDistance() + "m";
+                       _distance.setText(distance);
                    }
                });
                //Log.d("thisResponse", "onResponse: this is distance "+ root.getRoute().getDistance());
