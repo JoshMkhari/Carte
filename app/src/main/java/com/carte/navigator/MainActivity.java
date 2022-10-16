@@ -10,9 +10,12 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PackageManagerCompat;
@@ -51,10 +54,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
     private static final int _REQUEST_CODE_LOCATION_PERMISSION = 1;
     public static BottomSheetDialog _subMenu;
-    //Googles API for location services. Majority of app functions use this class
-    FusedLocationProviderClient fusedLocationClient;
     public static FragmentManager _fragmentManager;
-    public static Location _currentLocation;
+    //Navigation Layout
+    public static ConstraintLayout _navigationLayout;
+    public static TextView _currentSpeed, _currentStreet;
+    private ImageButton _volume_control;
+    public static boolean _muted = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +86,30 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
             setUpBottomSheet();
         }
 
+        _navigationLayout = findViewById(R.id.constraint_layout_navigating);
+        _currentSpeed = findViewById(R.id.textView_currentSpeed_layout);
+        _currentStreet = findViewById(R.id.textView_current_street);
+        _volume_control = findViewById(R.id.volume_control);
+
+        _volume_control.setOnClickListener(view -> {
+            //Switch background
+            Bitmap bmp;
+            if(_muted)
+            {
+                _muted = false;
+                //https://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
+                bmp = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                        R.drawable.image_mute_icon);
+
+            }else
+            {
+                //https://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
+                _muted= true;
+                bmp = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                        R.drawable.image_volume_mute_icon);
+            }
+            _volume_control.setImageBitmap(bmp);
+        });
     }
 
 //    https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s

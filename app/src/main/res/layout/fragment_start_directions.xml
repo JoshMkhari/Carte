@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menu.sub.directions.Fragment_Start_Directions">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".menu.sub.directions.Fragment_Start_Directions"
+    android:padding="20dp">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageButton
+        android:id="@+id/imageButton_stop_navigating_menu"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_baseline_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/textView_arrival_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="18:51"
+        android:textColor="?colorSecondary"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView_arrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="arrival"
+        app:layout_constraintEnd_toEndOf="@+id/textView_arrival_time"
+        app:layout_constraintStart_toStartOf="@+id/textView_arrival_time"
+        app:layout_constraintTop_toBottomOf="@+id/textView_arrival_time" />
+
+    <TextView
+        android:id="@+id/textView_time_remaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="4"
+        android:textColor="?colorSecondary"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/textView_arrival_time"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_time_remaining_min_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="min"
+        app:layout_constraintEnd_toEndOf="@+id/textView_time_remaining"
+        app:layout_constraintStart_toStartOf="@+id/textView_time_remaining"
+        app:layout_constraintTop_toBottomOf="@+id/textView_time_remaining" />
+
+    <TextView
+        android:id="@+id/textView_distance_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="1.2"
+        android:textColor="?colorSecondary"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/textView_time_remaining"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_distance_left_km_miles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="km"
+        app:layout_constraintEnd_toEndOf="@+id/textView_distance_left"
+        app:layout_constraintStart_toStartOf="@+id/textView_distance_left"
+        app:layout_constraintTop_toBottomOf="@+id/textView_distance_left" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
