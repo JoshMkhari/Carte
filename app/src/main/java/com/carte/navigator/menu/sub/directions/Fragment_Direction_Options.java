@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.MapsFragment;
 import com.carte.navigator.R;
+import com.carte.navigator.menu.trueway_directions_json.Root;
 import com.google.android.gms.maps.model.Marker;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,9 +47,10 @@ public class Fragment_Direction_Options extends Fragment {
         //imageButton_close_direction_options_menu
         //autoCompleteTextView_destination
         //autoCompleteTextView_origin
-        //textview_temp
+        //textView_distance
+        //textView_Time
 
-        TextView temp = direction_options.findViewById(R.id.textview_temp);
+
 
         //https://blog.logrocket.com/a-complete-guide-to-okhttp/
         OkHttpClient client = new OkHttpClient();
@@ -71,7 +74,19 @@ public class Fragment_Direction_Options extends Fragment {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Log.d("thisResponse", "onResponse: " + response.body().string());
+                //String responseBody = Objects.requireNonNull(response.body()).toString();
+               // Log.d("thisResponse", "onResponse: " +responseBody );
+                Gson gson = new Gson();
+               // Root root = gson.fromJson(response.body(),Root.class);
+               Root root = gson.fromJson(response.body().string(),Root.class);
+
+               getActivity().runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+
+                   }
+               });
+               //Log.d("thisResponse", "onResponse: this is distance "+ root.getRoute().getDistance());
             }
         });
 

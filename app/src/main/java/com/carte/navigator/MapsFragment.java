@@ -102,6 +102,7 @@ public class MapsFragment extends Fragment {
 
                 findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
                         setGraph(R.navigation.navigation_info_directions);//(developer Android NavController, n.d)
+
                 MainActivity._subMenu.show();
             });
         }
@@ -113,12 +114,14 @@ public class MapsFragment extends Fragment {
         LatLng currentLocation = new LatLng(_currentLocation.getLatitude(), _currentLocation.getLongitude());
         //https://stackoverflow.com/questions/14811579/how-to-create-a-custom-shaped-bitmap-marker-with-android-map-api-v2
         //Polyline polyline1 =
-
+/*
         _map.addPolyline(new PolylineOptions()
                 .clickable(true)
                 .add(
                         new LatLng(-25.871907, 28.056417),
                         new LatLng(-25.871581, 28.056407)));
+
+ */
         _map.addMarker(new MarkerOptions()
                 .position(currentLocation)
                 .title("Current location")

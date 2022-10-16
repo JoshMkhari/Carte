@@ -53,18 +53,27 @@
         android:text="Start navigation"
         android:textColor="#5fb2ff"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView_Time"
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_destination" />
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:id="@+id/textView_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="54 min"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_destination" />
 
     <TextView
-        android:id="@+id/textview_temp"
+        android:id="@+id/textView_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="This"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="32 km"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_direction_start" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_Time" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
