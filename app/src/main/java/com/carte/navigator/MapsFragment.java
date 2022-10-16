@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carte.navigator.menu.trueway_directions_json.Root;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,7 +36,9 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class MapsFragment extends Fragment {
@@ -108,6 +111,24 @@ public class MapsFragment extends Fragment {
         }
     };
 
+
+    public static void drawRoute(Root root)
+    {
+        List<LatLng> multiple = new ArrayList<>();
+
+        for (List list: root.getRoute().getGeometry().getCoordinates()
+             ) {
+            double latitude = (Double) list.get(0);
+            double longitude = (Double) list.get(1);
+            multiple.add(new LatLng(latitude,longitude));
+        }
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.addAll(multiple);
+        polylineOptions.clickable(true);
+
+        Polyline polyline = _map.addPolyline(polylineOptions);
+        //polyline.setColor();
+    }
 
     public static void setUpMap()
     {

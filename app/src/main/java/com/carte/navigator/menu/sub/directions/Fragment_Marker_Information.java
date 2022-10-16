@@ -37,7 +37,7 @@ public class Fragment_Marker_Information extends Fragment {
         Button directions = marker_information_view.findViewById(R.id.button_information_directions);
 
         assert marker != null;
-        String title = marker.getPosition().longitude + "," + marker.getPosition().latitude;
+        String title = marker.getPosition().latitude + "," + marker.getPosition().longitude;
         marker_Title.setText(title);
 
         directions.setOnClickListener(view -> {

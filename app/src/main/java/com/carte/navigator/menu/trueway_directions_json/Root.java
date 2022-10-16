@@ -1,5 +1,6 @@
 package com.carte.navigator.menu.trueway_directions_json;
 
+//https://json2csharp.com/code-converters/json-to-pojo
 public class Root {
     private Route route;
 

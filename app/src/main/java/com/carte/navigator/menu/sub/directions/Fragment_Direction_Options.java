@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,6 +74,10 @@ public class Fragment_Direction_Options extends Fragment {
                 .addHeader("X-RapidAPI-Host", "trueway-directions2.p.rapidapi.com")
                 .build();
 
+        _start_Directions.setOnClickListener(view -> {
+            Navigation.findNavController(direction_options).navigate(R.id.action_fragment_Direction_Options_to_fragment_Start_Directions);
+        });
+
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -81,12 +86,11 @@ public class Fragment_Direction_Options extends Fragment {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                //String responseBody = Objects.requireNonNull(response.body()).toString();
-               // Log.d("thisResponse", "onResponse: " +responseBody );
+                //https://mkyong.com/java/how-to-parse-json-with-gson/
                 Gson gson = new Gson();
-               // Root root = gson.fromJson(response.body(),Root.class);
-               Root root = gson.fromJson(response.body().string(),Root.class);
 
+               Root root = gson.fromJson(response.body().string(),Root.class);
+                //Log.d("compare", "onResponse: "+ response.body().string());
                requireActivity().runOnUiThread(new Runnable() {
                    @Override
                    public void run() {
@@ -105,6 +109,9 @@ public class Fragment_Direction_Options extends Fragment {
                        //Check if user is using miles or metres
                        distance = root.getRoute().getDistance() + "m";
                        _distance.setText(distance);
+
+                       MapsFragment.drawRoute(root);
+                       //Draw on map here
                    }
                });
                //Log.d("thisResponse", "onResponse: this is distance "+ root.getRoute().getDistance());
