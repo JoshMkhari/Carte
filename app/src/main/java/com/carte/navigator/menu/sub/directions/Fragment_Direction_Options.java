@@ -26,6 +26,8 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 import okhttp3.Call;
@@ -107,7 +109,18 @@ public class Fragment_Direction_Options extends Fragment {
                        _time.setText(time);
 
                        //Check if user is using miles or metres
-                       distance = root.getRoute().getDistance() + "m";
+                       int dist = root.getRoute().getDistance();
+                       if(dist>1000)
+                       {
+                           double dis = dist/1000f;
+                           //https://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
+                           distance = (double)Math.round(dis * 10d) / 10d + "km";
+
+                       }else
+                       {
+                           distance = dist + "m";
+                       }
+
                        _distance.setText(distance);
 
                        MapsFragment.drawRoute(root);

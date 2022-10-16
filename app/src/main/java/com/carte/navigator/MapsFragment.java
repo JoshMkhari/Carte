@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +32,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -52,6 +55,7 @@ public class MapsFragment extends Fragment {
     public static Location _currentLocation;
     static Bitmap _smallMarker;
     public static HashMap<Integer, Marker> _hashMapMarker;
+    private static Context _context;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -68,7 +72,7 @@ public class MapsFragment extends Fragment {
             LatLng sydney = new LatLng(30.5595, 22.9375);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             _map = googleMap;
-
+            _context = requireContext();
 //          https://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
             int height = 100;
             int width = 100;
@@ -116,10 +120,31 @@ public class MapsFragment extends Fragment {
     {
         List<LatLng> multiple = new ArrayList<>();
 
+        //https://stackoverflow.com/questions/41760781/android-google-map-polylines-and-zoom
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        // Latlng's to get focus
+        double latitude = root.getRoute().getLegs().get(0).getStart_point().getLat();
+        double longitude = root.getRoute().getLegs().get(0).getStart_point().getLng();
+        LatLng origin = new LatLng(latitude,longitude);
+
+        builder.include(origin);
+        // Latlng's to get focus
+        latitude = root.getRoute().getLegs().get(0).getEnd_point().getLat();
+        longitude = root.getRoute().getLegs().get(0).getEnd_point().getLng();
+        LatLng end = new LatLng(latitude,longitude);
+        builder.include(end);
+
+        //initialize the padding for map boundary
+        int padding = 200;
+        ///create the bounds from latlngBuilder to set into map camera
+        LatLngBounds bounds = builder.build();
+
+
         for (List list: root.getRoute().getGeometry().getCoordinates()
              ) {
-            double latitude = (Double) list.get(0);
-            double longitude = (Double) list.get(1);
+             latitude = (Double) list.get(0);
+             longitude = (Double) list.get(1);
             multiple.add(new LatLng(latitude,longitude));
         }
         PolylineOptions polylineOptions = new PolylineOptions();
@@ -127,7 +152,13 @@ public class MapsFragment extends Fragment {
         polylineOptions.clickable(true);
 
         Polyline polyline = _map.addPolyline(polylineOptions);
-        //polyline.setColor();
+        polyline.setWidth(40);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            polyline.setColor(_context.getColor(R.color.teal_700));
+        }
+
+        _map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,padding));
+
     }
 
     public static void setUpMap()
@@ -135,14 +166,15 @@ public class MapsFragment extends Fragment {
         LatLng currentLocation = new LatLng(_currentLocation.getLatitude(), _currentLocation.getLongitude());
         //https://stackoverflow.com/questions/14811579/how-to-create-a-custom-shaped-bitmap-marker-with-android-map-api-v2
         //Polyline polyline1 =
-/*
-        _map.addPolyline(new PolylineOptions()
-                .clickable(true)
-                .add(
-                        new LatLng(-25.871907, 28.056417),
-                        new LatLng(-25.871581, 28.056407)));
 
- */
+        //Polyline polyline = _map.addPolyline(new PolylineOptions()
+        //        .clickable(true)
+         //       .add(
+         //               new LatLng(-25.871907, 28.056417),
+          //              new LatLng(-25.871581, 28.056407)));
+
+
+
         _map.addMarker(new MarkerOptions()
                 .position(currentLocation)
                 .title("Current location")
