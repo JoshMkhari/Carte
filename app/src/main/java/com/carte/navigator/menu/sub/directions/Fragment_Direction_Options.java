@@ -46,6 +46,7 @@ public class Fragment_Direction_Options extends Fragment {
     AutoCompleteTextView _origin, _destination;
     ImageButton _close;
     Button _start_Directions;
+    public static Root _root;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,7 +66,7 @@ public class Fragment_Direction_Options extends Fragment {
         //https://blog.logrocket.com/a-complete-guide-to-okhttp/
         OkHttpClient client = new OkHttpClient();
 
-        Marker marker = MapsFragment._hashMapMarker.get(0);
+        Marker marker = MapsFragment._hashMapMarker.get(1);
         assert marker != null;
         Request request = new Request.Builder()
                 .url("https://trueway-directions2.p.rapidapi.com/FindDrivingRoute?stops="
@@ -125,6 +126,7 @@ public class Fragment_Direction_Options extends Fragment {
 
                        MapsFragment.drawRoute(root);
                        //Draw on map here
+                       _root = root;
                    }
                });
                //Log.d("thisResponse", "onResponse: this is distance "+ root.getRoute().getDistance());

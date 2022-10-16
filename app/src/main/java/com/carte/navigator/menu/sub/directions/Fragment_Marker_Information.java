@@ -28,7 +28,7 @@ public class Fragment_Marker_Information extends Fragment {
         View marker_information_view = inflater.inflate(R.layout.fragment_marker_information, container, false);
         //MapsFragment._hashMapMarker
 
-        Marker marker = MapsFragment._hashMapMarker.get(0);
+        Marker marker = MapsFragment._hashMapMarker.get(1);
 
         TextView marker_Title, location_data;
 

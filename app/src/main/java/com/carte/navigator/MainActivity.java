@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,10 +56,11 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     private static final int _REQUEST_CODE_LOCATION_PERMISSION = 1;
     public static BottomSheetDialog _subMenu;
     public static FragmentManager _fragmentManager;
+
+    //layout_menu
+
+    public static LinearLayout _menu;
     //Navigation Layout
-    public static ConstraintLayout _navigationLayout;
-    public static TextView _currentSpeed, _currentStreet;
-    private ImageButton _volume_control;
     public static boolean _muted = false;
 
     @Override
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        _menu = findViewById(R.id.layout_menu);
         //map stuff
         //Fragment fragment = new Fragment();
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
@@ -86,30 +89,6 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
             setUpBottomSheet();
         }
 
-        _navigationLayout = findViewById(R.id.constraint_layout_navigating);
-        _currentSpeed = findViewById(R.id.textView_currentSpeed_layout);
-        _currentStreet = findViewById(R.id.textView_current_street);
-        _volume_control = findViewById(R.id.volume_control);
-
-        _volume_control.setOnClickListener(view -> {
-            //Switch background
-            Bitmap bmp;
-            if(_muted)
-            {
-                _muted = false;
-                //https://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
-                bmp = BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                        R.drawable.image_mute_icon);
-
-            }else
-            {
-                //https://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
-                _muted= true;
-                bmp = BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                        R.drawable.image_volume_mute_icon);
-            }
-            _volume_control.setImageBitmap(bmp);
-        });
     }
 
 //    https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
@@ -131,9 +110,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     {
         //Variable Declarations
         _subMenu = new BottomSheetDialog(MainActivity.this);
+        //https://stackoverflow.com/questions/51302005/how-to-change-transparent-background-in-bottomsheetdialog
+        if(_subMenu.getWindow() != null)
+            _subMenu.getWindow().setDimAmount(0);
+
 
         _subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
-        _subMenu.setCanceledOnTouchOutside(true);
+        _subMenu.setCanceledOnTouchOutside(false);
 
         ImageButton _imageButton_close_sub_menu = _subMenu.findViewById(R.id.imageButton_close_sub_menu);
         assert _imageButton_close_sub_menu != null;

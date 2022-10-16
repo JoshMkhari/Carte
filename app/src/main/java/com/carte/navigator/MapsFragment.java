@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
 import com.carte.navigator.menu.trueway_directions_json.Root;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -87,16 +89,16 @@ public class MapsFragment extends Fragment {
                 MainActivity._subMenu.dismiss();
                 Marker marker = _map.addMarker(new MarkerOptions()
                         .position(latLng));
-                if(_hashMapMarker.isEmpty())
+                if(_hashMapMarker.size()<1)
                 {
-                    _hashMapMarker.put(0,marker);//0 will always refer to the long click on map
+                    _hashMapMarker.put(1,marker);//0 will always refer to the long click on map
                 }
                 else
                 {
                     Marker removeMarker = _hashMapMarker.get(0);
                     assert removeMarker != null;
                     removeMarker.remove();
-                    _hashMapMarker.put(0,marker);//0 will always refer to the long click on map
+                    _hashMapMarker.put(1,marker);//0 will always refer to the long click on map
                 }
 
                 ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
@@ -181,6 +183,33 @@ public class MapsFragment extends Fragment {
                 .snippet("Population: 4,627,300")
                         .icon(BitmapDescriptorFactory.fromBitmap(_smallMarker)));
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
+    }
+
+    public static void startNavigation()
+    {
+        //Use mapbox stuff
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(_currentLocation.getLatitude(),_currentLocation.getLongitude()))
+                .zoom(12f)
+                .bearing(300)
+                .tilt(30)
+                .build();
+
+        // Latlng's to get focus
+        double latitude = Fragment_Direction_Options._root.getRoute().getLegs().get(0).getStart_point().getLat();
+        double longitude = Fragment_Direction_Options._root.getRoute().getLegs().get(0).getStart_point().getLng();
+        LatLng origin = new LatLng(latitude,longitude);
+
+        Marker marker = _map.addMarker(new MarkerOptions()
+                .position(origin)
+                .flat(true)
+                .rotation(245));
+        _hashMapMarker.put(0,marker);//0 will always refer to the user
+
+
+        _map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition ), 30000, null);
+        _map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition ), 30000, null);
+
     }
 
     @Nullable
