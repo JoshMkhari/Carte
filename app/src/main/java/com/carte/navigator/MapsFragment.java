@@ -31,6 +31,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.HashMap;
@@ -93,6 +95,9 @@ public class MapsFragment extends Fragment {
                 ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
                 assert constraintLayoutTitle != null;
 
+                // Add polylines to the map.
+                // Polylines are useful to show a route or some other connection between points
+
                 constraintLayoutTitle.setVisibility(View.GONE);
 
                 findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
@@ -107,6 +112,13 @@ public class MapsFragment extends Fragment {
     {
         LatLng currentLocation = new LatLng(_currentLocation.getLatitude(), _currentLocation.getLongitude());
         //https://stackoverflow.com/questions/14811579/how-to-create-a-custom-shaped-bitmap-marker-with-android-map-api-v2
+        //Polyline polyline1 =
+
+        _map.addPolyline(new PolylineOptions()
+                .clickable(true)
+                .add(
+                        new LatLng(-25.871907, 28.056417),
+                        new LatLng(-25.871581, 28.056407)));
         _map.addMarker(new MarkerOptions()
                 .position(currentLocation)
                 .title("Current location")
