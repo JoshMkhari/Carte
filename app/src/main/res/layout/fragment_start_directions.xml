@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".menu.sub.directions.Fragment_Start_Directions"
+    android:padding="20dp">
+
+
+    <ImageButton
+        android:id="@+id/imageButton_stop_navigating_menu"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_baseline_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_arrival_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:text="18:51"
+        android:textColor="?colorSecondary"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_time_remaining"
+        app:layout_constraintEnd_toStartOf="@+id/textView_time_remaining"
+        app:layout_constraintTop_toTopOf="@+id/textView_time_remaining" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/image_current_speed_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_currentSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <ImageButton
+        android:id="@+id/volume_control"
+        android:layout_marginTop="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/image_volume_mute_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_stop_navigating_menu" />
+
+    <TextView
+        android:id="@+id/textView_next_turn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Turn left in 7 m"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        android:textColor="?colorSecondary"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_stop_navigating_menu"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textView_arrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="arrival"
+        app:layout_constraintEnd_toEndOf="@+id/textView_arrival_time"
+        app:layout_constraintStart_toStartOf="@+id/textView_arrival_time"
+        app:layout_constraintTop_toBottomOf="@+id/textView_arrival_time" />
+
+    <TextView
+        android:id="@+id/textView_time_remaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:text="4"
+        android:textColor="?colorSecondary"
+        android:layout_marginBottom="40dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_time_remaining_min_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="min"
+        app:layout_constraintEnd_toEndOf="@+id/textView_time_remaining"
+        app:layout_constraintStart_toStartOf="@+id/textView_time_remaining"
+        app:layout_constraintTop_toBottomOf="@+id/textView_time_remaining" />
+
+    <TextView
+        android:id="@+id/textView_distance_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="1.2"
+        android:textColor="?colorSecondary"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/textView_time_remaining"
+        app:layout_constraintTop_toTopOf="@+id/textView_time_remaining" />
+
+    <TextView
+        android:id="@+id/textView_distance_left_km_miles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="km"
+        app:layout_constraintEnd_toEndOf="@+id/textView_distance_left"
+        app:layout_constraintStart_toStartOf="@+id/textView_distance_left"
+        app:layout_constraintTop_toBottomOf="@+id/textView_distance_left" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

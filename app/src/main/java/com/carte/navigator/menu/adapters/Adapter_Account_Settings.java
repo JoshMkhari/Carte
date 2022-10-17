@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,17 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.carte.navigator.R;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
+import com.carte.navigator.menu.sub.settings.Fragment_Units;
 
 public class Adapter_Account_Settings extends RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>{
     private final Interface_RecyclerView _interfaceRecyclerView;//(Practical Coding, 2021)
     final LayoutInflater _inflater;
     final String[] _optionsList;
+    final int _source;
+    final boolean _radioButton;
 
-    public Adapter_Account_Settings(Interface_RecyclerView _interfaceRecyclerView, Context context, String[] optionsList )
+    public Adapter_Account_Settings(Interface_RecyclerView _interfaceRecyclerView, Context context, String[] optionsList, int source, boolean radioButton)
     {
         this._interfaceRecyclerView = _interfaceRecyclerView;
         _inflater = LayoutInflater.from(context);
         _optionsList = optionsList;
+        _source = source;
+        _radioButton = radioButton;
     }
 
 
@@ -37,26 +41,47 @@ public class Adapter_Account_Settings extends RecyclerView.Adapter<Adapter_Accou
     @Override
     public void onBindViewHolder(@NonNull Adapter_Account_Settings.OptionViewHolder holder, int position) {
         holder.optionName.setText(_optionsList[position]);
-        holder.subOptionName.setVisibility(View.GONE);
+        if(!_radioButton)
+        {
+            holder.optionSelectedState.setVisibility(View.GONE);
+            //sometimes this should be gone
+            //other times it should be data from user view model
+            holder.subOptionName.setVisibility(View.GONE);
+
+        }else
+        {
+            holder.optionTickImage.setVisibility(View.GONE);
+            switch (_optionsList[0])
+            {
+                case "Automatic":
+                    holder.subOptionName.setText(Fragment_Units._units_distance_sub[position]);
+                    break;
+                case "Celsius":
+                    holder.subOptionName.setText(Fragment_Units._units_temperature_sub[position]);
+                    break;
+            }
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return _optionsList.length;
     }
 
     public class OptionViewHolder extends RecyclerView.ViewHolder{
 
-        ImageButton optionTickImage;
+        ImageView optionTickImage, optionSelectedState;
         TextView optionName;
         TextView subOptionName;
 
         public OptionViewHolder(@NonNull View itemView)
         {
             super(itemView);
-            optionTickImage = itemView.findViewById(R.id.imageButton_option_layout_arrow_click);
+            optionTickImage = itemView.findViewById(R.id.imageView_option_layout_arrow_click);
             optionName = itemView.findViewById(R.id.textView_option_layout_title);
             subOptionName = itemView.findViewById(R.id.textView_option_layout_sub_title);
+            optionSelectedState = itemView.findViewById(R.id.imageView_selected_state);
 
             itemView.setOnClickListener(v -> {
                 if(_interfaceRecyclerView != null)
@@ -64,7 +89,7 @@ public class Adapter_Account_Settings extends RecyclerView.Adapter<Adapter_Accou
                     int pos = getAdapterPosition();
 
                     if(pos != RecyclerView.NO_POSITION){
-                        _interfaceRecyclerView.onItemClick(pos,2);//(Practical Coding, 2021)
+                        _interfaceRecyclerView.onItemClick(pos,_source);//(Practical Coding, 2021)
                     }
                 }
             });

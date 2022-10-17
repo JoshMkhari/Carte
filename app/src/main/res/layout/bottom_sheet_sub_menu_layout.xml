@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/sub_menu_bottom_sheet"
@@ -28,7 +28,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardElevation="40dp">
+                    app:cardElevation="40dp"
+                    android:id="@+id/constraint_layout_title">
 
                     <ImageButton
                         android:layout_width="50dp"
