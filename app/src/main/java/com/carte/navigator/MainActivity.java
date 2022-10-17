@@ -8,11 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PackageManagerCompat;
@@ -25,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,15 +56,20 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
     private static final int _REQUEST_CODE_LOCATION_PERMISSION = 1;
     public static BottomSheetDialog _subMenu;
-    //Googles API for location services. Majority of app functions use this class
-    FusedLocationProviderClient fusedLocationClient;
     public static FragmentManager _fragmentManager;
-    public static Location _currentLocation;
+
+    //layout_menu
+
+    public static LinearLayout _menu;
+    //Navigation Layout
+    public static boolean _muted = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        _menu = findViewById(R.id.layout_menu);
         //map stuff
         //Fragment fragment = new Fragment();
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
@@ -102,6 +112,17 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         //Variable Declarations
         _subMenu = new BottomSheetDialog(MainActivity.this);
 
+        //https://stackoverflow.com/questions/51302005/how-to-change-transparent-background-in-bottomsheetdialog
+        if(_subMenu.getWindow() != null)
+            _subMenu.getWindow().setDimAmount(0);
+
+
+        _subMenu.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+               _subMenu.hide();
+            }
+        });
         _subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
         _subMenu.setCanceledOnTouchOutside(true);
 

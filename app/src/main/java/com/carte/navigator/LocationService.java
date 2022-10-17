@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.carte.navigator.menu.Constants;
+import com.carte.navigator.menu.sub.directions.Fragment_Start_Directions;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
@@ -43,7 +44,10 @@ public class LocationService extends Service {
                     MapsFragment.setUpMap();
                     changed = true;
                 }
-
+                if(MapsFragment._currentlyNavigating)
+                {
+                    Fragment_Start_Directions.updateUiElements();
+                }
             }
         }
     };

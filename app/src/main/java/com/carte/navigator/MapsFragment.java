@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
+import com.carte.navigator.menu.trueway_directions_json.Root;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,12 +32,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class MapsFragment extends Fragment {
@@ -45,8 +55,10 @@ public class MapsFragment extends Fragment {
     // https://www.geeksforgeeks.org/how-to-add-custom-marker-to-google-maps-in-android/
     private static GoogleMap _map;
     public static Location _currentLocation;
+    public static boolean _currentlyNavigating;
     static Bitmap _smallMarker;
     public static HashMap<Integer, Marker> _hashMapMarker;
+    private static Context _context;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -63,7 +75,8 @@ public class MapsFragment extends Fragment {
             LatLng sydney = new LatLng(30.5595, 22.9375);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             _map = googleMap;
-
+            _context = requireContext();
+            _currentlyNavigating = false;
 //          https://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
             int height = 100;
             int width = 100;
@@ -78,41 +91,128 @@ public class MapsFragment extends Fragment {
                 MainActivity._subMenu.dismiss();
                 Marker marker = _map.addMarker(new MarkerOptions()
                         .position(latLng));
-                if(_hashMapMarker.isEmpty())
+
+                _map.setOnMarkerClickListener(marker1 -> {
+                    MainActivity._subMenu.show();
+                    return true;
+                });
+
+                if(_hashMapMarker.get(1)== null)
                 {
-                    _hashMapMarker.put(0,marker);//0 will always refer to the long click on map
+                    _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
                 }
                 else
                 {
-                    Marker removeMarker = _hashMapMarker.get(0);
+                    Marker removeMarker = _hashMapMarker.get(1);
                     assert removeMarker != null;
                     removeMarker.remove();
-                    _hashMapMarker.put(0,marker);//0 will always refer to the long click on map
+                    _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
                 }
 
                 ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
                 assert constraintLayoutTitle != null;
 
+                // Add polylines to the map.
+                // Polylines are useful to show a route or some other connection between points
+
                 constraintLayoutTitle.setVisibility(View.GONE);
 
                 findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
                         setGraph(R.navigation.navigation_info_directions);//(developer Android NavController, n.d)
+
                 MainActivity._subMenu.show();
             });
         }
     };
 
 
+    public static void drawRoute(Root root)
+    {
+        List<LatLng> multiple = new ArrayList<>();
+
+        //https://stackoverflow.com/questions/41760781/android-google-map-polylines-and-zoom
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        // Latlng's to get focus
+        double latitude = root.getRoute().getLegs().get(0).getStart_point().getLat();
+        double longitude = root.getRoute().getLegs().get(0).getStart_point().getLng();
+        LatLng origin = new LatLng(latitude,longitude);
+
+        builder.include(origin);
+        // Latlng's to get focus
+        latitude = root.getRoute().getLegs().get(0).getEnd_point().getLat();
+        longitude = root.getRoute().getLegs().get(0).getEnd_point().getLng();
+        LatLng end = new LatLng(latitude,longitude);
+        builder.include(end);
+
+        //initialize the padding for map boundary
+        int padding = 200;
+        ///create the bounds from latlngBuilder to set into map camera
+        LatLngBounds bounds = builder.build();
+
+
+        for (List list: root.getRoute().getGeometry().getCoordinates()
+             ) {
+             latitude = (Double) list.get(0);
+             longitude = (Double) list.get(1);
+            multiple.add(new LatLng(latitude,longitude));
+        }
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.addAll(multiple);
+        polylineOptions.clickable(true);
+
+        _map.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+            @Override
+            public void onPolylineClick(@NonNull Polyline polyline) {
+                MainActivity._subMenu.show();
+            }
+        });
+        Polyline polyline = _map.addPolyline(polylineOptions);
+        polyline.setWidth(40);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            polyline.setColor(_context.getColor(R.color.teal_700));
+        }
+
+        _map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,padding));
+
+    }
+
     public static void setUpMap()
     {
         LatLng currentLocation = new LatLng(_currentLocation.getLatitude(), _currentLocation.getLongitude());
         //https://stackoverflow.com/questions/14811579/how-to-create-a-custom-shaped-bitmap-marker-with-android-map-api-v2
-        _map.addMarker(new MarkerOptions()
+        Marker marker = _map.addMarker(new MarkerOptions()
                 .position(currentLocation)
-                .title("Current location")
-                .snippet("Population: 4,627,300")
-                        .icon(BitmapDescriptorFactory.fromBitmap(_smallMarker)));
+                .title("You")
+                .icon(BitmapDescriptorFactory.fromBitmap(_smallMarker)));
+
+        _hashMapMarker.put(0,marker);//0 will always refer to the user icon
+
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
+    }
+
+    public static void startNavigation()
+    {
+
+        _currentlyNavigating = true;
+        double latitude = Fragment_Direction_Options._root.getRoute().getGeometry().getCoordinates().get(0).get(0);
+        double longitude = Fragment_Direction_Options._root.getRoute().getGeometry().getCoordinates().get(0).get(1);
+
+
+        LatLng startLocation = new LatLng(latitude,longitude);
+
+        Marker removeMarker = _hashMapMarker.get(0);
+        assert removeMarker != null;
+        removeMarker.remove();
+
+        Marker marker = _map.addMarker(new MarkerOptions()
+                .position(startLocation)
+                .flat(true));
+
+        _hashMapMarker.put(0,marker);
+        _map.animateCamera(CameraUpdateFactory.newLatLngZoom(startLocation,20.0f));
+
+
     }
 
     @Nullable

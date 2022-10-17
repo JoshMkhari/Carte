@@ -1,14 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".menu.sub.directions.Fragment_Direction_Options">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".menu.sub.directions.Fragment_Direction_Options"
+    android:padding="20dp">
 
-    <!-- TODO: Update blank fragment layout -->
+    <View
+        android:id="@+id/view_menu_direction_information"
+        android:layout_width="50dp"
+        android:layout_height="5dp"
+        android:background="@drawable/shape_bottom_sheet_menu_indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView_origin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="?colorSecondary"
+        android:text="Your location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_menu_direction_information" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Destination"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_origin" />
+
+    <ImageButton
+        android:id="@+id/imageButton_close_direction_options_menu"
+        android:layout_width="40dp"
+        android:textColor="?colorSecondary"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_baseline_close_24"
+        app:layout_constraintBottom_toTopOf="@+id/autoCompleteTextView_destination"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/autoCompleteTextView_origin" />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/button_direction_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/transparent"
+        android:text="Start navigation"
+        android:textColor="#5fb2ff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView_Time"
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_destination" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/textViewEstimatedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estimated time:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_Time" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Time" />
+
+    <TextView
+        android:id="@+id/textView_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:text="54 min"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewEstimatedTime"
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_destination" />
+
+    <TextView
+        android:id="@+id/textView_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="32 km"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView_Time"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Time" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="match_parent"
@@ -13,8 +14,11 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
         android:nestedScrollingEnabled="true"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_login" />
 
     <include layout="@layout/bottom_sheet_menu_layout"
-        app:layout_anchorGravity="top|end"/>
+        app:layout_anchorGravity="top|end"
+        android:id="@+id/layout_menu"/>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
