@@ -151,7 +151,7 @@ public class Fragment_Register extends Fragment  {
                                         }
                                     });
                             MainActivity._subMenu.hide();
-                            MainActivity._textView_userName.setText(userEmail);
+                            MainActivity._textView_userName.setText(userEmail );
                         }else{
                             Toast.makeText(getActivity(), "Failed to register", Toast.LENGTH_LONG).show();
                         }
