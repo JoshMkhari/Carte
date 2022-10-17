@@ -1,13 +1,9 @@
 package com.carte.navigator.menu.sub.directions;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +11,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.carte.navigator.MainActivity;
-import com.carte.navigator.MapsFragment;
+import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.R;
 import com.carte.navigator.menu.trueway_directions_json.Root;
 import com.google.android.gms.maps.model.Marker;
@@ -27,9 +21,6 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;

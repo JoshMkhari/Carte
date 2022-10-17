@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.carte.navigator.MainActivity;
-import com.carte.navigator.MapsFragment;
+import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.R;
 
 /**

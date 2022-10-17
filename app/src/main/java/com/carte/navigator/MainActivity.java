@@ -11,17 +11,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PackageManagerCompat;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -33,24 +27,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carte.navigator.mapRelated.LocationService;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
-import com.carte.navigator.menu.sub.settings.Fragment_Units;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
-
-import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity implements Interface_RecyclerView {
 

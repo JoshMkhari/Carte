@@ -1,6 +1,5 @@
-package com.carte.navigator;
+package com.carte.navigator.mapRelated;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,19 +10,18 @@ import android.location.Location;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.carte.navigator.R;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.sub.directions.Fragment_Start_Directions;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.concurrent.CountDownLatch;
 //https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
