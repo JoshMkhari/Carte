@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -120,7 +121,6 @@ public class Fragment_Register extends Fragment  {
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>(){
                                         public void onComplete(@NonNull Task<Void> task){
                                             if(task.isSuccessful()){
@@ -147,8 +147,6 @@ public class Fragment_Register extends Fragment  {
 
                                                 FirebaseUser user = mAuth.getCurrentUser();
                                                 if(user.isEmailVerified()) {
-
-
                                                     Toast.makeText(getActivity(), "You email has been verified", Toast.LENGTH_LONG).show();
 
                                                 }else{
@@ -161,7 +159,7 @@ public class Fragment_Register extends Fragment  {
                                         }
 
                                     });
-
+                            MainActivity._subMenu.hide();
                         }else{
                             Toast.makeText(getActivity(), "Failed to register", Toast.LENGTH_LONG).show();
                         }

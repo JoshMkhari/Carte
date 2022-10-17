@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -94,6 +95,7 @@ public class Fragment_Login extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task){
                         if(task.isSuccessful()){
                           Toast.makeText(getActivity(), "You have logged in successfully", Toast.LENGTH_SHORT).show();
+                            MainActivity._subMenu.hide();
                         }else{
                             Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
 
