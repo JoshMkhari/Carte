@@ -15,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.MapsFragment;
@@ -78,7 +79,7 @@ public class Fragment_Direction_Options extends Fragment {
                 .build();
 
         _start_Directions.setOnClickListener(view -> {
-            Navigation.findNavController(direction_options).navigate(R.id.action_fragment_Direction_Options_to_fragment_Start_Directions);
+           // Navigation.findNavController(direction_options).navigate(R.id.action_fragment_Direction_Options_to_fragment_Start_Directions);
         });
 
         client.newCall(request).enqueue(new Callback() {

@@ -55,6 +55,7 @@ public class MapsFragment extends Fragment {
     // https://www.geeksforgeeks.org/how-to-add-custom-marker-to-google-maps-in-android/
     private static GoogleMap _map;
     public static Location _currentLocation;
+    public static boolean _currentlyNavigating;
     static Bitmap _smallMarker;
     public static HashMap<Integer, Marker> _hashMapMarker;
     private static Context _context;
@@ -75,6 +76,7 @@ public class MapsFragment extends Fragment {
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
             _map = googleMap;
             _context = requireContext();
+            _currentlyNavigating = false;
 //          https://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
             int height = 100;
             int width = 100;
@@ -180,8 +182,9 @@ public class MapsFragment extends Fragment {
     public static void startNavigation()
     {
 
-        double latitude = (Double) Fragment_Direction_Options._root.getRoute().getGeometry().getCoordinates().get(0).get(0);
-        double longitude = (Double) Fragment_Direction_Options._root.getRoute().getGeometry().getCoordinates().get(0).get(1);
+        _currentlyNavigating = true;
+        double latitude = Fragment_Direction_Options._root.getRoute().getGeometry().getCoordinates().get(0).get(0);
+        double longitude = Fragment_Direction_Options._root.getRoute().getGeometry().getCoordinates().get(0).get(1);
 
 
         LatLng startLocation = new LatLng(latitude,longitude);
@@ -197,7 +200,7 @@ public class MapsFragment extends Fragment {
         _hashMapMarker.put(0,marker);
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(startLocation,20.0f));
 
-        //Use mapbox stuff
+
     }
 
     @Nullable

@@ -45,6 +45,7 @@
         app:layout_constraintTop_toTopOf="@+id/autoCompleteTextView_origin" />
 
     <Button
+        android:visibility="gone"
         android:id="@+id/button_direction_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,13 +58,29 @@
         app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_destination" />
 
     <TextView
-        android:layout_marginTop="15dp"
+        android:id="@+id/textViewEstimatedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estimated time:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_Time" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Time" />
+
+    <TextView
         android:id="@+id/textView_Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
         android:text="54 min"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewEstimatedTime"
         app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_destination" />
 
     <TextView
@@ -72,7 +89,7 @@
         android:layout_height="wrap_content"
         android:text="32 km"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView_Time"
         app:layout_constraintTop_toBottomOf="@+id/textView_Time" />
 
 

@@ -22,56 +22,55 @@ import com.carte.navigator.R;
  */
 public class Fragment_Start_Directions extends Fragment {
 
+    boolean _muted;
+    View _navigating;
+    static TextView _distance_left, _distance_left_unit_of_measurement, _time_remaining, _time_remaining_unit_measurement, _arrival_time, _next_turn, _currentSpeed;
+    static ImageButton _imageButton_stop_navigation, _imageButton_volume_control;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View navigating = inflater.inflate(R.layout.fragment_start_directions, container, false);
+        _navigating = inflater.inflate(R.layout.fragment_start_directions, container, false);
+        _muted = false;
 
-        TextView distance_left, distance_left_unit_of_measurement,time_remaining, time_remaining_unit_measurement, arrival_time;
-        ImageButton imageButton_stop_navigation;
 
-        distance_left = navigating.findViewById(R.id.textView_distance_left);
-        time_remaining_unit_measurement = navigating.findViewById(R.id.textView_time_remaining_min_hour);
-        time_remaining = navigating.findViewById(R.id.textView_time_remaining);
-        arrival_time = navigating.findViewById(R.id.textView_arrival_time);
-        distance_left_unit_of_measurement = navigating.findViewById(R.id.textView_distance_left_km_miles);
-        imageButton_stop_navigation = navigating.findViewById(R.id.imageButton_stop_navigating_menu);
+        _distance_left = _navigating.findViewById(R.id.textView_distance_left);
+        _time_remaining_unit_measurement = _navigating.findViewById(R.id.textView_time_remaining_min_hour);
+        _time_remaining = _navigating.findViewById(R.id.textView_time_remaining);
+        _arrival_time = _navigating.findViewById(R.id.textView_arrival_time);
+        _distance_left_unit_of_measurement = _navigating.findViewById(R.id.textView_distance_left_km_miles);
+        _imageButton_stop_navigation = _navigating.findViewById(R.id.imageButton_stop_navigating_menu);
+        _next_turn = _navigating.findViewById(R.id.textView_next_turn);
+        _imageButton_volume_control = _navigating.findViewById(R.id.volume_control);
+        _currentSpeed = _navigating.findViewById(R.id.textView_currentSpeed);
 
-        /*
-        _navigationLayout = findViewById(R.id.constraint_layout_navigating);
-        _currentSpeed = findViewById(R.id.textView_currentSpeed_layout);
-        _currentStreet = findViewById(R.id.textView_current_street);
-        _volume_control = findViewById(R.id.volume_control);
 
-        _volume_control.setOnClickListener(view -> {
-            //Switch background
+        _imageButton_volume_control.setOnClickListener(view -> {
             Bitmap bmp;
-            if(_muted)
-            {
+            if (_muted) {
                 _muted = false;
                 //https://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
-                bmp = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                bmp = BitmapFactory.decodeResource(requireContext().getResources(),
                         R.drawable.image_mute_icon);
 
-            }else
-            {
+            } else {
                 //https://stackoverflow.com/questions/3035692/how-to-convert-a-drawable-to-a-bitmap
-                _muted= true;
-                bmp = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                _muted = true;
+                bmp = BitmapFactory.decodeResource(requireContext().getResources(),
                         R.drawable.image_volume_mute_icon);
             }
-            _volume_control.setImageBitmap(bmp);
+            _imageButton_volume_control.setImageBitmap(bmp);
         });
-         */
 
-        // Gets the layout params that will allow you to resize the layout
-        ViewGroup.LayoutParams params = MainActivity._menu.getLayoutParams();
-        // Changes the height and width to the specified *pixels*
-        params.height = 0;
-        MainActivity._menu.setLayoutParams(params);
         MapsFragment.startNavigation();
-        return navigating;
+        return _navigating;
+    }
+
+    public static void updateUiElements()
+    {
+        _currentSpeed.setText(Math.round(MapsFragment._currentLocation.getSpeed()));
+
+        //_next_turn
     }
 }
