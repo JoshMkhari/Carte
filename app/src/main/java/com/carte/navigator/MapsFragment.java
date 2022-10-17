@@ -89,16 +89,16 @@ public class MapsFragment extends Fragment {
                 MainActivity._subMenu.dismiss();
                 Marker marker = _map.addMarker(new MarkerOptions()
                         .position(latLng));
-                if(_hashMapMarker.size()<1)
+                if(_hashMapMarker.get(1)== null)
                 {
-                    _hashMapMarker.put(1,marker);//0 will always refer to the long click on map
+                    _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
                 }
                 else
                 {
-                    Marker removeMarker = _hashMapMarker.get(0);
+                    Marker removeMarker = _hashMapMarker.get(1);
                     assert removeMarker != null;
                     removeMarker.remove();
-                    _hashMapMarker.put(1,marker);//0 will always refer to the long click on map
+                    _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
                 }
 
                 ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
@@ -167,49 +167,37 @@ public class MapsFragment extends Fragment {
     {
         LatLng currentLocation = new LatLng(_currentLocation.getLatitude(), _currentLocation.getLongitude());
         //https://stackoverflow.com/questions/14811579/how-to-create-a-custom-shaped-bitmap-marker-with-android-map-api-v2
-        //Polyline polyline1 =
-
-        //Polyline polyline = _map.addPolyline(new PolylineOptions()
-        //        .clickable(true)
-         //       .add(
-         //               new LatLng(-25.871907, 28.056417),
-          //              new LatLng(-25.871581, 28.056407)));
-
-
-
-        _map.addMarker(new MarkerOptions()
+        Marker marker = _map.addMarker(new MarkerOptions()
                 .position(currentLocation)
-                .title("Current location")
-                .snippet("Population: 4,627,300")
-                        .icon(BitmapDescriptorFactory.fromBitmap(_smallMarker)));
+                .title("You")
+                .icon(BitmapDescriptorFactory.fromBitmap(_smallMarker)));
+
+        _hashMapMarker.put(0,marker);//0 will always refer to the user icon
+
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
     }
 
     public static void startNavigation()
     {
-        //Use mapbox stuff
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(_currentLocation.getLatitude(),_currentLocation.getLongitude()))
-                .zoom(12f)
-                .bearing(300)
-                .tilt(30)
-                .build();
 
-        // Latlng's to get focus
-        double latitude = Fragment_Direction_Options._root.getRoute().getLegs().get(0).getStart_point().getLat();
-        double longitude = Fragment_Direction_Options._root.getRoute().getLegs().get(0).getStart_point().getLng();
-        LatLng origin = new LatLng(latitude,longitude);
+        double latitude = (Double) Fragment_Direction_Options._root.getRoute().getGeometry().getCoordinates().get(0).get(0);
+        double longitude = (Double) Fragment_Direction_Options._root.getRoute().getGeometry().getCoordinates().get(0).get(1);
+
+
+        LatLng startLocation = new LatLng(latitude,longitude);
+
+        Marker removeMarker = _hashMapMarker.get(0);
+        assert removeMarker != null;
+        removeMarker.remove();
 
         Marker marker = _map.addMarker(new MarkerOptions()
-                .position(origin)
-                .flat(true)
-                .rotation(245));
-        _hashMapMarker.put(0,marker);//0 will always refer to the user
+                .position(startLocation)
+                .flat(true));
 
+        _hashMapMarker.put(0,marker);
+        _map.animateCamera(CameraUpdateFactory.newLatLngZoom(startLocation,20.0f));
 
-        _map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition ), 30000, null);
-        _map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition ), 30000, null);
-
+        //Use mapbox stuff
     }
 
     @Nullable
