@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     private static final int _REQUEST_CODE_LOCATION_PERMISSION = 1;
     public static BottomSheetDialog _subMenu;
     public static FragmentManager _fragmentManager;
-
+    public static TextView _textView_userName;
     //layout_menu
 
     public static LinearLayout _menu;
@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         setContentView(R.layout.activity_main);
 
         _menu = findViewById(R.id.layout_menu);
+        _textView_userName = findViewById(R.id.textView_profile_name);
+
         //map stuff
         //Fragment fragment = new Fragment();
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
         Button button_newCollection = findViewById(R.id.button_menu_newCollection);
 
-        ImageButton imageButton_set_up_profile = findViewById(R.id.imageButton_user_profile);
+        Button imageButton_set_up_profile = findViewById(R.id.button_setUp);
 
         recyclerView_destinationOptions.setHasFixedSize(true);
         recyclerView_userCollections.setHasFixedSize(true);
