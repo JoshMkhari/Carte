@@ -107,7 +107,7 @@ public class Fragment_Register extends Fragment  {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
                     public void onComplete(@NonNull Task<AuthResult> task){
                         if(task.isSuccessful()){
-                            User user = new User(userEmail,0, Place.Type.POINT_OF_INTEREST);
+                            User user = new User(userEmail,0, 0);
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(task1 -> {

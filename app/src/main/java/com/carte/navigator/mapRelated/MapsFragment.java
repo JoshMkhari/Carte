@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
-import com.carte.navigator.menu.sub.account.Landmarks;
 import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
 import com.carte.navigator.menu.trueway_directions_json.Root;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,7 +49,7 @@ public class MapsFragment extends Fragment {
     public static GoogleMap _map;
     public static Location _currentLocation;
     public static boolean _currentlyNavigating;
-    static Bitmap _smallMarker;
+    public static Bitmap _smallMarker;
     public static HashMap<Integer, Marker> _hashMapMarker;
     private static Context _context;
 

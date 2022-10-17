@@ -6,7 +6,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,6 +25,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class UserLandmarks {
     private Context _context;
@@ -211,6 +214,14 @@ public class UserLandmarks {
     }
 
     public void GetLandMarksNearMeAndFilter(Place.Type userFilter) {
+
+        //First clear map
+        MapsFragment._map.clear();
+        MapsFragment._map.addMarker(new MarkerOptions()
+                .position(Objects.requireNonNull(MapsFragment._hashMapMarker.get(0)).getPosition())
+                .title("You")
+                .icon(BitmapDescriptorFactory.fromBitmap(MapsFragment._smallMarker)));
+
         //This programming statement was adapted from Google Maps Platform:
         //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
         //Author: Google Developers
@@ -312,8 +323,9 @@ public class UserLandmarks {
                             //Link: https://www.geeksforgeeks.org/how-to-implement-current-location-button-feature-in-google-maps-in-android/
                             //Author: aashaypawar
                             //Author Profile Link: https://auth.geeksforgeeks.org/user/aashaypawar
-                            //Send marker
+
                             MapsFragment._map.addMarker(_LandmarksNearMe);
+                            _SuccessfulFilter = true;
                         }
                         _NumberOfDetailsAboutLandmarks++;
                         //This programming statement was adapted from Google Maps Platform:
@@ -322,11 +334,9 @@ public class UserLandmarks {
                         if (_NumberOfDetailsAboutLandmarks > (MaxNumberOfEntries - 1)) {
                             break;
                         }
-
                     }
                     Toast.makeText(_context, "Landmarks have been identified successfully.", Toast.LENGTH_SHORT).show();
                     if(_SuccessfulFilter){
-
                         Toast.makeText(_context, "Filter has been applied successfully.", Toast.LENGTH_SHORT).show();
                     }else{
 
@@ -338,6 +348,21 @@ public class UserLandmarks {
         });
     }
 
+    public static Place.Type returnLandmarkType(int type)
+    {
+        switch (type)
+        {
+            //Also remove names from icons for Light mode xD
+            case 0:
+                return Place.Type.RESTAURANT;
+            case 1:
+                return Place.Type.SUPERMARKET;
+            case 2:
+                return Place.Type.POINT_OF_INTEREST;
+            default:
+                return Place.Type.FOOD;
+        }
+    }
     public void GetLandmarkDetails(){
         String PlaceID = _LocalLandmarks.getId();
         //This programming statement was adapted from Google Maps Platform:

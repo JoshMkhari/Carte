@@ -1,5 +1,7 @@
 package com.carte.navigator.menu.models;
 
+import android.widget.Switch;
+
 import com.google.android.libraries.places.api.model.Place;
 
 public class User {
@@ -8,10 +10,24 @@ public class User {
     private int unitOfMeasurement;
     private Place.Type userPreference;
 
-    public User( String email, int unit, Place.Type pref)
+    public User( String email, int unit, int place)
     {
         this.email = email;
-        this.userPreference = pref;
+        switch (place)
+        {
+            case 0:
+                this.userPreference = Place.Type.RESTAURANT;
+                break;
+            case 1:
+                this.userPreference = Place.Type.SUPERMARKET;
+                break;
+            case 2:
+                this.userPreference = Place.Type.TOURIST_ATTRACTION;
+                break;
+            case 3:
+                this.userPreference = Place.Type.FOOD;
+                break;
+        }
         this.unitOfMeasurement = unit;
     }
 

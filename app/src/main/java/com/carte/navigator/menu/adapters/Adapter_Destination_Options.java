@@ -16,7 +16,7 @@ import com.carte.navigator.menu.models.Model_Image_Text;
 
 import java.util.ArrayList;
 
-public class Adapter_Destination_Options extends RecyclerView.Adapter<Adapter_Destination_Options.OptionViewHolder> { //(Professor Sluiter, 2020).
+public class  Adapter_Destination_Options extends RecyclerView.Adapter<Adapter_Destination_Options.OptionViewHolder> { //(Professor Sluiter, 2020).
 
     private final Interface_RecyclerView _interfaceRecyclerView;//(Practical Coding, 2021)
     final LayoutInflater _inflater;

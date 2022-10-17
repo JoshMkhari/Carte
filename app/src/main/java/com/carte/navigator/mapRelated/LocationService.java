@@ -1,5 +1,6 @@
 package com.carte.navigator.mapRelated;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -59,6 +60,7 @@ public class LocationService extends Service {
     }
 
     //@SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission")
     private void startLocationService(){
         String channelID = "location_notification_channel";
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

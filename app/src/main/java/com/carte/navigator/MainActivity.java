@@ -28,11 +28,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.carte.navigator.mapRelated.LocationService;
+import com.carte.navigator.mapRelated.UserLandmarks;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
 import com.carte.navigator.menu.models.User;
+import com.google.android.libraries.places.api.model.Place;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -202,30 +204,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         {
             //Also remove names from icons for Light mode xD
             case 0://Navigation options menu
-                switch (position)
-                {
-                    //Also remove names from icons for Light mode xD
-                    case 0:
-                        Toast.makeText(MainActivity.this,
-                                "Resrtuaranct", Toast.LENGTH_LONG).show();
-                        break;
-                    case 1:
-                        Toast.makeText(MainActivity.this,
-                                "Supermarket", Toast.LENGTH_LONG).show();
-                        break;
-                    case 2:
-                        Toast.makeText(MainActivity.this,
-                                "Attractions", Toast.LENGTH_LONG).show();
-                        break;
-                    case 3:
-                        Toast.makeText(MainActivity.this,
-                                "Fastfood", Toast.LENGTH_LONG).show();
-                        break;
-                }
-                break;
+
+                UserLandmarks userLandmarks = new UserLandmarks(getApplicationContext());
+                userLandmarks.GetLandMarksNearMeAndFilter(UserLandmarks.returnLandmarkType(position));
+
             case 1://Collections menu
                 Toast.makeText(MainActivity.this,
-                        "User collections", Toast.LENGTH_LONG).show();
+                        "User collections N/A", Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 switch (position)
