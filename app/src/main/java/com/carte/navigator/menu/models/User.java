@@ -8,26 +8,12 @@ public class User {
 
     private String email;
     private int unitOfMeasurement;
-    private Place.Type userPreference;
+    private int userPreference;
 
     public User( String email, int unit, int place)
     {
         this.email = email;
-        switch (place)
-        {
-            case 0:
-                this.userPreference = Place.Type.RESTAURANT;
-                break;
-            case 1:
-                this.userPreference = Place.Type.SUPERMARKET;
-                break;
-            case 2:
-                this.userPreference = Place.Type.TOURIST_ATTRACTION;
-                break;
-            case 3:
-                this.userPreference = Place.Type.FOOD;
-                break;
-        }
+        this.userPreference = place;
         this.unitOfMeasurement = unit;
     }
 
@@ -47,11 +33,11 @@ public class User {
         this.unitOfMeasurement = unitOfMeasurement;
     }
 
-    public Place.Type getUserPreference() {
+    public int getUserPreference() {
         return userPreference;
     }
 
-    public void setUserPreference(Place.Type userPreference) {
+    public void setUserPreference(int userPreference) {
         this.userPreference = userPreference;
     }
 }
