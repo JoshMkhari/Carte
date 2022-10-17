@@ -91,6 +91,12 @@ public class MapsFragment extends Fragment {
                 MainActivity._subMenu.dismiss();
                 Marker marker = _map.addMarker(new MarkerOptions()
                         .position(latLng));
+
+                _map.setOnMarkerClickListener(marker1 -> {
+                    MainActivity._subMenu.show();
+                    return true;
+                });
+
                 if(_hashMapMarker.get(1)== null)
                 {
                     _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
@@ -155,6 +161,12 @@ public class MapsFragment extends Fragment {
         polylineOptions.addAll(multiple);
         polylineOptions.clickable(true);
 
+        _map.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+            @Override
+            public void onPolylineClick(@NonNull Polyline polyline) {
+                MainActivity._subMenu.show();
+            }
+        });
         Polyline polyline = _map.addPolyline(polylineOptions);
         polyline.setWidth(40);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

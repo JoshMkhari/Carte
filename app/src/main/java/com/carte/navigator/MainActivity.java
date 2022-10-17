@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -110,13 +111,20 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     {
         //Variable Declarations
         _subMenu = new BottomSheetDialog(MainActivity.this);
+
         //https://stackoverflow.com/questions/51302005/how-to-change-transparent-background-in-bottomsheetdialog
         if(_subMenu.getWindow() != null)
             _subMenu.getWindow().setDimAmount(0);
 
 
+        _subMenu.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+               _subMenu.hide();
+            }
+        });
         _subMenu.setContentView(R.layout.bottom_sheet_sub_menu_layout);
-        _subMenu.setCanceledOnTouchOutside(false);
+        _subMenu.setCanceledOnTouchOutside(true);
 
         ImageButton _imageButton_close_sub_menu = _subMenu.findViewById(R.id.imageButton_close_sub_menu);
         assert _imageButton_close_sub_menu != null;
