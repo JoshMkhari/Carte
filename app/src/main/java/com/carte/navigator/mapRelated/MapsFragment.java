@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.libraries.places.api.model.Place;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,7 +171,7 @@ public class MapsFragment extends Fragment {
 
     }
 
-    public static void setUpMap()
+    public static void setUpMap(Place.Type userFilter)
     {
         LatLng currentLocation = new LatLng(_currentLocation.getLatitude(), _currentLocation.getLongitude());
         //https://stackoverflow.com/questions/14811579/how-to-create-a-custom-shaped-bitmap-marker-with-android-map-api-v2
@@ -181,7 +182,7 @@ public class MapsFragment extends Fragment {
 
         _hashMapMarker.put(0,marker);//0 will always refer to the user icon
         UserLandmarks  userLandmarks = new UserLandmarks(_context);
-        userLandmarks.GetLandMarksNearMeAndFilter();
+        userLandmarks.GetLandMarksNearMeAndFilter(userFilter);
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
     }
 

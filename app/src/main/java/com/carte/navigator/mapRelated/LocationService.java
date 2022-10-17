@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.sub.directions.Fragment_Start_Directions;
@@ -22,6 +23,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.libraries.places.api.model.Place;
 
 import java.util.concurrent.CountDownLatch;
 //https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
@@ -39,7 +41,7 @@ public class LocationService extends Service {
                 MapsFragment._currentLocation = locationResult.getLastLocation();
                 if(!changed)
                 {
-                    MapsFragment.setUpMap();
+                    MapsFragment.setUpMap(Place.Type.POINT_OF_INTEREST);
                     changed = true;
                 }
                 if(MapsFragment._currentlyNavigating)

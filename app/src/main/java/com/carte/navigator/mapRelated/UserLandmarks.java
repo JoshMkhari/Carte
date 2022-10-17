@@ -231,19 +231,15 @@ public class UserLandmarks {
             //Author: Google Developers
             @Override
             public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
-
                 //This programming statement was adapted from Google Maps Platform:
                 //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                 //Author: Google Developers
                 if (task.isSuccessful() && task.getResult() != null) {
-
                     //This programming statement was adapted from Google Maps Platform:
                     //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                     //Author: Google Developers
                     FindCurrentPlaceResponse FoundLocationResponse = task.getResult();
-
                     int MaxNumberOfEntries;
-
                     //This programming statement was adapted from Google Maps Platform:
                     //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                     //Author: Google Developers
@@ -279,8 +275,6 @@ public class UserLandmarks {
                     //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                     //Author: Google Developers
                     for (PlaceLikelihood PossibleLandmarksNearMe : FoundLocationResponse.getPlaceLikelihoods()) {
-
-
                         //This programming statement was adapted from Google Maps Platform:
                         //Link: https://developers.google.com/maps/documentation/places/android-sdk/place-details
                         //Author: Google Developers
@@ -321,7 +315,6 @@ public class UserLandmarks {
                             //Send marker
                             MapsFragment._map.addMarker(_LandmarksNearMe);
                         }
-
                         _NumberOfDetailsAboutLandmarks++;
                         //This programming statement was adapted from Google Maps Platform:
                         //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
@@ -364,8 +357,6 @@ public class UserLandmarks {
                 //Author: Google Developers
                 _LandmarkSpecifications=fetchPlaceResponse.getPlace();
 
-
-
                 _BusinessHoursOfLandmark =  _LandmarkSpecifications.getOpeningHours();
 
                 if(_AddressOfLandmark== null || _AddressOfLandmark.equals("null")){
@@ -385,10 +376,6 @@ public class UserLandmarks {
                 }else{
                     _ContactDetailsOfLandmark = _LandmarkSpecifications.getPhoneNumber();
                 }
-
-
-
-
             }
         });
 

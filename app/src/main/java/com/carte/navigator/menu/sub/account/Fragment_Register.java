@@ -1,6 +1,5 @@
 package com.carte.navigator.menu.sub.account;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,15 +15,13 @@ import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
+import com.carte.navigator.menu.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.model.Place;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -110,44 +107,13 @@ public class Fragment_Register extends Fragment  {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
                     public void onComplete(@NonNull Task<AuthResult> task){
                         if(task.isSuccessful()){
-                            User user = new User(userEmail);
-
+                            User user = new User(userEmail,0, Place.Type.POINT_OF_INTEREST);
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(task1 -> {
                                         if(task1.isSuccessful()){
-
-                                            HashMap<String, Object> hashMap = new HashMap<>();
-                                            hashMap.put("Units","units");
-                                            hashMap.put("Landmarks", "landmarks");
-
-                                            HashMap<String, String> hashMap2 = new HashMap<>();
-                                            hashMap2.put("Metric", "metric");
-                                            hashMap2.put("Imperial", "imperial");
-
-                                            HashMap<String, String> hashMap3 = new HashMap<>();
-                                            hashMap3.put("Historical", "historical");
-                                            hashMap3.put("Modern", "modern");
-                                            hashMap3.put("Popular", "popular");
-
-                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users")
-                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Settings");
-                                            ref.child("Units")
-                                                    .setValue(hashMap2);
-                                            ref.child("Landmarks")
-                                                    .setValue(hashMap3);
-
-
-                                            FirebaseUser user1 = mAuth.getCurrentUser();
-                                            if(user1.isEmailVerified()) {
-                                                Toast.makeText(getActivity(), "You email has been verified", Toast.LENGTH_LONG).show();
-
-                                            }else{
-                                                user1.sendEmailVerification();
-                                                Toast.makeText(getActivity(), "Check your email to verify your account!", Toast.LENGTH_LONG).show();
-                                            }
-                                        } else{
-                                            Toast.makeText(getActivity(), "Failed to register! Try again", Toast.LENGTH_LONG).show();
+                                            MainActivity._currentUserAuth = mAuth.getCurrentUser();
+                                            MainActivity._currentUser = user;
                                         }
                                     });
                             MainActivity._subMenu.hide();
@@ -155,7 +121,6 @@ public class Fragment_Register extends Fragment  {
                         }else{
                             Toast.makeText(getActivity(), "Failed to register", Toast.LENGTH_LONG).show();
                         }
-
                     }
                 });
     }

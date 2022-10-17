@@ -32,7 +32,9 @@ import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
+import com.carte.navigator.menu.models.User;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     public static TextView _textView_userName;
     //layout_menu
 
+    public static FirebaseUser _currentUserAuth;
+    public static User _currentUser;
     public static LinearLayout _menu;
     //Navigation Layout
     public static boolean _muted = false;
