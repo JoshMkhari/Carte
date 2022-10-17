@@ -205,8 +205,6 @@ public class MapsFragment extends Fragment {
 
         _hashMapMarker.put(0,marker);
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(startLocation,20.0f));
-
-
     }
 
     @Nullable
