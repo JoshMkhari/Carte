@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.carte.navigator.MapsFragment;
+import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.R;
 import com.google.android.gms.maps.model.Marker;
 

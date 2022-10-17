@@ -1,4 +1,4 @@
-package com.carte.navigator;
+package com.carte.navigator.mapRelated;
 
 import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
@@ -7,39 +7,32 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
-import android.location.LocationRequest;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.carte.navigator.MainActivity;
+import com.carte.navigator.R;
+import com.carte.navigator.menu.sub.account.Landmarks;
 import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
 import com.carte.navigator.menu.trueway_directions_json.Root;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +46,7 @@ public class MapsFragment extends Fragment {
 
     //Markers
     // https://www.geeksforgeeks.org/how-to-add-custom-marker-to-google-maps-in-android/
-    private static GoogleMap _map;
+    public static GoogleMap _map;
     public static Location _currentLocation;
     public static boolean _currentlyNavigating;
     static Bitmap _smallMarker;
@@ -187,7 +180,8 @@ public class MapsFragment extends Fragment {
                 .icon(BitmapDescriptorFactory.fromBitmap(_smallMarker)));
 
         _hashMapMarker.put(0,marker);//0 will always refer to the user icon
-
+        UserLandmarks  userLandmarks = new UserLandmarks(_context);
+        userLandmarks.GetLandMarksNearMeAndFilter();
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
     }
 

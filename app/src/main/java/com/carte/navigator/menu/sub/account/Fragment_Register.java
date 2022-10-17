@@ -32,7 +32,6 @@ import java.util.HashMap;
  */
 public class Fragment_Register extends Fragment  {
 
-
     private EditText email;
     private EditText password;
     private EditText confirmPassword;
@@ -62,7 +61,6 @@ public class Fragment_Register extends Fragment  {
                 RegisterUser();
             }
         });
-
 
         loginWithEmail.setOnClickListener(v -> Navigation.findNavController(register).navigate(R.id.action_fragment_Register_to_fragment_Login));
         return register;
@@ -101,13 +99,8 @@ public class Fragment_Register extends Fragment  {
             confirmPassword.setError("Password does not match");
             confirmPassword.requestFocus();
             return;
-        }else if(userPassword.equals(conPassword))
-           // Toast.makeText(getActivity(), "Your password matches", Toast.LENGTH_LONG).show();
-
-
+        }
         createAccount(userEmail,userPassword);
-
-
     }
 
     //Create the users profile/account:
@@ -121,45 +114,44 @@ public class Fragment_Register extends Fragment  {
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>(){
-                                        public void onComplete(@NonNull Task<Void> task){
-                                            if(task.isSuccessful()){
-                                                HashMap<String, Object> hashMap = new HashMap<>();
-                                                hashMap.put("Units","units");
-                                                hashMap.put("Landmarks", "landmarks");
+                                    .setValue(user).addOnCompleteListener(task1 -> {
+                                        if(task1.isSuccessful()){
 
-                                                HashMap<String, String> hashMap2 = new HashMap<>();
-                                                hashMap2.put("Metric", "metric");
-                                                hashMap2.put("Imperial", "imperial");
+                                            HashMap<String, Object> hashMap = new HashMap<>();
+                                            hashMap.put("Units","units");
+                                            hashMap.put("Landmarks", "landmarks");
 
-                                                HashMap<String, String> hashMap3 = new HashMap<>();
-                                                hashMap3.put("Historical", "historical");
-                                                hashMap3.put("Modern", "modern");
-                                                hashMap3.put("Popular", "popular");
+                                            HashMap<String, String> hashMap2 = new HashMap<>();
+                                            hashMap2.put("Metric", "metric");
+                                            hashMap2.put("Imperial", "imperial");
 
-                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users")
-                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Settings");
-                                                ref.child("Units")
-                                                        .setValue(hashMap2);
-                                                ref.child("Landmarks")
-                                                        .setValue(hashMap3);
+                                            HashMap<String, String> hashMap3 = new HashMap<>();
+                                            hashMap3.put("Historical", "historical");
+                                            hashMap3.put("Modern", "modern");
+                                            hashMap3.put("Popular", "popular");
+
+                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users")
+                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Settings");
+                                            ref.child("Units")
+                                                    .setValue(hashMap2);
+                                            ref.child("Landmarks")
+                                                    .setValue(hashMap3);
 
 
-                                                FirebaseUser user = mAuth.getCurrentUser();
-                                                if(user.isEmailVerified()) {
-                                                    Toast.makeText(getActivity(), "You email has been verified", Toast.LENGTH_LONG).show();
+                                            FirebaseUser user1 = mAuth.getCurrentUser();
+                                            if(user1.isEmailVerified()) {
+                                                Toast.makeText(getActivity(), "You email has been verified", Toast.LENGTH_LONG).show();
 
-                                                }else{
-                                                    user.sendEmailVerification();
-                                                    Toast.makeText(getActivity(), "Check your email to verify your account!", Toast.LENGTH_LONG).show();
-                                                }
-                                            } else{
-                                                Toast.makeText(getActivity(), "Failed to register! Try again", Toast.LENGTH_LONG).show();
+                                            }else{
+                                                user1.sendEmailVerification();
+                                                Toast.makeText(getActivity(), "Check your email to verify your account!", Toast.LENGTH_LONG).show();
                                             }
+                                        } else{
+                                            Toast.makeText(getActivity(), "Failed to register! Try again", Toast.LENGTH_LONG).show();
                                         }
-
                                     });
                             MainActivity._subMenu.hide();
+                            MainActivity._textView_userName.setText(userEmail );
                         }else{
                             Toast.makeText(getActivity(), "Failed to register", Toast.LENGTH_LONG).show();
                         }

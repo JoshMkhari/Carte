@@ -11,17 +11,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PackageManagerCompat;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -33,31 +27,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carte.navigator.mapRelated.LocationService;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
-import com.carte.navigator.menu.sub.settings.Fragment_Units;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
-
-import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity implements Interface_RecyclerView {
 
     private static final int _REQUEST_CODE_LOCATION_PERMISSION = 1;
     public static BottomSheetDialog _subMenu;
     public static FragmentManager _fragmentManager;
-
+    public static TextView _textView_userName;
     //layout_menu
 
     public static LinearLayout _menu;
@@ -70,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         setContentView(R.layout.activity_main);
 
         _menu = findViewById(R.id.layout_menu);
+        _textView_userName = findViewById(R.id.textView_profile_name);
+
         //map stuff
         //Fragment fragment = new Fragment();
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
@@ -140,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
         Button button_newCollection = findViewById(R.id.button_menu_newCollection);
 
-        ImageButton imageButton_set_up_profile = findViewById(R.id.imageButton_user_profile);
+        Button imageButton_set_up_profile = findViewById(R.id.button_setUp);
 
         recyclerView_destinationOptions.setHasFixedSize(true);
         recyclerView_userCollections.setHasFixedSize(true);
