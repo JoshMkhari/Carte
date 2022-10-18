@@ -111,6 +111,7 @@ public class MapsFragment extends Fragment {
                         removeMarker.remove();
                     }
                 }
+                Fragment_Direction_Options.routeDrawn = false;
                 _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
                 if(drawnPolyline!=null)
                     drawnPolyline.remove();
