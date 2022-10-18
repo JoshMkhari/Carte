@@ -4,6 +4,8 @@ import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 import android.widget.Toast;
 
@@ -318,14 +320,39 @@ public class UserLandmarks {
                             //This programming statement was adapted from Google Maps Platform:
                             //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                             //Author: Google Developers
+                            int height = 100;
+                            int width = 100;
                             _IDsOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getId();
+                            BitmapDrawable bitmapdraw = null;
 
+                            
+                            if(userFilter.equals(Place.Type.RESTAURANT))
+                            {
+                                bitmapdraw = MapsFragment.bitmapdrawReast;
+                            }
+                            if(userFilter.equals(Place.Type.SUPERMARKET))
+                            {
+                                bitmapdraw = MapsFragment.bitmapdrawSuper;
+                            }
+                            if(userFilter.equals(Place.Type.POINT_OF_INTEREST))
+                            {
+                                bitmapdraw = MapsFragment.bitmapdrawAttrc;
+                            }
+                            if(userFilter.equals(Place.Type.FOOD))
+                            {
+                                bitmapdraw = MapsFragment.bitmapdrawFood;
+                            }
+                            Bitmap b = bitmapdraw.getBitmap();
+                            Bitmap _smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
                             //LocalLandmarks.getTypes().contains(Place.Type.PARK);
                             //This programming statement was adapted from Treehouse:
                             //Link: https://blog.teamtreehouse.com/beginners-guide-location-android
                             //Author: Ben Jakuben
                             //Author Profile Link: https://blog.teamtreehouse.com/author/benjakuben
                             _LandmarksNearMe = new MarkerOptions();
+
+                            _LandmarksNearMe.icon(BitmapDescriptorFactory.fromBitmap(_smallMarker));
+
                             //This programming statement was adapted from Google Maps Platform:
                             //Link: https://developers.google.com/maps/documentation/android-sdk/marker
                             //Author: Google Developers

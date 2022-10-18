@@ -53,6 +53,10 @@ public class MapsFragment extends Fragment {
     public static HashMap<Integer, Marker> _hashMapMarker;
     private static Context _context;
     static Polyline drawnPolyline;
+    public static BitmapDrawable bitmapdrawReast;
+    public static BitmapDrawable bitmapdrawSuper;
+    public static BitmapDrawable bitmapdrawAttrc;
+    public static BitmapDrawable bitmapdrawFood;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -68,6 +72,10 @@ public class MapsFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             LatLng sydney = new LatLng(30.5595, 22.9375);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            bitmapdrawReast = (BitmapDrawable) getResources().getDrawable(R.drawable.image_restaurant_icon);
+            bitmapdrawSuper = (BitmapDrawable) getResources().getDrawable(R.drawable.image_supermarket_icon);
+            bitmapdrawAttrc = (BitmapDrawable) getResources().getDrawable(R.drawable.image_attractions_icon);
+            bitmapdrawFood = (BitmapDrawable) getResources().getDrawable(R.drawable.image_fast_food_icon);
             _map = googleMap;
             _context = requireContext();
             _currentlyNavigating = false;
@@ -76,7 +84,7 @@ public class MapsFragment extends Fragment {
             int width = 100;
 
             //https://stackoverflow.com/questions/53811117/how-to-get-string-from-resources-strings-into-a-fragment
-            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.image_supermarket_icon);
+            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.image_profile_icon);
             Bitmap b = bitmapdraw.getBitmap();
             _smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
             //https://stackoverflow.com/questions/42401131/add-marker-on-long-press-in-google-maps-api-v3
