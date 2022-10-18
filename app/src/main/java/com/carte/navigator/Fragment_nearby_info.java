@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.carte.navigator.mapRelated.MapsFragment;
+import com.carte.navigator.mapRelated.UserLandmarks;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.model.OpeningHours;
@@ -112,7 +113,14 @@ public class Fragment_nearby_info extends Fragment {
 
                 rating.setText(_RatingsOfLandmarks);
                 details.setText(_ContactDetailsOfLandmark);
-                marker_Title.setText(_LandmarkSpecifications.getName());
+                if(_LandmarkSpecifications.getName() == null)
+                {
+                    marker_Title.setText(UserLandmarks.returnLandmarkType(MainActivity._currentModelUser.getUserPreference()).toString());
+                }else
+                {
+                    marker_Title.setText(_LandmarkSpecifications.getName());
+                }
+
                 location_data.setText(_LandmarkSpecifications.getAddress());
 
                 if(_BusinessHoursOfLandmark == null)
