@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -74,6 +75,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
         AutoCompleteTextView autoCompleteTextViewSearch = findViewById(R.id.autoCompleteTextView_Destination);
         autoCompleteTextViewSearch.setAdapter(new Adapter_PlaceAutoSuggest(MainActivity.this, android.R.layout.simple_list_item_1));
+
+        autoCompleteTextViewSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                return false;
+            }
+        });
         //map stuff
         //Fragment fragment = new Fragment();
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
