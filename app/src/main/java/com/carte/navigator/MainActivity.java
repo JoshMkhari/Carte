@@ -36,6 +36,7 @@ import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
 import com.carte.navigator.menu.models.Model_User;
+import com.carte.navigator.menu.sub.Fragment_Collection;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         RecyclerView recyclerView_userCollections = findViewById(R.id.recyclerView_user_collections);
         RecyclerView recyclerView_account_settings = findViewById(R.id.recyclerView_account_settings);
 
-        Button button_newCollection = findViewById(R.id.button_menu_newCollection);
+        Button button_viewALLCollection = findViewById(R.id.button_menu_collections_seeAll);
 
         Button imageButton_set_up_profile = findViewById(R.id.button_setUp);
 
@@ -187,21 +188,20 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         recyclerView_account_settings.setAdapter(adapter_account_settings);
 
         //Remember to code this
-        if(tempUserCollections.isEmpty())
+        if(_currentModelUser.getModel_user_collections()==null)
         {
             recyclerView_userCollections.setVisibility(View.GONE);
-            //button_newCollection.setVisibility(View.GONE);
 
         }
-
         _fragmentManager = getSupportFragmentManager();
+
     //Can turn into a method im sure
-        button_newCollection.setOnClickListener(view -> {
+        button_viewALLCollection.setOnClickListener(view -> {
             TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
             assert _textView_sub_menu_title != null;
 
             _textView_sub_menu_title.setText("Collections");
-
+            Fragment_Collection.newMode = true;
             findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
                     setGraph(R.navigation.navigation_collections);//(developer Android NavController, n.d)
             _subMenu.show();
