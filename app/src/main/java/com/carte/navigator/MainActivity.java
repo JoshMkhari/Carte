@@ -27,12 +27,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carte.navigator.dataAccessLayer.Database_Lite;
 import com.carte.navigator.mapRelated.LocationService;
+import com.carte.navigator.mapRelated.UserLandmarks;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
+import com.carte.navigator.menu.models.Model_User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -45,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     public static TextView _textView_userName;
     //layout_menu
 
+    public static FirebaseUser _currentUserAuth;
+    public static Model_User _currentModelUser;
     public static LinearLayout _menu;
     //Navigation Layout
     public static boolean _muted = false;
@@ -61,7 +71,25 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         //Fragment fragment = new Fragment();
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
                 setGraph(R.navigation.navigation_maps);//(developer Android NavController, n.d)
-
+        Database_Lite db = new Database_Lite(getApplicationContext());
+        MainActivity._currentModelUser = db.getAllUsers().get(0).get_modelUser();
+        if (!MainActivity._currentModelUser.getEmail().equals("DefaultUser"))
+        {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            String uPass = db.getAllUsers().get(0).get_password();
+            mAuth.signInWithEmailAndPassword(MainActivity._currentModelUser.getEmail(), uPass)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                MainActivity._currentUserAuth = mAuth.getCurrentUser();
+                                if(MainActivity._currentUserAuth != null)
+                                    Model_User.mergeData(getApplicationContext(),uPass);
+                                _textView_userName.setText(_currentModelUser.getEmail());
+                            }
+                        }
+                    });
+        }
         LocationService.changed = false;
         //https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -153,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         recyclerView_destinationOptions.setAdapter(adapter_destination_options);
 
         //Account Settings RecyclerView
-        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_account_settings = new Adapter_Account_Settings(this,getApplicationContext(),settings_navigationOptions,2,false);//(Professor Sluiter, 2020).
+        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_account_settings = new Adapter_Account_Settings(this,getApplicationContext(),settings_navigationOptions,2,false,false);//(Professor Sluiter, 2020).
         recyclerView_account_settings.setAdapter(adapter_account_settings);
 
         //Remember to code this
@@ -198,30 +226,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         {
             //Also remove names from icons for Light mode xD
             case 0://Navigation options menu
-                switch (position)
-                {
-                    //Also remove names from icons for Light mode xD
-                    case 0:
-                        Toast.makeText(MainActivity.this,
-                                "Resrtuaranct", Toast.LENGTH_LONG).show();
-                        break;
-                    case 1:
-                        Toast.makeText(MainActivity.this,
-                                "Supermarket", Toast.LENGTH_LONG).show();
-                        break;
-                    case 2:
-                        Toast.makeText(MainActivity.this,
-                                "Attractions", Toast.LENGTH_LONG).show();
-                        break;
-                    case 3:
-                        Toast.makeText(MainActivity.this,
-                                "Fastfood", Toast.LENGTH_LONG).show();
-                        break;
-                }
-                break;
+
+                UserLandmarks userLandmarks = new UserLandmarks(getApplicationContext());
+                userLandmarks.GetLandMarksNearMeAndFilter(UserLandmarks.returnLandmarkType(position));
+
             case 1://Collections menu
                 Toast.makeText(MainActivity.this,
-                        "User collections", Toast.LENGTH_LONG).show();
+                        "Model_User collections N/A", Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 switch (position)

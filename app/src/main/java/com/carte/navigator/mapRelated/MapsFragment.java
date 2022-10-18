@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
-import com.carte.navigator.menu.sub.account.Landmarks;
 import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
 import com.carte.navigator.menu.trueway_directions_json.Root;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,6 +32,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.libraries.places.api.model.Place;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class MapsFragment extends Fragment {
     public static GoogleMap _map;
     public static Location _currentLocation;
     public static boolean _currentlyNavigating;
-    static Bitmap _smallMarker;
+    public static Bitmap _smallMarker;
     public static HashMap<Integer, Marker> _hashMapMarker;
     private static Context _context;
 
@@ -170,7 +170,7 @@ public class MapsFragment extends Fragment {
 
     }
 
-    public static void setUpMap()
+    public static void setUpMap(Place.Type userFilter)
     {
         LatLng currentLocation = new LatLng(_currentLocation.getLatitude(), _currentLocation.getLongitude());
         //https://stackoverflow.com/questions/14811579/how-to-create-a-custom-shaped-bitmap-marker-with-android-map-api-v2
@@ -181,7 +181,7 @@ public class MapsFragment extends Fragment {
 
         _hashMapMarker.put(0,marker);//0 will always refer to the user icon
         UserLandmarks  userLandmarks = new UserLandmarks(_context);
-        userLandmarks.GetLandMarksNearMeAndFilter();
+        userLandmarks.GetLandMarksNearMeAndFilter(userFilter);
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation,20.0f));
     }
 
@@ -205,8 +205,6 @@ public class MapsFragment extends Fragment {
 
         _hashMapMarker.put(0,marker);
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(startLocation,20.0f));
-
-
     }
 
     @Nullable

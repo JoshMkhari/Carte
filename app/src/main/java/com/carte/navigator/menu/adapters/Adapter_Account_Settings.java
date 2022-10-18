@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
 import com.carte.navigator.menu.sub.settings.Fragment_Units;
@@ -19,15 +20,16 @@ public class Adapter_Account_Settings extends RecyclerView.Adapter<Adapter_Accou
     final LayoutInflater _inflater;
     final String[] _optionsList;
     final int _source;
-    final boolean _radioButton;
+    final boolean _radioButton, _type;
 
-    public Adapter_Account_Settings(Interface_RecyclerView _interfaceRecyclerView, Context context, String[] optionsList, int source, boolean radioButton)
+    public Adapter_Account_Settings(Interface_RecyclerView _interfaceRecyclerView, Context context, String[] optionsList, int source, boolean radioButton, boolean type)
     {
         this._interfaceRecyclerView = _interfaceRecyclerView;
         _inflater = LayoutInflater.from(context);
         _optionsList = optionsList;
         _source = source;
         _radioButton = radioButton;
+        _type =type;
     }
 
 
@@ -51,9 +53,21 @@ public class Adapter_Account_Settings extends RecyclerView.Adapter<Adapter_Accou
         }else
         {
             holder.optionTickImage.setVisibility(View.GONE);
+            int active_position ;
+            if(_type)
+            {
+                active_position = MainActivity._currentModelUser.getUnitOfMeasurement();
+            }else
+            {
+                active_position = MainActivity._currentModelUser.getUserPreference();
+            }
+            if(position != active_position )
+            {
+                holder.optionSelectedState.setBackgroundResource(R.drawable.image_un_selected_radio_button);
+            }
             switch (_optionsList[0])
             {
-                case "Automatic":
+                case "Metric":
                     holder.subOptionName.setText(Fragment_Units._units_distance_sub[position]);
                     break;
                 case "Celsius":

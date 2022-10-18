@@ -1,12 +1,12 @@
 package com.carte.navigator.menu.sub.account;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +16,13 @@ import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
+import com.carte.navigator.dataAccessLayer.Database_Lite;
+import com.carte.navigator.menu.models.Model_User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -107,55 +105,24 @@ public class Fragment_Register extends Fragment  {
     private void createAccount( String userEmail, String userPassword)
     {
         mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
-                    public void onComplete(@NonNull Task<AuthResult> task){
-                        if(task.isSuccessful()){
-                            User user = new User(userEmail);
-
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(task1 -> {
-                                        if(task1.isSuccessful()){
-
-                                            HashMap<String, Object> hashMap = new HashMap<>();
-                                            hashMap.put("Units","units");
-                                            hashMap.put("Landmarks", "landmarks");
-
-                                            HashMap<String, String> hashMap2 = new HashMap<>();
-                                            hashMap2.put("Metric", "metric");
-                                            hashMap2.put("Imperial", "imperial");
-
-                                            HashMap<String, String> hashMap3 = new HashMap<>();
-                                            hashMap3.put("Historical", "historical");
-                                            hashMap3.put("Modern", "modern");
-                                            hashMap3.put("Popular", "popular");
-
-                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users")
-                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Settings");
-                                            ref.child("Units")
-                                                    .setValue(hashMap2);
-                                            ref.child("Landmarks")
-                                                    .setValue(hashMap3);
-
-
-                                            FirebaseUser user1 = mAuth.getCurrentUser();
-                                            if(user1.isEmailVerified()) {
-                                                Toast.makeText(getActivity(), "You email has been verified", Toast.LENGTH_LONG).show();
-
-                                            }else{
-                                                user1.sendEmailVerification();
-                                                Toast.makeText(getActivity(), "Check your email to verify your account!", Toast.LENGTH_LONG).show();
-                                            }
-                                        } else{
-                                            Toast.makeText(getActivity(), "Failed to register! Try again", Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                            MainActivity._subMenu.hide();
-                            MainActivity._textView_userName.setText(userEmail );
-                        }else{
-                            Toast.makeText(getActivity(), "Failed to register", Toast.LENGTH_LONG).show();
-                        }
-
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Model_User modelUser = new Model_User(userEmail,0, 0);
+                        FirebaseDatabase.getInstance().getReference("Users")
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .setValue(modelUser).addOnCompleteListener(task1 -> {
+                                    if(task1.isSuccessful()){
+                                        MainActivity._currentUserAuth = mAuth.getCurrentUser();
+                                        MainActivity._currentModelUser = modelUser;
+                                        Database_Lite db = new Database_Lite(requireContext());
+                                        Log.d("textToAdd", "createAccount: " + db.addUser(MainActivity._currentModelUser, userPassword)
+                                        + "user password " + userPassword);
+                                    }
+                                });
+                        MainActivity._subMenu.hide();
+                        MainActivity._textView_userName.setText(userEmail );
+                    }else{
+                        Toast.makeText(getActivity(), "Failed to register", Toast.LENGTH_LONG).show();
                     }
                 });
     }

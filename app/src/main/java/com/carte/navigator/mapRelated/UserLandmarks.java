@@ -6,7 +6,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,6 +25,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class UserLandmarks {
     private Context _context;
@@ -210,7 +213,15 @@ public class UserLandmarks {
         _ExtraDetailsOfLandmarks = Arrays.asList(Place.Field.ID, Place.Field.RATING, Place.Field.PHONE_NUMBER, Place.Field.ADDRESS);
     }
 
-    public void GetLandMarksNearMeAndFilter() {
+    public void GetLandMarksNearMeAndFilter(Place.Type userFilter) {
+
+        //First clear map
+        MapsFragment._map.clear();
+        MapsFragment._map.addMarker(new MarkerOptions()
+                .position(Objects.requireNonNull(MapsFragment._hashMapMarker.get(0)).getPosition())
+                .title("You")
+                .icon(BitmapDescriptorFactory.fromBitmap(MapsFragment._smallMarker)));
+
         //This programming statement was adapted from Google Maps Platform:
         //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
         //Author: Google Developers
@@ -231,19 +242,15 @@ public class UserLandmarks {
             //Author: Google Developers
             @Override
             public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
-
                 //This programming statement was adapted from Google Maps Platform:
                 //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                 //Author: Google Developers
                 if (task.isSuccessful() && task.getResult() != null) {
-
                     //This programming statement was adapted from Google Maps Platform:
                     //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                     //Author: Google Developers
                     FindCurrentPlaceResponse FoundLocationResponse = task.getResult();
-
                     int MaxNumberOfEntries;
-
                     //This programming statement was adapted from Google Maps Platform:
                     //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                     //Author: Google Developers
@@ -279,119 +286,47 @@ public class UserLandmarks {
                     //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                     //Author: Google Developers
                     for (PlaceLikelihood PossibleLandmarksNearMe : FoundLocationResponse.getPlaceLikelihoods()) {
-
-
                         //This programming statement was adapted from Google Maps Platform:
                         //Link: https://developers.google.com/maps/documentation/places/android-sdk/place-details
                         //Author: Google Developers
                         _LocalLandmarks = PossibleLandmarksNearMe.getPlace();
 
-                        //Filter Testing
-                        _Filter = "";
+                        if (_LocalLandmarks.getName() != null && _LocalLandmarks.getLatLng() != null && _LocalLandmarks.getTypes().contains(userFilter)) {
+                            //This programming statement was adapted from Google Maps Platform:
+                            //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
+                            //Author: Google Developers
+                            _NamesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getName();
+                            //This programming statement was adapted from Google Maps Platform:
+                            //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
+                            //Author: Google Developers
+                            _TypeOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = String.valueOf(_LocalLandmarks.getTypes());
+                            //This programming statement was adapted from Google Maps Platform:
+                            //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
+                            //Author: Google Developers
+                            _CoordinatesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getLatLng();
+                            //This programming statement was adapted from Google Maps Platform:
+                            //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
+                            //Author: Google Developers
+                            _IDsOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getId();
 
-                        switch(_Filter){
+                            //LocalLandmarks.getTypes().contains(Place.Type.PARK);
+                            //This programming statement was adapted from Treehouse:
+                            //Link: https://blog.teamtreehouse.com/beginners-guide-location-android
+                            //Author: Ben Jakuben
+                            //Author Profile Link: https://blog.teamtreehouse.com/author/benjakuben
+                            _LandmarksNearMe = new MarkerOptions();
+                            //This programming statement was adapted from Google Maps Platform:
+                            //Link: https://developers.google.com/maps/documentation/android-sdk/marker
+                            //Author: Google Developers
+                            _LandmarksNearMe.position(_CoordinatesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]).title(_NamesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]).snippet(_TypeOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]);
+                            //This programming statement was adapted from GeeksForGeeks:
+                            //Link: https://www.geeksforgeeks.org/how-to-implement-current-location-button-feature-in-google-maps-in-android/
+                            //Author: aashaypawar
+                            //Author Profile Link: https://auth.geeksforgeeks.org/user/aashaypawar
 
-
-                            case "Park":
-                                if (_LocalLandmarks.getName() != null && _LocalLandmarks.getLatLng() != null && _LocalLandmarks.getTypes().contains(Place.Type.PARK)) {
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
-                                    //Author: Google Developers
-                                    _NamesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getName();
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
-                                    //Author: Google Developers
-                                    _TypeOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = String.valueOf(_LocalLandmarks.getTypes());
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
-                                    //Author: Google Developers
-                                    _CoordinatesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getLatLng();
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
-                                    //Author: Google Developers
-                                    _IDsOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getId();
-
-                                    //LocalLandmarks.getTypes().contains(Place.Type.PARK);
-                                    //This programming statement was adapted from Treehouse:
-                                    //Link: https://blog.teamtreehouse.com/beginners-guide-location-android
-                                    //Author: Ben Jakuben
-                                    //Author Profile Link: https://blog.teamtreehouse.com/author/benjakuben
-                                    _LandmarksNearMe = new MarkerOptions();
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/android-sdk/marker
-                                    //Author: Google Developers
-                                    _LandmarksNearMe.position(_CoordinatesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]).title(_NamesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]).snippet(_TypeOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]);
-                                    //This programming statement was adapted from GeeksForGeeks:
-                                    //Link: https://www.geeksforgeeks.org/how-to-implement-current-location-button-feature-in-google-maps-in-android/
-                                    //Author: aashaypawar
-                                    //Author Profile Link: https://auth.geeksforgeeks.org/user/aashaypawar
-                                    //Send marker
-                                    MapsFragment._map.addMarker(_LandmarksNearMe);
-                                }
-                                _SuccessfulFilter = true;
-
-                                break;
-                            case "Theater":
-
-
-                                _LocalLandmarks.getTypes().contains(Place.Type.MOVIE_THEATER);
-                                //This programming statement was adapted from Treehouse:
-                                //Link: https://blog.teamtreehouse.com/beginners-guide-location-android
-                                //Author: Ben Jakuben
-                                //Author Profile Link: https://blog.teamtreehouse.com/author/benjakuben
-                                _LandmarksNearMe = new MarkerOptions();
-                                //This programming statement was adapted from Google Maps Platform:
-                                //Link: https://developers.google.com/maps/documentation/android-sdk/marker
-                                //Author: Google Developers
-                                _LandmarksNearMe.position(_CoordinatesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]).title(_NamesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]).snippet(_TypeOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]);
-                                //This programming statement was adapted from GeeksForGeeks:
-                                //Link: https://www.geeksforgeeks.org/how-to-implement-current-location-button-feature-in-google-maps-in-android/
-                                //Author: aashaypawar
-                                //Author Profile Link: https://auth.geeksforgeeks.org/user/aashaypawar
-                                MapsFragment._map.addMarker(_LandmarksNearMe);
-
-                                _SuccessfulFilter = true;
-
-                                break;
-
-                            case "":
-                                if (_LocalLandmarks.getName() != null && _LocalLandmarks.getLatLng() != null && _LocalLandmarks.getTypes().contains(Place.Type.POINT_OF_INTEREST)) {
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
-                                    //Author: Google Developers
-                                    _NamesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getName();
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
-                                    //Author: Google Developers
-                                    _TypeOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = String.valueOf(_LocalLandmarks.getTypes());
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
-                                    //Author: Google Developers
-                                    _CoordinatesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getLatLng();
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
-                                    //Author: Google Developers
-                                    _IDsOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getId();
-
-                                    _LocalLandmarks.getTypes().contains(Place.Type.POINT_OF_INTEREST);
-                                    //This programming statement was adapted from Treehouse:
-                                    //Link: https://blog.teamtreehouse.com/beginners-guide-location-android
-                                    //Author: Ben Jakuben
-                                    //Author Profile Link: https://blog.teamtreehouse.com/author/benjakuben
-                                    _LandmarksNearMe = new MarkerOptions();
-                                    //This programming statement was adapted from Google Maps Platform:
-                                    //Link: https://developers.google.com/maps/documentation/android-sdk/marker
-                                    //Author: Google Developers
-                                    _LandmarksNearMe.position(_CoordinatesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]).title(_NamesOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]).snippet(_TypeOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks]);
-                                    //This programming statement was adapted from GeeksForGeeks:
-                                    //Link: https://www.geeksforgeeks.org/how-to-implement-current-location-button-feature-in-google-maps-in-android/
-                                    //Author: aashaypawar
-                                    //Author Profile Link: https://auth.geeksforgeeks.org/user/aashaypawar
-                                    MapsFragment._map.addMarker(_LandmarksNearMe);
-                                }
-                                break;
+                            MapsFragment._map.addMarker(_LandmarksNearMe);
+                            _SuccessfulFilter = true;
                         }
-
                         _NumberOfDetailsAboutLandmarks++;
                         //This programming statement was adapted from Google Maps Platform:
                         //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
@@ -399,11 +334,9 @@ public class UserLandmarks {
                         if (_NumberOfDetailsAboutLandmarks > (MaxNumberOfEntries - 1)) {
                             break;
                         }
-
                     }
                     Toast.makeText(_context, "Landmarks have been identified successfully.", Toast.LENGTH_SHORT).show();
                     if(_SuccessfulFilter){
-
                         Toast.makeText(_context, "Filter has been applied successfully.", Toast.LENGTH_SHORT).show();
                     }else{
 
@@ -414,6 +347,23 @@ public class UserLandmarks {
             }
         });
     }
+
+    public static Place.Type returnLandmarkType(int type)
+    {
+        switch (type)
+        {
+            //Also remove names from icons for Light mode xD
+            case 0:
+                return Place.Type.RESTAURANT;
+            case 1:
+                return Place.Type.SUPERMARKET;
+            case 2:
+                return Place.Type.POINT_OF_INTEREST;
+            default:
+                return Place.Type.FOOD;
+        }
+    }
+
 
     public void GetLandmarkDetails(){
         String PlaceID = _LocalLandmarks.getId();
@@ -434,8 +384,6 @@ public class UserLandmarks {
                 //Author: Google Developers
                 _LandmarkSpecifications=fetchPlaceResponse.getPlace();
 
-
-
                 _BusinessHoursOfLandmark =  _LandmarkSpecifications.getOpeningHours();
 
                 if(_AddressOfLandmark== null || _AddressOfLandmark.equals("null")){
@@ -455,10 +403,6 @@ public class UserLandmarks {
                 }else{
                     _ContactDetailsOfLandmark = _LandmarkSpecifications.getPhoneNumber();
                 }
-
-
-
-
             }
         });
 

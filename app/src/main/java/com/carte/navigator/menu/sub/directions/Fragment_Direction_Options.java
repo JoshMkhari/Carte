@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.carte.navigator.MainActivity;
 import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.R;
 import com.carte.navigator.menu.trueway_directions_json.Root;
@@ -89,8 +90,9 @@ public class Fragment_Direction_Options extends Fragment {
                requireActivity().runOnUiThread(new Runnable() {
                    @Override
                    public void run() {
-                       String time, distance;
+                       String time, distance = "";
                        int duration = root.getRoute().getDuration();
+
                        if(duration<60)
                        {
                            time = "< 1 min" ;
@@ -101,17 +103,49 @@ public class Fragment_Direction_Options extends Fragment {
                        }
                        _time.setText(time);
 
-                       //Check if user is using miles or metres
                        int dist = root.getRoute().getDistance();
-                       if(dist>1000)
-                       {
-                           double dis = dist/1000f;
-                           //https://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
-                           distance = (double)Math.round(dis * 10d) / 10d + "km";
+                       //Check if user is using miles or metres
 
-                       }else
+                       switch (MainActivity._currentModelUser.getUnitOfMeasurement())
                        {
-                           distance = dist + "m";
+                           case 0://Metric
+                               if(dist>1000)
+                               {
+                                   double dis = dist/1000f;
+                                   //https://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
+                                   distance = (double)Math.round(dis * 10d) / 10d + "km";
+
+                               }else
+                               {
+                                   distance = dist + " metres";
+                               }
+                               break;
+                           case 1://Imperial UK
+                               float yards = dist*1.09361f;
+                               if(yards>1760)
+                               {
+                                   double dis = dist/1000f;
+                                   //https://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
+                                   distance = (double)Math.round(dis * 10d) / 10d + " miles";
+
+                               }else
+                               {
+                                   distance = (double)Math.round(yards * 10d) / 10d + " yards";
+                               }
+                               break;
+                           case 2://Imperial US
+                               float feet = dist*3.28084f;
+                               if(feet>5280)
+                               {
+                                   double dis = dist/1000f;
+                                   //https://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
+                                   distance = (double)Math.round(dis * 10d) / 10d + " miles";
+
+                               }else
+                               {
+                                   distance = (double)Math.round(feet * 10d) / 10d + " feet";
+                               }
+                               break;
                        }
 
                        _distance.setText(distance);

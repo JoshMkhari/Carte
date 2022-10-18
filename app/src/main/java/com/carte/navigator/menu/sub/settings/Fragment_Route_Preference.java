@@ -3,64 +3,65 @@ package com.carte.navigator.menu.sub.settings;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
+import com.carte.navigator.dataAccessLayer.Database_Lite;
+import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
+import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
+import com.carte.navigator.menu.models.Model_User;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_Route_Preference#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_Route_Preference extends Fragment {
+public class Fragment_Route_Preference extends Fragment implements Interface_RecyclerView {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Fragment_Route_Preference() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Route_Preference.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_Route_Preference newInstance(String param1, String param2) {
-        Fragment_Route_Preference fragment = new Fragment_Route_Preference();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_route_preference, container, false);
+        View route_preference = inflater.inflate(R.layout.fragment_route_preference, container, false);
+
+
+        RecyclerView recyclerView_pref = route_preference.findViewById(R.id.recyclerView_pref_user);
+
+        recyclerView_pref.setHasFixedSize(true);
+
+        //Ensuring the recycler view layout contains 4 item in each row
+        RecyclerView.LayoutManager layoutManagerGeneral = new StaggeredGridLayoutManager(1, 1);//(Professor Sluiter, 2020).
+        recyclerView_pref.setLayoutManager(layoutManagerGeneral);
+
+        RecyclerView.LayoutManager layoutManagerOptions = new StaggeredGridLayoutManager(1, 1);//(Professor Sluiter, 2020).
+        recyclerView_pref.setLayoutManager(layoutManagerOptions);
+
+        //Retrieving navigation option texts
+        String[] prefOptions = getResources().getStringArray(R.array.string_pref_options);
+
+        //Account Settings RecyclerView
+
+        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_pref = new Adapter_Account_Settings(this,getContext(),prefOptions,7,true, false);//(Professor Sluiter, 2020).
+        recyclerView_pref.setAdapter(adapter_settings_pref);
+
+        return route_preference;
+    }
+
+    @Override
+    public void onItemClick(int position, int source) {
+        Database_Lite db = new Database_Lite(requireContext());
+        if(source==7)
+        {
+            MainActivity._currentModelUser.setUserPreference(position);
+            db.updateUserPref(MainActivity._currentModelUser);
+            Model_User.uploadData(MainActivity._currentModelUser);
+            MainActivity._subMenu.dismiss();
+        }
     }
 }

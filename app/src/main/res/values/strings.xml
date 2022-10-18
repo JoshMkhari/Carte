@@ -39,14 +39,12 @@
     </string-array>
 
     <string-array name="string_units_distance">
-        <item>Automatic</item>
         <item>Metric</item>
         <item>Imperial UK</item>
         <item>Imperial US</item>
     </string-array>
 
     <string-array name="string_units_distance_sub">
-        <item>Based on phone language</item>
         <item>Meters, kilometers</item>
         <item>Yards, miles</item>
         <item>Feet, miles</item>
@@ -60,6 +58,13 @@
     <string-array name="string_units_temperature_sub">
         <item>°C</item>
         <item>°F</item>
+    </string-array>
+
+    <string-array name="string_pref_options">
+        <item>Restaurant</item>
+        <item>Supermarket</item>
+        <item>Attractions</item>
+        <item>Fast Food</item>
     </string-array>
 
     <string name="back_button">Used to navigate back to the previous view</string>
