@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
@@ -78,5 +79,7 @@ public class Fragment_Collection extends Fragment implements Interface_RecyclerV
     @Override
     public void onItemClick(int position, int source) {
 
+        Toast.makeText(requireContext(),
+                "Navigating to this location is a POE feature N/A", Toast.LENGTH_LONG).show();
     }
 }
