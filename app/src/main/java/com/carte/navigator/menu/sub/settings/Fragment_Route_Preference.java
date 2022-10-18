@@ -59,7 +59,7 @@ public class Fragment_Route_Preference extends Fragment implements Interface_Rec
         if(source==7)
         {
             MainActivity._currentModelUser.setUserPreference(position);
-            db.updateUserUnit(MainActivity._currentModelUser);
+            db.updateUserPref(MainActivity._currentModelUser);
             Model_User.uploadData(MainActivity._currentModelUser);
             MainActivity._subMenu.dismiss();
         }
