@@ -42,6 +42,7 @@ public class Fragment_Direction_Options extends Fragment {
     public static Root _root;
     public static boolean nearby;
     public static int key;
+    public static  boolean routeDrawn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

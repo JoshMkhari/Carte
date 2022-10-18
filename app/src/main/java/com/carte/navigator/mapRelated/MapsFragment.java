@@ -52,6 +52,7 @@ public class MapsFragment extends Fragment {
     public static Bitmap _smallMarker;
     public static HashMap<Integer, Marker> _hashMapMarker;
     private static Context _context;
+    static Polyline drawnPolyline;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -103,7 +104,8 @@ public class MapsFragment extends Fragment {
                     }
                 }
                 _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
-
+                if(drawnPolyline!=null)
+                    drawnPolyline.remove();
                 ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
                 assert constraintLayoutTitle != null;
 
@@ -160,12 +162,14 @@ public class MapsFragment extends Fragment {
                 MainActivity._subMenu.show();
             }
         });
-        Polyline polyline = _map.addPolyline(polylineOptions);
-        polyline.setWidth(40);
+        drawnPolyline = _map.addPolyline(polylineOptions);
+
+        drawnPolyline.setWidth(40);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            polyline.setColor(_context.getColor(R.color.teal_700));
+            drawnPolyline.setColor(_context.getColor(R.color.teal_700));
         }
 
+        Fragment_Direction_Options.routeDrawn = true;
         _map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,padding));
 
     }

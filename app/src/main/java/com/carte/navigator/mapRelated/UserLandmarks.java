@@ -344,26 +344,31 @@ public class UserLandmarks {
                             MapsFragment._map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                 @Override
                                 public boolean onMarkerClick(@NonNull Marker marker) {
-                                    findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
-                                            setGraph(R.navigation.navigation_info_nearby);//(developer Android NavController, n.d)
-                                    ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
-                                    assert constraintLayoutTitle != null;
+                                    if(Fragment_Direction_Options.routeDrawn)
+                                    {
+                                        MainActivity._subMenu.show();
+                                    }else
+                                    {
+                                        findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
+                                                setGraph(R.navigation.navigation_info_nearby);//(developer Android NavController, n.d)
+                                        ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
+                                        assert constraintLayoutTitle != null;
 
-                                    constraintLayoutTitle.setVisibility(View.GONE);
+                                        constraintLayoutTitle.setVisibility(View.GONE);
 
 
-                                    for (HashMap.Entry<Integer, Marker> set :
-                                            MapsFragment._hashMapMarker.entrySet()) {
-                                        if(set.getValue().getPosition().equals(marker.getPosition()))
-                                        {
-                                            Fragment_nearby_info.GetLandmarkDetails(Objects.requireNonNull(Fragment_nearby_info.placeHashMap.get(set.getKey())));
-                                            Fragment_Direction_Options.key = set.getKey();
-                                            Fragment_Direction_Options.nearby= true;
-                                            MainActivity._subMenu.show();
-                                            return true ;
+                                        for (HashMap.Entry<Integer, Marker> set :
+                                                MapsFragment._hashMapMarker.entrySet()) {
+                                            if(set.getValue().getPosition().equals(marker.getPosition()))
+                                            {
+                                                Fragment_nearby_info.GetLandmarkDetails(Objects.requireNonNull(Fragment_nearby_info.placeHashMap.get(set.getKey())));
+                                                Fragment_Direction_Options.key = set.getKey();
+                                                Fragment_Direction_Options.nearby= true;
+                                                MainActivity._subMenu.show();
+                                                return true ;
+                                            }
                                         }
                                     }
-
 
                                     return true;
                                 }

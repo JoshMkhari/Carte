@@ -66,6 +66,18 @@ public class Fragment_nearby_info extends Fragment {
         //String title = _marker.getPosition().latitude + "," + _marker.getPosition().longitude;
         //marker_Title.setText(title);
         directions.setOnClickListener(view -> {
+            for (HashMap.Entry<Integer, Marker> set :
+                    MapsFragment._hashMapMarker.entrySet()) {
+                if(set.getKey()!=0&& set.getKey()!=Fragment_Direction_Options.key)
+                {
+                    Marker removeMarker = MapsFragment._hashMapMarker.get(set.getKey());
+                    if(removeMarker ==null)
+                    {
+                        continue;
+                    }
+                    removeMarker.remove();
+                }
+            }
             Navigation.findNavController(nearbyInfoView).navigate(R.id.action_fragment_nearby_info_to_fragment_Direction_Options2);
         });
 
