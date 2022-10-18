@@ -360,6 +360,7 @@ public class UserLandmarks {
                                             if(set.getValue().getPosition().equals(marker.getPosition()))
                                             {
                                                 Fragment_nearby_info.GetLandmarkDetails(Objects.requireNonNull(Fragment_nearby_info.placeHashMap.get(set.getKey())));
+                                                Fragment_Direction_Options.currentLocation = new LatLng(marker.getPosition().latitude,marker.getPosition().longitude);
                                                 Fragment_Direction_Options.key = set.getKey();
                                                 Fragment_Direction_Options.nearby= true;
                                                 MainActivity._subMenu.show();

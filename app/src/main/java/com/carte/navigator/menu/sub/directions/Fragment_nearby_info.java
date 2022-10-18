@@ -4,6 +4,8 @@ import static com.carte.navigator.mapRelated.UserLandmarks._ExtraDetailsOfLandma
 import static com.carte.navigator.mapRelated.UserLandmarks._Landmarks;
 
 import android.annotation.SuppressLint;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,13 +16,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
 import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.mapRelated.UserLandmarks;
+import com.carte.navigator.menu.models.Model_User_Collections;
 import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
+import com.carte.navigator.menu.trueway_directions_json.EndPoint;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.model.OpeningHours;
@@ -29,6 +35,7 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,6 +69,7 @@ public class Fragment_nearby_info extends Fragment {
         details = nearbyInfoView.findViewById(R.id.nearbyDetails);
         marker_Title = nearbyInfoView.findViewById(R.id.textView_marker_Title_nearby);
         location_data = nearbyInfoView.findViewById(R.id.textView_location_marker_data_nearby);
+        ImageButton favourite = nearbyInfoView.findViewById(R.id.imageButton_nearby);
         Button directions = nearbyInfoView.findViewById(R.id.button_information_directions_nearby);
 
         //assert _marker != null;
@@ -83,6 +91,24 @@ public class Fragment_nearby_info extends Fragment {
             Navigation.findNavController(nearbyInfoView).navigate(R.id.action_fragment_nearby_info_to_fragment_Direction_Options2);
         });
 
+        favourite.setOnClickListener(view -> {
+            EndPoint endPoint = new EndPoint();
+            endPoint.setLat(Fragment_Direction_Options.currentLocation.latitude);
+            endPoint.setLng(Fragment_Direction_Options.currentLocation.longitude);
+            List<Address> addresses = null;
+            Geocoder geocoder = new Geocoder(requireContext());
+            try {
+                addresses = geocoder.getFromLocation(Fragment_Direction_Options.currentLocation.latitude, Fragment_Direction_Options.currentLocation.longitude, 1);
+            }catch (Exception ignored)
+            {
+            }
+            Model_User_Collections model_user_collections = new Model_User_Collections(addresses.get(0).getAddressLine(0),endPoint);
+            if(MainActivity._currentModelUser.getModel_user_collections() == null)
+                MainActivity._currentModelUser.initializeUserCollections();
+            MainActivity._currentModelUser.getModel_user_collections().add(model_user_collections);
+            Toast.makeText(requireContext(),
+                    "Location has been starred " + MainActivity._currentModelUser.getModel_user_collections().size(), Toast.LENGTH_LONG).show();
+        });
 
         return nearbyInfoView;
     }

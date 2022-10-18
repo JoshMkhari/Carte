@@ -16,6 +16,7 @@ import com.carte.navigator.MainActivity;
 import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.R;
 import com.carte.navigator.menu.trueway_directions_json.Root;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.gson.Gson;
 
@@ -39,6 +40,7 @@ public class Fragment_Direction_Options extends Fragment {
     AutoCompleteTextView _origin, _destination;
     ImageButton _close;
     Button _start_Directions;
+    public static LatLng currentLocation;
     public static Root _root;
     public static boolean nearby;
     public static int key;
@@ -92,7 +94,6 @@ public class Fragment_Direction_Options extends Fragment {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 //https://mkyong.com/java/how-to-parse-json-with-gson/
                 Gson gson = new Gson();
-
                Root root = gson.fromJson(response.body().string(),Root.class);
                 //Log.d("compare", "onResponse: "+ response.body().string());
                requireActivity().runOnUiThread(new Runnable() {

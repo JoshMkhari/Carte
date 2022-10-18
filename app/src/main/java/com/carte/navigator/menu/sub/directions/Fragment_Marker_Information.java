@@ -67,7 +67,7 @@ public class Fragment_Marker_Information extends Fragment {
             EndPoint endPoint = new EndPoint();
             endPoint.setLat(marker.getPosition().latitude);
             endPoint.setLng(marker.getPosition().longitude);
-            Model_User_Collections model_user_collections = new Model_User_Collections(finalAddresses.get(0).getFeatureName(),endPoint);
+            Model_User_Collections model_user_collections = new Model_User_Collections(finalAddresses.get(0).getAddressLine(0),endPoint);
             if(MainActivity._currentModelUser.getModel_user_collections() == null)
                 MainActivity._currentModelUser.initializeUserCollections();
             MainActivity._currentModelUser.getModel_user_collections().add(model_user_collections);
