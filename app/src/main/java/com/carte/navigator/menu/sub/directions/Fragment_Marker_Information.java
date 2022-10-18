@@ -20,7 +20,6 @@ import com.google.android.gms.maps.model.Marker;
  * create an instance of this fragment.
  */
 public class Fragment_Marker_Information extends Fragment {
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class Fragment_Marker_Information extends Fragment {
         marker_Title.setText(title);
 
         directions.setOnClickListener(view -> {
-            Navigation.findNavController(marker_information_view).navigate(R.id.action_fragment_Marker_Information_to_fragment_Direction_Options);
+            Navigation.findNavController(marker_information_view).navigate(R.id.action_fragment_nearby_info_to_fragment_Direction_Options2);
         });
         return marker_information_view;
     }

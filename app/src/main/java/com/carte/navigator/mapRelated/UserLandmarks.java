@@ -1,11 +1,19 @@
 package com.carte.navigator.mapRelated;
 
+import static androidx.navigation.fragment.NavHostFragment.findNavController;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.carte.navigator.Fragment_nearby_info;
+import com.carte.navigator.MainActivity;
+import com.carte.navigator.R;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -35,9 +43,9 @@ public class UserLandmarks {
     private LatLng _CurrentPositionCoOrdinates;
     private MarkerOptions _CurrentPositionOnMap, _LandmarksNearMe;
 
-    private PlacesClient _Landmarks;
+    public static PlacesClient _Landmarks;
     private List<Place.Field> _BasicDetailsOfLandmarks;
-    private List<Place.Field> _ExtraDetailsOfLandmarks;
+    public static List<Place.Field> _ExtraDetailsOfLandmarks;
 
     private String[] _NamesOfLandmarksNearMe;
     private String[] _TypeOfLandmarksNearMe;
@@ -285,6 +293,7 @@ public class UserLandmarks {
                     //This programming statement was adapted from Google Maps Platform:
                     //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                     //Author: Google Developers
+                    int key = 3;
                     for (PlaceLikelihood PossibleLandmarksNearMe : FoundLocationResponse.getPlaceLikelihoods()) {
                         //This programming statement was adapted from Google Maps Platform:
                         //Link: https://developers.google.com/maps/documentation/places/android-sdk/place-details
@@ -324,7 +333,24 @@ public class UserLandmarks {
                             //Author: aashaypawar
                             //Author Profile Link: https://auth.geeksforgeeks.org/user/aashaypawar
 
-                            MapsFragment._map.addMarker(_LandmarksNearMe);
+                            Marker marker = MapsFragment._map.addMarker(_LandmarksNearMe);
+                            MapsFragment._hashMapMarker.put(key,marker);
+                            key++;
+                            MapsFragment._map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                @Override
+                                public boolean onMarkerClick(@NonNull Marker marker) {
+                                    findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
+                                            setGraph(R.navigation.navigation_info_nearby);//(developer Android NavController, n.d)
+                                    Fragment_nearby_info._marker = marker;
+                                    Fragment_nearby_info._place = _LocalLandmarks;
+                                    TextView _textView_sub_menu_title = MainActivity._subMenu.findViewById(R.id.textView_sub_menu_title);
+                                    assert _textView_sub_menu_title != null;
+
+                                    _textView_sub_menu_title.setVisibility(View.GONE);
+                                    MainActivity._subMenu.show();
+                                    return true;
+                                }
+                            });
                             _SuccessfulFilter = true;
                         }
                         _NumberOfDetailsAboutLandmarks++;
@@ -337,9 +363,10 @@ public class UserLandmarks {
                     }
                     Toast.makeText(_context, "Landmarks have been identified successfully.", Toast.LENGTH_SHORT).show();
                     if(_SuccessfulFilter){
+                        //change image to white halo
                         Toast.makeText(_context, "Filter has been applied successfully.", Toast.LENGTH_SHORT).show();
                     }else{
-
+                        //Change image to red
                         Toast.makeText(_context, "Filter has been not applied successfully.", Toast.LENGTH_SHORT).show();
 
                     }
