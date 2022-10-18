@@ -112,7 +112,7 @@ public class MapsFragment extends Fragment {
 
                 constraintLayoutTitle.setVisibility(View.GONE);
 
-
+                Fragment_Direction_Options.nearby = false;
                 MainActivity._subMenu.show();
             });
         }

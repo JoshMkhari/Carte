@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.mapRelated.UserLandmarks;
+import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.model.OpeningHours;
@@ -65,7 +66,7 @@ public class Fragment_nearby_info extends Fragment {
         //String title = _marker.getPosition().latitude + "," + _marker.getPosition().longitude;
         //marker_Title.setText(title);
         directions.setOnClickListener(view -> {
-            Navigation.findNavController(nearbyInfoView).navigate(R.id.action_fragment_Marker_Information_to_fragment_Direction_Options);
+            Navigation.findNavController(nearbyInfoView).navigate(R.id.action_fragment_nearby_info_to_fragment_Direction_Options2);
         });
 
 

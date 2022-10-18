@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.carte.navigator.Fragment_nearby_info;
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
+import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -356,6 +357,8 @@ public class UserLandmarks {
                                         if(set.getValue().getPosition().equals(marker.getPosition()))
                                         {
                                             Fragment_nearby_info.GetLandmarkDetails(Objects.requireNonNull(Fragment_nearby_info.placeHashMap.get(set.getKey())));
+                                            Fragment_Direction_Options.key = set.getKey();
+                                            Fragment_Direction_Options.nearby= true;
                                             MainActivity._subMenu.show();
                                             return true ;
                                         }
