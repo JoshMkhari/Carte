@@ -363,6 +363,8 @@ public class UserLandmarks {
                 return Place.Type.FOOD;
         }
     }
+
+
     public void GetLandmarkDetails(){
         String PlaceID = _LocalLandmarks.getId();
         //This programming statement was adapted from Google Maps Platform:

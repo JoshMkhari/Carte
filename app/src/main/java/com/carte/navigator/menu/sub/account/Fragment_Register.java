@@ -15,10 +15,10 @@ import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
-import com.carte.navigator.menu.models.User;
+import com.carte.navigator.dataAccessLayer.Database_Lite;
+import com.carte.navigator.menu.models.Model_User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -104,23 +104,23 @@ public class Fragment_Register extends Fragment  {
     private void createAccount( String userEmail, String userPassword)
     {
         mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
-                    public void onComplete(@NonNull Task<AuthResult> task){
-                        if(task.isSuccessful()){
-                            User user = new User(userEmail,0, 0);
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(task1 -> {
-                                        if(task1.isSuccessful()){
-                                            MainActivity._currentUserAuth = mAuth.getCurrentUser();
-                                            MainActivity._currentUser = user;
-                                        }
-                                    });
-                            MainActivity._subMenu.hide();
-                            MainActivity._textView_userName.setText(userEmail );
-                        }else{
-                            Toast.makeText(getActivity(), "Failed to register", Toast.LENGTH_LONG).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Model_User modelUser = new Model_User(userEmail,0, 0);
+                        FirebaseDatabase.getInstance().getReference("Users")
+                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .setValue(modelUser).addOnCompleteListener(task1 -> {
+                                    if(task1.isSuccessful()){
+                                        MainActivity._currentUserAuth = mAuth.getCurrentUser();
+                                        MainActivity._currentModelUser = modelUser;
+                                        Database_Lite db = new Database_Lite(requireContext());
+                                        db.addUser(MainActivity._currentModelUser);
+                                    }
+                                });
+                        MainActivity._subMenu.hide();
+                        MainActivity._textView_userName.setText(userEmail );
+                    }else{
+                        Toast.makeText(getActivity(), "Failed to register", Toast.LENGTH_LONG).show();
                     }
                 });
     }

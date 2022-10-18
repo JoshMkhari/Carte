@@ -27,15 +27,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carte.navigator.dataAccessLayer.Database_Lite;
 import com.carte.navigator.mapRelated.LocationService;
 import com.carte.navigator.mapRelated.UserLandmarks;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
-import com.carte.navigator.menu.models.User;
-import com.google.android.libraries.places.api.model.Place;
+import com.carte.navigator.menu.models.Model_User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     //layout_menu
 
     public static FirebaseUser _currentUserAuth;
-    public static User _currentUser;
+    public static Model_User _currentModelUser;
     public static LinearLayout _menu;
     //Navigation Layout
     public static boolean _muted = false;
@@ -67,7 +71,23 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         //Fragment fragment = new Fragment();
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
                 setGraph(R.navigation.navigation_maps);//(developer Android NavController, n.d)
-
+        Database_Lite db = new Database_Lite(getApplicationContext());
+        MainActivity._currentModelUser = db.getAllUsers().get(0).get_modelUser();
+        if (!MainActivity._currentModelUser.getEmail().equals("DefaultUser"))
+        {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.signInWithEmailAndPassword(MainActivity._currentModelUser.getEmail(), db.getAllUsers().get(0).get_password())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                MainActivity._currentUserAuth = mAuth.getCurrentUser();
+                                if(MainActivity._currentUserAuth != null)
+                                    Model_User.mergeData(getApplicationContext());
+                            }
+                        }
+                    });
+        }
         LocationService.changed = false;
         //https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -210,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
             case 1://Collections menu
                 Toast.makeText(MainActivity.this,
-                        "User collections N/A", Toast.LENGTH_LONG).show();
+                        "Model_User collections N/A", Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 switch (position)

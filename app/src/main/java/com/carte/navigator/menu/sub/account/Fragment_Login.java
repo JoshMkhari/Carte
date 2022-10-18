@@ -1,6 +1,5 @@
 package com.carte.navigator.menu.sub.account;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,14 +15,11 @@ import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
-import com.carte.navigator.mapRelated.MapsFragment;
-import com.carte.navigator.menu.models.User;
+import com.carte.navigator.menu.models.Model_User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -104,30 +100,8 @@ public class Fragment_Login extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task){
                         if(task.isSuccessful()){
                             MainActivity._currentUserAuth = mAuth.getCurrentUser();
-                            // creating a variable for
-                            // our Firebase Database.
-                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-
-                            // creating a variable for our
-                            // Database Reference for Firebase.
-                            DatabaseReference databaseReference = firebaseDatabase.getReference();
-
-                            Query myUserQuery = databaseReference.child("Users").child(MainActivity._currentUserAuth.getUid());
-
-                            myUserQuery.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    MainActivity._currentUser = new User(snapshot.child("email").toString()
-                                            ,Integer.parseInt(snapshot.child("unitOfMeasurement").toString())
-                                    ,Integer.parseInt(snapshot.child("userPreference").toString()));
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
-                            MainActivity._currentUser = new User(email,0, 0);
+                            Model_User.mergeData(requireContext());
+                            MainActivity._currentModelUser = new Model_User(email,0, 0);
                             MainActivity._textView_userName.setText(email);
                             MainActivity._subMenu.hide();
                         }else{

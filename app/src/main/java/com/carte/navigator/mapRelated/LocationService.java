@@ -42,7 +42,7 @@ public class LocationService extends Service {
                 MapsFragment._currentLocation = locationResult.getLastLocation();
                 if(!changed)
                 {
-                    MapsFragment.setUpMap(Place.Type.POINT_OF_INTEREST);
+                    MapsFragment.setUpMap(UserLandmarks.returnLandmarkType(MainActivity._currentModelUser.getUserPreference()));
                     changed = true;
                 }
                 if(MapsFragment._currentlyNavigating)
