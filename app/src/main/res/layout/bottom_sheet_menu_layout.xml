@@ -47,7 +47,7 @@
                         android:id="@+id/autoCompleteTextView_Destination"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Where to?"
+                        android:hint="Where to? N/A POE feature"
                         android:inputType="text"
                         android:imeOptions="actionSearch"
                         android:textColor="?colorSecondary"
