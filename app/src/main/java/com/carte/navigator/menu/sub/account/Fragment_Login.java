@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
+import com.carte.navigator.dataAccessLayer.Database_Lite;
 import com.carte.navigator.menu.models.Model_User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -101,7 +102,8 @@ public class Fragment_Login extends Fragment {
                         if(task.isSuccessful()){
                             MainActivity._currentUserAuth = mAuth.getCurrentUser();
                             Model_User.mergeData(requireContext());
-                            MainActivity._currentModelUser = new Model_User(email,0, 0);
+                            Database_Lite db = new Database_Lite(requireContext());
+                            MainActivity._currentModelUser = db.getAllUsers().get(0).get_modelUser();
                             MainActivity._textView_userName.setText(email);
                             MainActivity._subMenu.hide();
                         }else{

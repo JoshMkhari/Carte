@@ -115,7 +115,7 @@ public class Database_Lite extends SQLiteOpenHelper {
         return users;
     }
 
-    public String addUser(Model_User model_user) {//(freecodecamp,2020)
+    public String addUser(Model_User model_user, String pass) {//(freecodecamp,2020)
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -132,6 +132,7 @@ public class Database_Lite extends SQLiteOpenHelper {
                 cv.put(COLUMN_USER_EMAIL, model_user.getEmail());
                 cv.put(COLUMN_PREF, model_user.getUserPreference());
                 cv.put(COLUMN_UNIT, model_user.getUnitOfMeasurement());
+                cv.put(COLUMN_USER_PASS,pass);
                 db.update(USER_TABLE,cv,COLUMN_USER_EMAIL + "=?",new String[]{oldUser});
                 return "true switch";
             }
@@ -141,6 +142,7 @@ public class Database_Lite extends SQLiteOpenHelper {
                     cv.put(COLUMN_USER_EMAIL, model_user.getEmail());
                     cv.put(COLUMN_PREF, model_user.getUserPreference());
                     cv.put(COLUMN_UNIT, model_user.getUnitOfMeasurement());
+                    cv.put(COLUMN_USER_PASS,pass);
                     db.insert(USER_TABLE, null, cv);
                     cv.clear();
                     return "true";

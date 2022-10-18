@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,8 @@ public class Fragment_Register extends Fragment  {
                                         MainActivity._currentUserAuth = mAuth.getCurrentUser();
                                         MainActivity._currentModelUser = modelUser;
                                         Database_Lite db = new Database_Lite(requireContext());
-                                        db.addUser(MainActivity._currentModelUser);
+                                        Log.d("textToAdd", "createAccount: " + db.addUser(MainActivity._currentModelUser, userPassword)
+                                        + "user password " + userPassword);
                                     }
                                 });
                         MainActivity._subMenu.hide();
