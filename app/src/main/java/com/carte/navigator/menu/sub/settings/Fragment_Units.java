@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
+import com.carte.navigator.dataAccessLayer.Database_Lite;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
+import com.carte.navigator.menu.models.Model_User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,8 +53,6 @@ public class Fragment_Units extends Fragment implements Interface_RecyclerView {
         String[] units_temperature = getResources().getStringArray(R.array.string_units_temperature);
 
 
-
-
         //Account Settings RecyclerView
         RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_distance = new Adapter_Account_Settings(this,getContext(),units_distance,5,true);//(Professor Sluiter, 2020).
         recyclerView_units.setAdapter(adapter_settings_distance);
@@ -63,39 +64,25 @@ public class Fragment_Units extends Fragment implements Interface_RecyclerView {
 
     @Override
     public void onItemClick(int position, int source) {
+        Database_Lite db = new Database_Lite(requireContext());
+
         if(source==5)
         {
-            switch (position)
-            {
-                case 0:
-                    Toast.makeText(getContext(),
-                            "Automatic selected", Toast.LENGTH_LONG).show();
-                    break;
-                case 1:
-                    Toast.makeText(getContext(),
-                            "Metric selected", Toast.LENGTH_LONG).show();
-                    break;
-                case 2:
-                    Toast.makeText(getContext(),
-                            "Imperial UK selected", Toast.LENGTH_LONG).show();
-                    break;
-                case 3:
-                    Toast.makeText(getContext(),
-                            "Imperial US selected", Toast.LENGTH_LONG).show();
-                    break;
-
-            }
+            MainActivity._currentModelUser.setUnitOfMeasurement(position);
+            db.updateUserUnit(MainActivity._currentModelUser);
+            Model_User.uploadData(MainActivity._currentModelUser);
+            MainActivity._subMenu.dismiss();
         }else
         {
             switch (position)
             {
                 case 0:
                     Toast.makeText(getContext(),
-                            "Celsius selected", Toast.LENGTH_LONG).show();
+                            "N/A POE C", Toast.LENGTH_LONG).show();
                     break;
                 case 1:
                     Toast.makeText(getContext(),
-                            "Fahrenheit selected", Toast.LENGTH_LONG).show();
+                            "N/A POE F", Toast.LENGTH_LONG).show();
                     break;
 
             }

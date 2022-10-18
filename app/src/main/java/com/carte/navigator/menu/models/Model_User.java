@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.dataAccessLayer.Database_Lite;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -77,5 +78,12 @@ public class Model_User {
 
             }
         });
+    }
+
+    public static void uploadData(Model_User model_user){
+
+        FirebaseDatabase.getInstance().getReference("Users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(model_user);
     }
 }

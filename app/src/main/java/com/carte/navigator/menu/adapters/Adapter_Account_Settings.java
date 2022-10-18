@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
 import com.carte.navigator.menu.sub.settings.Fragment_Units;
@@ -51,9 +52,13 @@ public class Adapter_Account_Settings extends RecyclerView.Adapter<Adapter_Accou
         }else
         {
             holder.optionTickImage.setVisibility(View.GONE);
+            if(position != MainActivity._currentModelUser.getUnitOfMeasurement())
+            {
+                holder.optionSelectedState.setBackgroundResource(R.drawable.image_un_selected_radio_button);
+            }
             switch (_optionsList[0])
             {
-                case "Automatic":
+                case "Metric":
                     holder.subOptionName.setText(Fragment_Units._units_distance_sub[position]);
                     break;
                 case "Celsius":

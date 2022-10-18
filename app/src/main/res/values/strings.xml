@@ -39,14 +39,12 @@
     </string-array>
 
     <string-array name="string_units_distance">
-        <item>Automatic</item>
         <item>Metric</item>
         <item>Imperial UK</item>
         <item>Imperial US</item>
     </string-array>
 
     <string-array name="string_units_distance_sub">
-        <item>Based on phone language</item>
         <item>Meters, kilometers</item>
         <item>Yards, miles</item>
         <item>Feet, miles</item>
