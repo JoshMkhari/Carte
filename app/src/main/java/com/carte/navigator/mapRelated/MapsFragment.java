@@ -78,7 +78,6 @@ public class MapsFragment extends Fragment {
             BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.image_supermarket_icon);
             Bitmap b = bitmapdraw.getBitmap();
             _smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-
             //https://stackoverflow.com/questions/42401131/add-marker-on-long-press-in-google-maps-api-v3
             _map.setOnMapLongClickListener(latLng -> {
                 MainActivity._subMenu.dismiss();
@@ -90,17 +89,19 @@ public class MapsFragment extends Fragment {
                     return true;
                 });
 
-                if(_hashMapMarker.get(1)== null)
-                {
-                    _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
+                for (HashMap.Entry<Integer, Marker> set :
+                        _hashMapMarker.entrySet()) {
+                    if(set.getKey()!=0)
+                    {
+                        Marker removeMarker = _hashMapMarker.get(set.getKey());
+                        if(removeMarker ==null)
+                        {
+                            continue;
+                        }
+                        removeMarker.remove();
+                    }
                 }
-                else
-                {
-                    Marker removeMarker = _hashMapMarker.get(1);
-                    assert removeMarker != null;
-                    removeMarker.remove();
-                    _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
-                }
+                _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
 
                 ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
                 assert constraintLayoutTitle != null;
@@ -109,7 +110,6 @@ public class MapsFragment extends Fragment {
                 // Polylines are useful to show a route or some other connection between points
 
                 constraintLayoutTitle.setVisibility(View.GONE);
-
                 findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
                         setGraph(R.navigation.navigation_info_directions);//(developer Android NavController, n.d)
 

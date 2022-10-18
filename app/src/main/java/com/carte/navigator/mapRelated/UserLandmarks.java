@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.carte.navigator.Fragment_nearby_info;
 import com.carte.navigator.MainActivity;
@@ -343,10 +344,8 @@ public class UserLandmarks {
                                             setGraph(R.navigation.navigation_info_nearby);//(developer Android NavController, n.d)
                                     Fragment_nearby_info._marker = marker;
                                     Fragment_nearby_info._place = _LocalLandmarks;
-                                    TextView _textView_sub_menu_title = MainActivity._subMenu.findViewById(R.id.textView_sub_menu_title);
-                                    assert _textView_sub_menu_title != null;
-
-                                    _textView_sub_menu_title.setVisibility(View.GONE);
+                                    ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
+                                    assert constraintLayoutTitle != null;
                                     MainActivity._subMenu.show();
                                     return true;
                                 }
