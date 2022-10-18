@@ -76,14 +76,16 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         if (!MainActivity._currentModelUser.getEmail().equals("DefaultUser"))
         {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            mAuth.signInWithEmailAndPassword(MainActivity._currentModelUser.getEmail(), db.getAllUsers().get(0).get_password())
+            String uPass = db.getAllUsers().get(0).get_password();
+            mAuth.signInWithEmailAndPassword(MainActivity._currentModelUser.getEmail(), uPass)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 MainActivity._currentUserAuth = mAuth.getCurrentUser();
                                 if(MainActivity._currentUserAuth != null)
-                                    Model_User.mergeData(getApplicationContext());
+                                    Model_User.mergeData(getApplicationContext(),uPass);
+                                _textView_userName.setText(_currentModelUser.getEmail());
                             }
                         }
                     });

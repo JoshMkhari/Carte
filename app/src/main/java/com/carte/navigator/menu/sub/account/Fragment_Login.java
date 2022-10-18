@@ -101,10 +101,7 @@ public class Fragment_Login extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task){
                         if(task.isSuccessful()){
                             MainActivity._currentUserAuth = mAuth.getCurrentUser();
-                            Model_User.mergeData(requireContext());
-                            Database_Lite db = new Database_Lite(requireContext());
-                            MainActivity._currentModelUser = db.getAllUsers().get(0).get_modelUser();
-                            MainActivity._textView_userName.setText(email);
+                            Model_User.mergeData(requireContext(), password);
                             MainActivity._subMenu.hide();
                         }else{
                             Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
