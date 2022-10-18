@@ -31,25 +31,35 @@
                     app:cardElevation="40dp"
                     android:id="@+id/constraint_layout_title">
 
+                    <View
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/view_submenu"
+                        android:layout_width="50dp"
+                        android:layout_height="5dp"
+                        android:background="@drawable/shape_bottom_sheet_menu_indicator"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <ImageButton
+                        android:id="@+id/imageButton_close_sub_menu"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         android:background="@drawable/ic_baseline_close_24"
-                        android:id="@+id/imageButton_close_sub_menu"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_submenu" />
 
                     <TextView
                         android:id="@+id/textView_sub_menu_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
                         android:text="Download Maps"
+                        android:textColor="?colorSecondary"
+                        android:textSize="24sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageButton_close_sub_menu"
                         app:layout_constraintStart_toEndOf="@+id/imageButton_close_sub_menu"
-                        app:layout_constraintTop_toTopOf="@+id/imageButton_close_sub_menu"
-                        android:textSize="24sp"
-                        android:textColor="?colorSecondary"
-                        android:layout_marginStart="20dp"/>
+                        app:layout_constraintTop_toBottomOf="@+id/view_submenu" />
 
                     <View
                         android:layout_marginVertical="20dp"

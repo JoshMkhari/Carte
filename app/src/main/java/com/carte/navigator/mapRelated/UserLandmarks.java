@@ -1,11 +1,22 @@
 package com.carte.navigator.mapRelated;
 
+import static androidx.navigation.fragment.NavHostFragment.findNavController;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.carte.navigator.menu.sub.directions.Fragment_nearby_info;
+import com.carte.navigator.MainActivity;
+import com.carte.navigator.R;
+import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -24,6 +35,7 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,9 +47,9 @@ public class UserLandmarks {
     private LatLng _CurrentPositionCoOrdinates;
     private MarkerOptions _CurrentPositionOnMap, _LandmarksNearMe;
 
-    private PlacesClient _Landmarks;
+    public static PlacesClient _Landmarks;
     private List<Place.Field> _BasicDetailsOfLandmarks;
-    private List<Place.Field> _ExtraDetailsOfLandmarks;
+    public static List<Place.Field> _ExtraDetailsOfLandmarks;
 
     private String[] _NamesOfLandmarksNearMe;
     private String[] _TypeOfLandmarksNearMe;
@@ -285,6 +297,7 @@ public class UserLandmarks {
                     //This programming statement was adapted from Google Maps Platform:
                     //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                     //Author: Google Developers
+                    int key = 3;
                     for (PlaceLikelihood PossibleLandmarksNearMe : FoundLocationResponse.getPlaceLikelihoods()) {
                         //This programming statement was adapted from Google Maps Platform:
                         //Link: https://developers.google.com/maps/documentation/places/android-sdk/place-details
@@ -307,14 +320,39 @@ public class UserLandmarks {
                             //This programming statement was adapted from Google Maps Platform:
                             //Link: https://developers.google.com/maps/documentation/places/android-sdk/current-place-tutorial
                             //Author: Google Developers
+                            int height = 100;
+                            int width = 100;
                             _IDsOfLandmarksNearMe[_NumberOfDetailsAboutLandmarks] = _LocalLandmarks.getId();
+                            BitmapDrawable bitmapdraw = null;
 
+                            
+                            if(userFilter.equals(Place.Type.RESTAURANT))
+                            {
+                                bitmapdraw = MapsFragment.bitmapdrawReast;
+                            }
+                            if(userFilter.equals(Place.Type.SUPERMARKET))
+                            {
+                                bitmapdraw = MapsFragment.bitmapdrawSuper;
+                            }
+                            if(userFilter.equals(Place.Type.POINT_OF_INTEREST))
+                            {
+                                bitmapdraw = MapsFragment.bitmapdrawAttrc;
+                            }
+                            if(userFilter.equals(Place.Type.FOOD))
+                            {
+                                bitmapdraw = MapsFragment.bitmapdrawFood;
+                            }
+                            Bitmap b = bitmapdraw.getBitmap();
+                            Bitmap _smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
                             //LocalLandmarks.getTypes().contains(Place.Type.PARK);
                             //This programming statement was adapted from Treehouse:
                             //Link: https://blog.teamtreehouse.com/beginners-guide-location-android
                             //Author: Ben Jakuben
                             //Author Profile Link: https://blog.teamtreehouse.com/author/benjakuben
                             _LandmarksNearMe = new MarkerOptions();
+
+                            _LandmarksNearMe.icon(BitmapDescriptorFactory.fromBitmap(_smallMarker));
+
                             //This programming statement was adapted from Google Maps Platform:
                             //Link: https://developers.google.com/maps/documentation/android-sdk/marker
                             //Author: Google Developers
@@ -324,7 +362,43 @@ public class UserLandmarks {
                             //Author: aashaypawar
                             //Author Profile Link: https://auth.geeksforgeeks.org/user/aashaypawar
 
-                            MapsFragment._map.addMarker(_LandmarksNearMe);
+                            Marker marker = MapsFragment._map.addMarker(_LandmarksNearMe);
+                            Fragment_nearby_info.placeHashMap.put(key,_LocalLandmarks);
+                            MapsFragment._hashMapMarker.put(key,marker);
+                            key++;
+                            MapsFragment._map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                @Override
+                                public boolean onMarkerClick(@NonNull Marker marker) {
+                                    if(Fragment_Direction_Options.routeDrawn)
+                                    {
+                                        MainActivity._subMenu.show();
+                                    }else
+                                    {
+                                        findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
+                                                setGraph(R.navigation.navigation_info_nearby);//(developer Android NavController, n.d)
+                                        ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
+                                        assert constraintLayoutTitle != null;
+
+                                        constraintLayoutTitle.setVisibility(View.GONE);
+
+
+                                        for (HashMap.Entry<Integer, Marker> set :
+                                                MapsFragment._hashMapMarker.entrySet()) {
+                                            if(set.getValue().getPosition().equals(marker.getPosition()))
+                                            {
+                                                Fragment_nearby_info.GetLandmarkDetails(Objects.requireNonNull(Fragment_nearby_info.placeHashMap.get(set.getKey())));
+                                                Fragment_Direction_Options.currentLocation = new LatLng(marker.getPosition().latitude,marker.getPosition().longitude);
+                                                Fragment_Direction_Options.key = set.getKey();
+                                                Fragment_Direction_Options.nearby= true;
+                                                MainActivity._subMenu.show();
+                                                return true ;
+                                            }
+                                        }
+                                    }
+
+                                    return true;
+                                }
+                            });
                             _SuccessfulFilter = true;
                         }
                         _NumberOfDetailsAboutLandmarks++;
@@ -337,9 +411,10 @@ public class UserLandmarks {
                     }
                     Toast.makeText(_context, "Landmarks have been identified successfully.", Toast.LENGTH_SHORT).show();
                     if(_SuccessfulFilter){
+                        //change image to white halo
                         Toast.makeText(_context, "Filter has been applied successfully.", Toast.LENGTH_SHORT).show();
                     }else{
-
+                        //Change image to red
                         Toast.makeText(_context, "Filter has been not applied successfully.", Toast.LENGTH_SHORT).show();
 
                     }

@@ -64,9 +64,6 @@ public class Fragment_Register extends Fragment  {
         return register;
     }
 
-
-
-
     public void RegisterUser()
     {
         String userEmail = email.getText().toString().trim();
@@ -115,8 +112,6 @@ public class Fragment_Register extends Fragment  {
                                         MainActivity._currentUserAuth = mAuth.getCurrentUser();
                                         MainActivity._currentModelUser = modelUser;
                                         Database_Lite db = new Database_Lite(requireContext());
-                                        Log.d("textToAdd", "createAccount: " + db.addUser(MainActivity._currentModelUser, userPassword)
-                                        + "user password " + userPassword);
                                     }
                                 });
                         MainActivity._subMenu.hide();
@@ -126,7 +121,4 @@ public class Fragment_Register extends Fragment  {
                     }
                 });
     }
-
-
-
 }

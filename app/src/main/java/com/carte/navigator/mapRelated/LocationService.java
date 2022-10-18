@@ -11,6 +11,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +44,7 @@ public class LocationService extends Service {
                 if(!changed)
                 {
                     MapsFragment.setUpMap(UserLandmarks.returnLandmarkType(MainActivity._currentModelUser.getUserPreference()));
+                    Log.d("please", "onLocationResult: "+ MainActivity._currentModelUser.getUserPreference());
                     changed = true;
                 }
                 if(MapsFragment._currentlyNavigating)

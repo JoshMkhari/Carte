@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_info_nearby"
+    app:startDestination="@id/fragment_nearby_info">
+
+    <fragment
+        android:id="@+id/fragment_nearby_info"
+        android:name="com.carte.navigator.menu.sub.directions.Fragment_nearby_info"
+        android:label="fragment_nearby_info"
+        tools:layout="@layout/fragment_nearby_info" >
+        <action
+            android:id="@+id/action_fragment_nearby_info_to_fragment_Direction_Options2"
+            app:destination="@id/fragment_Direction_Options2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Direction_Options2"
+        android:name="com.carte.navigator.menu.sub.directions.Fragment_Direction_Options"
+        android:label="fragment_direction_options"
+        tools:layout="@layout/fragment_direction_options" />
+
+</navigation>

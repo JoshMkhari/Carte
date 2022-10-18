@@ -16,6 +16,7 @@ import com.carte.navigator.MainActivity;
 import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.R;
 import com.carte.navigator.menu.trueway_directions_json.Root;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.gson.Gson;
 
@@ -39,8 +40,11 @@ public class Fragment_Direction_Options extends Fragment {
     AutoCompleteTextView _origin, _destination;
     ImageButton _close;
     Button _start_Directions;
+    public static LatLng currentLocation;
     public static Root _root;
-
+    public static boolean nearby;
+    public static int key;
+    public static  boolean routeDrawn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,8 +62,14 @@ public class Fragment_Direction_Options extends Fragment {
 
         //https://blog.logrocket.com/a-complete-guide-to-okhttp/
         OkHttpClient client = new OkHttpClient();
-
-        Marker marker = MapsFragment._hashMapMarker.get(1);
+        Marker marker;
+        if(nearby)
+        {
+            marker = MapsFragment._hashMapMarker.get(key);
+        }
+         else {
+            marker = MapsFragment._hashMapMarker.get(1);
+        }
         assert marker != null;
         Request request = new Request.Builder()
                 .url("https://trueway-directions2.p.rapidapi.com/FindDrivingRoute?stops="
@@ -84,7 +94,6 @@ public class Fragment_Direction_Options extends Fragment {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 //https://mkyong.com/java/how-to-parse-json-with-gson/
                 Gson gson = new Gson();
-
                Root root = gson.fromJson(response.body().string(),Root.class);
                 //Log.d("compare", "onResponse: "+ response.body().string());
                requireActivity().runOnUiThread(new Runnable() {

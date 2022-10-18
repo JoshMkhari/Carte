@@ -20,7 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -33,8 +35,11 @@ import com.carte.navigator.mapRelated.UserLandmarks;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
+import com.carte.navigator.menu.adapters.Adapter_PlaceAutoSuggest;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
 import com.carte.navigator.menu.models.Model_User;
+import com.carte.navigator.menu.sub.Fragment_Collection;
+import com.carte.navigator.menu.sub.directions.Fragment_nearby_info;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -43,6 +48,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements Interface_RecyclerView {
@@ -63,10 +69,19 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Fragment_nearby_info.placeHashMap = new HashMap<>();
         _menu = findViewById(R.id.layout_menu);
         _textView_userName = findViewById(R.id.textView_profile_name);
 
+        AutoCompleteTextView autoCompleteTextViewSearch = findViewById(R.id.autoCompleteTextView_Destination);
+        autoCompleteTextViewSearch.setAdapter(new Adapter_PlaceAutoSuggest(MainActivity.this, android.R.layout.simple_list_item_1));
+
+        autoCompleteTextViewSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                return false;
+            }
+        });
         //map stuff
         //Fragment fragment = new Fragment();
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
@@ -105,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
             setUpBottomSheet();
         }
 
+
     }
 
 //    https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
@@ -124,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
     private void setUpBottomSheet()
     {
+
+
         //Variable Declarations
         _subMenu = new BottomSheetDialog(MainActivity.this);
 
@@ -150,23 +168,20 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         ArrayList<Integer> tempUserCollections = new ArrayList<Integer>();//Will be changed later
 
         RecyclerView recyclerView_destinationOptions = findViewById(R.id.recyclerview_destination_filter_options);
-        RecyclerView recyclerView_userCollections = findViewById(R.id.recyclerView_user_collections);
         RecyclerView recyclerView_account_settings = findViewById(R.id.recyclerView_account_settings);
 
-        Button button_newCollection = findViewById(R.id.button_menu_newCollection);
+        Button button_viewALLCollection = findViewById(R.id.button_menu_collections_seeAll);
 
         Button imageButton_set_up_profile = findViewById(R.id.button_setUp);
 
         recyclerView_destinationOptions.setHasFixedSize(true);
-        recyclerView_userCollections.setHasFixedSize(true);
+
         recyclerView_account_settings.setHasFixedSize(true);
 
         //Ensuring the recycler view layout contains 4 item in each row
         RecyclerView.LayoutManager layoutManagerDestination = new StaggeredGridLayoutManager(4, 1);//(Professor Sluiter, 2020).
         recyclerView_destinationOptions.setLayoutManager(layoutManagerDestination);
 
-        RecyclerView.LayoutManager layoutManagerCollections = new StaggeredGridLayoutManager(4, 1);//(Professor Sluiter, 2020).
-        recyclerView_userCollections.setLayoutManager(layoutManagerCollections);
 
         RecyclerView.LayoutManager layoutManagerSettings = new StaggeredGridLayoutManager(1,1);
         recyclerView_account_settings.setLayoutManager(layoutManagerSettings);
@@ -184,22 +199,14 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_account_settings = new Adapter_Account_Settings(this,getApplicationContext(),settings_navigationOptions,2,false,false);//(Professor Sluiter, 2020).
         recyclerView_account_settings.setAdapter(adapter_account_settings);
 
-        //Remember to code this
-        if(tempUserCollections.isEmpty())
-        {
-            recyclerView_userCollections.setVisibility(View.GONE);
-            //button_newCollection.setVisibility(View.GONE);
-
-        }
-
         _fragmentManager = getSupportFragmentManager();
+
     //Can turn into a method im sure
-        button_newCollection.setOnClickListener(view -> {
+        button_viewALLCollection.setOnClickListener(view -> {
             TextView _textView_sub_menu_title = _subMenu.findViewById(R.id.textView_sub_menu_title);
             assert _textView_sub_menu_title != null;
 
             _textView_sub_menu_title.setText("Collections");
-
             findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_sub_menu))).
                     setGraph(R.navigation.navigation_collections);//(developer Android NavController, n.d)
             _subMenu.show();
@@ -229,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
                 UserLandmarks userLandmarks = new UserLandmarks(getApplicationContext());
                 userLandmarks.GetLandMarksNearMeAndFilter(UserLandmarks.returnLandmarkType(position));
-
+                break;
             case 1://Collections menu
                 Toast.makeText(MainActivity.this,
                         "Model_User collections N/A", Toast.LENGTH_LONG).show();
@@ -249,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
                         break;
                     case 1:
                         Toast.makeText(MainActivity.this,
-                                "Help", Toast.LENGTH_LONG).show();
+                                "N/A POE", Toast.LENGTH_LONG).show();
                         break;
                 }
                 break;

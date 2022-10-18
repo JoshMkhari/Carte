@@ -14,11 +14,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Model_User {
 
     private String email;
     private int unitOfMeasurement;
     private int userPreference;
+    private List<Model_User_Collections> model_user_collections;
 
     public Model_User(String email, int unit, int place)
     {
@@ -27,6 +31,18 @@ public class Model_User {
         this.unitOfMeasurement = unit;
     }
 
+    public List<Model_User_Collections> getModel_user_collections() {
+        return model_user_collections;
+    }
+
+    public void setModel_user_collections(List<Model_User_Collections> model_user_collections) {
+        this.model_user_collections = model_user_collections;
+    }
+
+    public void initializeUserCollections()
+    {
+        this.model_user_collections = new ArrayList<>();
+    }
     public String getEmail() {
         return email;
     }

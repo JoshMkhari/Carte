@@ -52,6 +52,11 @@ public class MapsFragment extends Fragment {
     public static Bitmap _smallMarker;
     public static HashMap<Integer, Marker> _hashMapMarker;
     private static Context _context;
+    static Polyline drawnPolyline;
+    public static BitmapDrawable bitmapdrawReast;
+    public static BitmapDrawable bitmapdrawSuper;
+    public static BitmapDrawable bitmapdrawAttrc;
+    public static BitmapDrawable bitmapdrawFood;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         /**
@@ -67,6 +72,10 @@ public class MapsFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             LatLng sydney = new LatLng(30.5595, 22.9375);
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            bitmapdrawReast = (BitmapDrawable) getResources().getDrawable(R.drawable.image_restaurant_icon);
+            bitmapdrawSuper = (BitmapDrawable) getResources().getDrawable(R.drawable.image_supermarket_icon);
+            bitmapdrawAttrc = (BitmapDrawable) getResources().getDrawable(R.drawable.image_attractions_icon);
+            bitmapdrawFood = (BitmapDrawable) getResources().getDrawable(R.drawable.image_fast_food_icon);
             _map = googleMap;
             _context = requireContext();
             _currentlyNavigating = false;
@@ -75,10 +84,9 @@ public class MapsFragment extends Fragment {
             int width = 100;
 
             //https://stackoverflow.com/questions/53811117/how-to-get-string-from-resources-strings-into-a-fragment
-            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.image_supermarket_icon);
+            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.image_profile_icon);
             Bitmap b = bitmapdraw.getBitmap();
             _smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-
             //https://stackoverflow.com/questions/42401131/add-marker-on-long-press-in-google-maps-api-v3
             _map.setOnMapLongClickListener(latLng -> {
                 MainActivity._subMenu.dismiss();
@@ -89,19 +97,23 @@ public class MapsFragment extends Fragment {
                     MainActivity._subMenu.show();
                     return true;
                 });
-
-                if(_hashMapMarker.get(1)== null)
-                {
-                    _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
+                findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
+                        setGraph(R.navigation.navigation_info_directions);//(developer Android NavController, n.d)
+                for (HashMap.Entry<Integer, Marker> set :
+                        _hashMapMarker.entrySet()) {
+                    if(set.getKey()!=0)
+                    {
+                        Marker removeMarker = _hashMapMarker.get(set.getKey());
+                        if(removeMarker ==null)
+                        {
+                            continue;
+                        }
+                        removeMarker.remove();
+                    }
                 }
-                else
-                {
-                    Marker removeMarker = _hashMapMarker.get(1);
-                    assert removeMarker != null;
-                    removeMarker.remove();
-                    _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
-                }
-
+                _hashMapMarker.put(1,marker);//1 will always refer to the long click on map
+                if(drawnPolyline!=null)
+                    drawnPolyline.remove();
                 ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
                 assert constraintLayoutTitle != null;
 
@@ -110,9 +122,7 @@ public class MapsFragment extends Fragment {
 
                 constraintLayoutTitle.setVisibility(View.GONE);
 
-                findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
-                        setGraph(R.navigation.navigation_info_directions);//(developer Android NavController, n.d)
-
+                Fragment_Direction_Options.nearby = false;
                 MainActivity._subMenu.show();
             });
         }
@@ -160,12 +170,14 @@ public class MapsFragment extends Fragment {
                 MainActivity._subMenu.show();
             }
         });
-        Polyline polyline = _map.addPolyline(polylineOptions);
-        polyline.setWidth(40);
+        drawnPolyline = _map.addPolyline(polylineOptions);
+
+        drawnPolyline.setWidth(40);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            polyline.setColor(_context.getColor(R.color.teal_700));
+            drawnPolyline.setColor(_context.getColor(R.color.teal_700));
         }
 
+        Fragment_Direction_Options.routeDrawn = true;
         _map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,padding));
 
     }
