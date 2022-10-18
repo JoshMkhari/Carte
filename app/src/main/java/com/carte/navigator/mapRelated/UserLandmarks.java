@@ -4,15 +4,13 @@ import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.carte.navigator.Fragment_nearby_info;
+import com.carte.navigator.menu.sub.directions.Fragment_nearby_info;
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
 import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;

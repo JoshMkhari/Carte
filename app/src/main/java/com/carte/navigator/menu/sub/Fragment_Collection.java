@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
@@ -51,7 +50,7 @@ public class Fragment_Collection extends Fragment implements Interface_RecyclerV
         if(MainActivity._currentModelUser.getModel_user_collections()!=null)
         for (Model_User_Collections name: MainActivity._currentModelUser.getModel_user_collections()
              ) {
-            userCollectionName.add(name.getCollectionName());
+            userCollectionName.add(name.getPlaceShortName());
         }
 
 

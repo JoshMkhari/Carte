@@ -6,22 +6,27 @@ import java.util.List;
 
 public class Model_User_Collections {
 
-    String collectionName;
-    List<EndPoint> placeName;
+    String placeShortName;
+    EndPoint endPoints;
 
-    public String getCollectionName() {
-        return collectionName;
+    public Model_User_Collections(String placeShortName, EndPoint endPoints) {
+        this.placeShortName = placeShortName;
+        this.endPoints = endPoints;
     }
 
-    public void setCollectionName(String collectionName) {
-        this.collectionName = collectionName;
+    public String getPlaceShortName() {
+        return placeShortName;
     }
 
-    public List<EndPoint> getPlaceName() {
-        return placeName;
+    public void setPlaceShortName(String placeShortName) {
+        this.placeShortName = placeShortName;
     }
 
-    public void setPlaceName(List<EndPoint> placeName) {
-        this.placeName = placeName;
+    public EndPoint getEndPoints() {
+        return endPoints;
+    }
+
+    public void setEndPoints(EndPoint endPoints) {
+        this.endPoints = endPoints;
     }
 }

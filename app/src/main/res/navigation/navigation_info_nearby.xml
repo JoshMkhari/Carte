@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_nearby_info"
-        android:name="com.carte.navigator.Fragment_nearby_info"
+        android:name="com.carte.navigator.menu.sub.directions.Fragment_nearby_info"
         android:label="fragment_nearby_info"
         tools:layout="@layout/fragment_nearby_info" >
         <action

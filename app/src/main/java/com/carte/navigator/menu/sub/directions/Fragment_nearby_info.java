@@ -1,4 +1,4 @@
-package com.carte.navigator;
+package com.carte.navigator.menu.sub.directions;
 
 import static com.carte.navigator.mapRelated.UserLandmarks._ExtraDetailsOfLandmarks;
 import static com.carte.navigator.mapRelated.UserLandmarks._Landmarks;
@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.carte.navigator.MainActivity;
+import com.carte.navigator.R;
 import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.mapRelated.UserLandmarks;
 import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
