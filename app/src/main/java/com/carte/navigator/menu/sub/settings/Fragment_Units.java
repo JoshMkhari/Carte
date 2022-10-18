@@ -70,7 +70,11 @@ public class Fragment_Units extends Fragment implements Interface_RecyclerView {
         {
             MainActivity._currentModelUser.setUnitOfMeasurement(position);
             db.updateUserUnit(MainActivity._currentModelUser);
-            Model_User.uploadData(MainActivity._currentModelUser);
+            if(!db.getAllUsers().get(0).get_modelUser().getEmail().equals("DefaultUser"))
+            {
+
+                Model_User.uploadData(MainActivity._currentModelUser);
+            }
             MainActivity._subMenu.dismiss();
         }else
         {

@@ -76,7 +76,7 @@ public class Fragment_Marker_Information extends Fragment {
         });
 
         directions.setOnClickListener(view -> {
-            Navigation.findNavController(marker_information_view).navigate(R.id.action_fragment_nearby_info_to_fragment_Direction_Options2);
+            Navigation.findNavController(marker_information_view).navigate(R.id.action_fragment_Marker_Information_to_fragment_Direction_Options);
         });
         return marker_information_view;
     }
