@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ import com.carte.navigator.mapRelated.UserLandmarks;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.adapters.Adapter_Destination_Options;
+import com.carte.navigator.menu.adapters.Adapter_PlaceAutoSuggest;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
 import com.carte.navigator.menu.models.Model_User;
 import com.carte.navigator.menu.sub.Fragment_Collection;
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         _menu = findViewById(R.id.layout_menu);
         _textView_userName = findViewById(R.id.textView_profile_name);
 
+        AutoCompleteTextView autoCompleteTextViewSearch = findViewById(R.id.autoCompleteTextView_Destination);
+        autoCompleteTextViewSearch.setAdapter(new Adapter_PlaceAutoSuggest(MainActivity.this, android.R.layout.simple_list_item_1));
         //map stuff
         //Fragment fragment = new Fragment();
         findNavController(Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_main_activity_background))).
@@ -108,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
             setUpBottomSheet();
         }
 
+
     }
 
 //    https://www.youtube.com/watch?v=4_RK_5bCoOY&t=929s
@@ -127,6 +132,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
 
     private void setUpBottomSheet()
     {
+
+
         //Variable Declarations
         _subMenu = new BottomSheetDialog(MainActivity.this);
 

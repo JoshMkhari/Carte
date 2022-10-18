@@ -47,7 +47,7 @@
                         android:id="@+id/autoCompleteTextView_Destination"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Where to?"
+                        android:hint="Where to?"
                         android:textColor="?colorSecondary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

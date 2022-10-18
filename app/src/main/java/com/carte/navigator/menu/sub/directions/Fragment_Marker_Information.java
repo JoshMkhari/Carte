@@ -72,7 +72,7 @@ public class Fragment_Marker_Information extends Fragment {
                 MainActivity._currentModelUser.initializeUserCollections();
             MainActivity._currentModelUser.getModel_user_collections().add(model_user_collections);
             Toast.makeText(requireContext(),
-                    "Location has been starred " + MainActivity._currentModelUser.getModel_user_collections().size(), Toast.LENGTH_LONG).show();
+                    "Location has been stored ", Toast.LENGTH_LONG).show();
         });
 
         directions.setOnClickListener(view -> {
