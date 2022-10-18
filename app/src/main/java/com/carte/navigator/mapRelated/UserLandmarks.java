@@ -4,6 +4,7 @@ import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -335,6 +337,7 @@ public class UserLandmarks {
                             //Author Profile Link: https://auth.geeksforgeeks.org/user/aashaypawar
 
                             Marker marker = MapsFragment._map.addMarker(_LandmarksNearMe);
+                            Fragment_nearby_info.placeHashMap.put(key,_LocalLandmarks);
                             MapsFragment._hashMapMarker.put(key,marker);
                             key++;
                             MapsFragment._map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -342,11 +345,23 @@ public class UserLandmarks {
                                 public boolean onMarkerClick(@NonNull Marker marker) {
                                     findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
                                             setGraph(R.navigation.navigation_info_nearby);//(developer Android NavController, n.d)
-                                    Fragment_nearby_info._marker = marker;
-                                    Fragment_nearby_info._place = _LocalLandmarks;
                                     ConstraintLayout constraintLayoutTitle = MainActivity._subMenu.findViewById(R.id.constraint_layout_title);
                                     assert constraintLayoutTitle != null;
-                                    MainActivity._subMenu.show();
+
+                                    constraintLayoutTitle.setVisibility(View.GONE);
+
+
+                                    for (HashMap.Entry<Integer, Marker> set :
+                                            MapsFragment._hashMapMarker.entrySet()) {
+                                        if(set.getValue().getPosition().equals(marker.getPosition()))
+                                        {
+                                            Fragment_nearby_info.GetLandmarkDetails(Objects.requireNonNull(Fragment_nearby_info.placeHashMap.get(set.getKey())));
+                                            MainActivity._subMenu.show();
+                                            return true ;
+                                        }
+                                    }
+
+
                                     return true;
                                 }
                             });

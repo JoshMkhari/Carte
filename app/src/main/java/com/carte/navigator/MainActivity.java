@@ -15,6 +15,7 @@ import android.os.Bundle;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -43,6 +44,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements Interface_RecyclerView {
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Fragment_nearby_info.placeHashMap = new HashMap<>();
         _menu = findViewById(R.id.layout_menu);
         _textView_userName = findViewById(R.id.textView_profile_name);
 

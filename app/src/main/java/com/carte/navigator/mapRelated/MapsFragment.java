@@ -88,7 +88,8 @@ public class MapsFragment extends Fragment {
                     MainActivity._subMenu.show();
                     return true;
                 });
-
+                findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
+                        setGraph(R.navigation.navigation_info_directions);//(developer Android NavController, n.d)
                 for (HashMap.Entry<Integer, Marker> set :
                         _hashMapMarker.entrySet()) {
                     if(set.getKey()!=0)
@@ -110,8 +111,7 @@ public class MapsFragment extends Fragment {
                 // Polylines are useful to show a route or some other connection between points
 
                 constraintLayoutTitle.setVisibility(View.GONE);
-                findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
-                        setGraph(R.navigation.navigation_info_directions);//(developer Android NavController, n.d)
+
 
                 MainActivity._subMenu.show();
             });

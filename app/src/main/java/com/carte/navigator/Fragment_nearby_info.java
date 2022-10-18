@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 
+import java.util.HashMap;
+
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
@@ -32,13 +35,17 @@ public class Fragment_nearby_info extends Fragment {
     public static Marker _marker;
     public static Place _place;
 
-    private Place  _LandmarkSpecifications;
-    public String _AddressOfLandmark = "Unavailable";
-    private OpeningHours _BusinessHoursOfLandmark;
-    public String _RatingsOfLandmarks = "Unavailable";
-    public String _ContactDetailsOfLandmark = "Unavailable";
-    TextView hours,rating,details;
-
+    private static Place  _LandmarkSpecifications;
+    public static String _AddressOfLandmark = "Unavailable";
+    private static OpeningHours _BusinessHoursOfLandmark;
+    public static String _RatingsOfLandmarks = "Unavailable";
+    public static String _ContactDetailsOfLandmark = "Unavailable";
+     static TextView hours;
+     static TextView rating;
+     static TextView details;
+     static TextView marker_Title;
+     static TextView location_data;
+    public static HashMap<Integer,Place> placeHashMap;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,8 +53,6 @@ public class Fragment_nearby_info extends Fragment {
         //MapsFragment._hashMapMarker
         View nearbyInfoView = inflater.inflate(R.layout.fragment_nearby_info, container, false);
 
-
-        TextView marker_Title, location_data;
         hours = nearbyInfoView.findViewById(R.id.nearbyHours);
         rating = nearbyInfoView.findViewById(R.id.nearbyRating);
         details = nearbyInfoView.findViewById(R.id.nearbyDetails);
@@ -58,18 +63,16 @@ public class Fragment_nearby_info extends Fragment {
         //assert _marker != null;
         //String title = _marker.getPosition().latitude + "," + _marker.getPosition().longitude;
         //marker_Title.setText(title);
-
-        GetLandmarkDetails();
-
         directions.setOnClickListener(view -> {
             Navigation.findNavController(nearbyInfoView).navigate(R.id.action_fragment_Marker_Information_to_fragment_Direction_Options);
         });
 
+
         return nearbyInfoView;
     }
 
-    public void GetLandmarkDetails(){
-        String PlaceID = _place.getId();
+    public static void GetLandmarkDetails(Place currentPlace){
+        String PlaceID = currentPlace.getId();
         //This programming statement was adapted from Google Maps Platform:
         //Link: https://developers.google.com/maps/documentation/places/android-sdk/place-details
         //Author: Google Developers
@@ -89,14 +92,6 @@ public class Fragment_nearby_info extends Fragment {
                 _LandmarkSpecifications=fetchPlaceResponse.getPlace();
 
                 _BusinessHoursOfLandmark =  _LandmarkSpecifications.getOpeningHours();
-
-                if(_BusinessHoursOfLandmark == null)
-                {
-                    hours.setText("Unavailable");
-                }else
-                {
-                    hours.setText(_BusinessHoursOfLandmark.getWeekdayText().get(0));
-                }
                 if(_AddressOfLandmark== null || _AddressOfLandmark.equals("null")){
                     _AddressOfLandmark = "Unavailable";
                 }else{
@@ -114,8 +109,20 @@ public class Fragment_nearby_info extends Fragment {
                 }else{
                     _ContactDetailsOfLandmark = _LandmarkSpecifications.getPhoneNumber();
                 }
+
                 rating.setText(_RatingsOfLandmarks);
                 details.setText(_ContactDetailsOfLandmark);
+                marker_Title.setText(_LandmarkSpecifications.getName());
+                location_data.setText(_LandmarkSpecifications.getAddress());
+
+                if(_BusinessHoursOfLandmark == null)
+                {
+                    hours.setText("Unavailable");
+                }else
+                {
+                    hours.setText(_BusinessHoursOfLandmark.getWeekdayText().get(0));
+                }
+
             }
         });
 
