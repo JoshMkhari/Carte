@@ -54,10 +54,10 @@ public class Fragment_Units extends Fragment implements Interface_RecyclerView {
 
 
         //Account Settings RecyclerView
-        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_distance = new Adapter_Account_Settings(this,getContext(),units_distance,5,true);//(Professor Sluiter, 2020).
+        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_distance = new Adapter_Account_Settings(this,getContext(),units_distance,5,true,true);//(Professor Sluiter, 2020).
         recyclerView_units.setAdapter(adapter_settings_distance);
 
-        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_temprature = new Adapter_Account_Settings(this,getContext(),units_temperature,6,true);//(Professor Sluiter, 2020).
+        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_settings_temprature = new Adapter_Account_Settings(this,getContext(),units_temperature,6,true,true);//(Professor Sluiter, 2020).
         recyclerView_navigation.setAdapter(adapter_settings_temprature);
         return _units;
     }

@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         recyclerView_destinationOptions.setAdapter(adapter_destination_options);
 
         //Account Settings RecyclerView
-        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_account_settings = new Adapter_Account_Settings(this,getApplicationContext(),settings_navigationOptions,2,false);//(Professor Sluiter, 2020).
+        RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder>  adapter_account_settings = new Adapter_Account_Settings(this,getApplicationContext(),settings_navigationOptions,2,false,false);//(Professor Sluiter, 2020).
         recyclerView_account_settings.setAdapter(adapter_account_settings);
 
         //Remember to code this
