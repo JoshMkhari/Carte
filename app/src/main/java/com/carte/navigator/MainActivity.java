@@ -303,4 +303,10 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
                     "Location service stopped", Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopLocationService();
+    }
 }
