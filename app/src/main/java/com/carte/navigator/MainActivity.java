@@ -304,6 +304,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         }
     }
 
+    //https://stackoverflow.com/questions/5555765/stop-service-in-android
     @Override
     public void onDestroy() {
         super.onDestroy();
