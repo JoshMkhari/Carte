@@ -19,9 +19,12 @@ import android.widget.Toast;
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.R;
+import com.carte.navigator.menu.models.Model_User;
 import com.carte.navigator.menu.models.Model_User_Collections;
 import com.carte.navigator.menu.trueway_directions_json.EndPoint;
 import com.google.android.gms.maps.model.Marker;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -68,11 +71,12 @@ public class Fragment_Marker_Information extends Fragment {
             endPoint.setLat(marker.getPosition().latitude);
             endPoint.setLng(marker.getPosition().longitude);
             Model_User_Collections model_user_collections = new Model_User_Collections(finalAddresses.get(0).getAddressLine(0),endPoint);
+
             if(MainActivity._currentModelUser.getModel_user_collections() == null)
+            {
                 MainActivity._currentModelUser.initializeUserCollections();
-            MainActivity._currentModelUser.getModel_user_collections().add(model_user_collections);
-            Toast.makeText(requireContext(),
-                    "Location has been stored ", Toast.LENGTH_LONG).show();
+            }
+            Model_User.checkDuplicates(model_user_collections);
         });
 
         directions.setOnClickListener(view -> {

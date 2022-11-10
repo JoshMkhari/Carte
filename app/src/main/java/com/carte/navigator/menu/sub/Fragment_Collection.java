@@ -49,11 +49,12 @@ public class Fragment_Collection extends Fragment implements Interface_RecyclerV
         List<String> userCollectionName = new ArrayList<>();
 
         if(MainActivity._currentModelUser.getModel_user_collections()!=null)
-        for (Model_User_Collections name: MainActivity._currentModelUser.getModel_user_collections()
-             ) {
-            userCollectionName.add(name.getPlaceShortName());
+        {
+            for (Model_User_Collections name: MainActivity._currentModelUser.getModel_user_collections()
+            ) {
+                userCollectionName.add(name.getPlaceShortName());
+            }
         }
-
 
         if(userCollectionName.size()==0)
         {
@@ -62,17 +63,13 @@ public class Fragment_Collection extends Fragment implements Interface_RecyclerV
         {
             allUserCollectionNames = userCollectionName.toArray(new String[userCollectionName.size()]);
         }
-
         //Ensuring the recycler view layout contains 4 item in each row
         RecyclerView.LayoutManager layoutManagerGeneral = new StaggeredGridLayoutManager(1, 1);//(Professor Sluiter, 2020).
         recyclerView_general_settings.setLayoutManager(layoutManagerGeneral);
 
-
         //Account Settings RecyclerView
         RecyclerView.Adapter<Adapter_Account_Settings.OptionViewHolder> adapter_collections = new Adapter_Account_Settings(this,getContext(),allUserCollectionNames,8,false,false);//(Professor Sluiter, 2020).
         recyclerView_general_settings.setAdapter(adapter_collections);
-
-
         return collection;
     }
 

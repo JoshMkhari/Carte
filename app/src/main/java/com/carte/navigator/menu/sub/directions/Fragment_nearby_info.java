@@ -24,6 +24,7 @@ import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
 import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.mapRelated.UserLandmarks;
+import com.carte.navigator.menu.models.Model_User;
 import com.carte.navigator.menu.models.Model_User_Collections;
 import com.carte.navigator.menu.sub.directions.Fragment_Direction_Options;
 import com.carte.navigator.menu.trueway_directions_json.EndPoint;
@@ -105,9 +106,8 @@ public class Fragment_nearby_info extends Fragment {
             Model_User_Collections model_user_collections = new Model_User_Collections(addresses.get(0).getAddressLine(0),endPoint);
             if(MainActivity._currentModelUser.getModel_user_collections() == null)
                 MainActivity._currentModelUser.initializeUserCollections();
-            MainActivity._currentModelUser.getModel_user_collections().add(model_user_collections);
-            Toast.makeText(requireContext(),
-                    "Location has been stored ", Toast.LENGTH_LONG).show();
+            //Check Duplicates
+            Model_User.checkDuplicates(model_user_collections);
         });
 
         return nearbyInfoView;

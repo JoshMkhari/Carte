@@ -1,6 +1,7 @@
 package com.carte.navigator.menu.models;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -32,12 +33,29 @@ public class Model_User {
     }
 
     public List<Model_User_Collections> getModel_user_collections() {
+        Log.d("myMan", "getModel_user_collections: ");
         return model_user_collections;
     }
 
+    public static void checkDuplicates(Model_User_Collections newCollection )
+    {
+        for (Model_User_Collections currentCollection:MainActivity._currentModelUser.getModel_user_collections()
+             ) {
+            if(currentCollection.placeShortName.equals(newCollection.placeShortName))
+            {
+                return;
+            }
+        }
+        MainActivity._currentModelUser.getModel_user_collections().add(newCollection);
+        uploadData(MainActivity._currentModelUser);
+    }
+    public void updateDatabase(){
+
+    }
     public void setModel_user_collections(List<Model_User_Collections> model_user_collections) {
         this.model_user_collections = model_user_collections;
     }
+
 
     public void initializeUserCollections()
     {
@@ -98,8 +116,14 @@ public class Model_User {
 
     public static void uploadData(Model_User model_user){
 
-        FirebaseDatabase.getInstance().getReference("Users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .setValue(model_user);
+        try
+        {
+            FirebaseDatabase.getInstance().getReference("Users")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .setValue(model_user);
+        }catch (Exception e){
+            Log.d("myMan", "uploadData: ");
+        }
+
     }
 }
