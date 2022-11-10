@@ -248,7 +248,15 @@ public class MapsFragment extends Fragment {
         Marker marker = _map.addMarker(new MarkerOptions()
                 .position(p1)
                 .flat(true));
+        MainActivity._subMenu.hide();
+        _hashMapMarker.put(1,marker);
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(p1,20.0f));
+        findNavController(Objects.requireNonNull(MainActivity._fragmentManager.findFragmentById(R.id.fragment_container_view_sub_menu))).
+                setGraph(R.navigation.navigation_info_directions);//(developer Android NavController, n.d)
+        _map.setOnMarkerClickListener(marker1 -> {
+            MainActivity._subMenu.show();
+            return true;
+        });
     }
 
     @Nullable
