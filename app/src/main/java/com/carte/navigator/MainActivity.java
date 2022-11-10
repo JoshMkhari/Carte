@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import com.carte.navigator.dataAccessLayer.CustomHash;
 import com.carte.navigator.dataAccessLayer.Database_Lite;
 import com.carte.navigator.mapRelated.LocationService;
+import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.mapRelated.UserLandmarks;
 import com.carte.navigator.menu.Constants;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
@@ -77,11 +79,17 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         AutoCompleteTextView autoCompleteTextViewSearch = findViewById(R.id.autoCompleteTextView_Destination);
         autoCompleteTextViewSearch.setAdapter(new Adapter_PlaceAutoSuggest(MainActivity.this, android.R.layout.simple_list_item_1));
 
-        autoCompleteTextViewSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                return false;
-            }
+        autoCompleteTextViewSearch.setOnEditorActionListener((textView, i, keyEvent) -> false);
+        //https://stackoverflow.com/questions/15833327/selected-item-of-autocomplete-textview-show-as-simple-textview
+        autoCompleteTextViewSearch.setOnItemClickListener((adapterView, view, i, l) -> {
+            Object item = adapterView.getItemAtPosition(i);
+            Log.d("thisIsItem", "onItemClick: " + item.toString());
+
+            //Now figure out how to get to this location on the map
+            MapsFragment.moveMapToLocation(item.toString());
+            //Convert destination into landmark lat lng
+            //Basically drop a pin at destination
+            //move camera to that location
         });
         //map stuff
         //Fragment fragment = new Fragment();

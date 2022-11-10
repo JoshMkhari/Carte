@@ -7,12 +7,16 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +38,7 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.libraries.places.api.model.Place;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +73,7 @@ public class MapsFragment extends Fragment {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
+        @SuppressLint("UseCompatLoadingForDrawables")
         @Override
         public void onMapReady(GoogleMap googleMap) {
             LatLng sydney = new LatLng(30.5595, 22.9375);
@@ -218,6 +224,31 @@ public class MapsFragment extends Fragment {
 
         _hashMapMarker.put(0,marker);
         _map.animateCamera(CameraUpdateFactory.newLatLngZoom(startLocation,20.0f));
+    }
+
+    public static void moveMapToLocation(String strAddress)
+    {
+        Geocoder coder = new Geocoder(_context);
+        List<Address> address;
+        LatLng p1 = null;
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return;
+            }
+
+            Address location = address.get(0);
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (Exception ex) {
+            Log.d("weFailed", "moveMapToLocation: ");
+        }
+
+        Marker marker = _map.addMarker(new MarkerOptions()
+                .position(p1)
+                .flat(true));
+        _map.animateCamera(CameraUpdateFactory.newLatLngZoom(p1,20.0f));
     }
 
     @Nullable
