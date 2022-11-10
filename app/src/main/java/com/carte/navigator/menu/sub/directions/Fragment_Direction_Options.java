@@ -1,5 +1,6 @@
 package com.carte.navigator.menu.sub.directions;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.mapRelated.MapsFragment;
@@ -45,6 +47,7 @@ public class Fragment_Direction_Options extends Fragment {
     public static boolean nearby;
     public static int key;
     public static  boolean routeDrawn;
+    public Context _context;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class Fragment_Direction_Options extends Fragment {
         View direction_options =inflater.inflate(R.layout.fragment_direction_options, container, false);
 
         //button_direction_start
-
+        _context = requireContext();
         _distance = direction_options.findViewById(R.id.textView_distance);
         _time = direction_options.findViewById(R.id.textView_Time);
         _origin = direction_options.findViewById(R.id.autoCompleteTextView_origin);
@@ -100,7 +103,16 @@ public class Fragment_Direction_Options extends Fragment {
                    @Override
                    public void run() {
                        String time, distance = "";
-                       int duration = root.getRoute().getDuration();
+                       int duration = 0;
+                       try {
+                           duration = root.getRoute().getDuration();
+                       }catch (Exception e){
+                           Toast.makeText(_context, "You might need a plane for this", Toast.LENGTH_SHORT).show();
+                           _distance.setText("Real far");
+                           _time.setText("Couple hours");
+                           return;
+                       }
+
 
                        if(duration<60)
                        {

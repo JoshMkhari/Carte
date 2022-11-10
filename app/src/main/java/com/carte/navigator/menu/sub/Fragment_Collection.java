@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.R;
+import com.carte.navigator.mapRelated.MapsFragment;
 import com.carte.navigator.menu.adapters.Adapter_Account_Settings;
 import com.carte.navigator.menu.interfaces.Interface_RecyclerView;
 import com.carte.navigator.menu.models.Model_User_Collections;
@@ -78,5 +79,6 @@ public class Fragment_Collection extends Fragment implements Interface_RecyclerV
 
         Toast.makeText(requireContext(),
                 "Navigating to this location is a POE feature N/A", Toast.LENGTH_LONG).show();
+        MapsFragment.moveMapToLocation(allUserCollectionNames[position]);
     }
 }
