@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carte.navigator.dataAccessLayer.CustomHash;
 import com.carte.navigator.dataAccessLayer.Database_Lite;
 import com.carte.navigator.mapRelated.LocationService;
 import com.carte.navigator.mapRelated.UserLandmarks;
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Recycle
         if (!MainActivity._currentModelUser.getEmail().equals("DefaultUser"))
         {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            String uPass = db.getAllUsers().get(0).get_password();
+            String uPass = CustomHash.decode(db.getAllUsers().get(0).get_password()) ;
             mAuth.signInWithEmailAndPassword(MainActivity._currentModelUser.getEmail(), uPass)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override

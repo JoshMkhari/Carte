@@ -112,6 +112,7 @@ public class Fragment_Register extends Fragment  {
                                         MainActivity._currentUserAuth = mAuth.getCurrentUser();
                                         MainActivity._currentModelUser = modelUser;
                                         Database_Lite db = new Database_Lite(requireContext());
+                                        db.addUser(MainActivity._currentModelUser,userPassword);
                                     }
                                 });
                         MainActivity._subMenu.hide();

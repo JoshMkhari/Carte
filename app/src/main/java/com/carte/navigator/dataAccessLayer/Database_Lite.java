@@ -116,6 +116,10 @@ public class Database_Lite extends SQLiteOpenHelper {
     }
 
     public String addUser(Model_User model_user, String pass) {//(freecodecamp,2020)
+
+        //encrypt here
+        pass = CustomHash.encode(pass);
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -128,7 +132,7 @@ public class Database_Lite extends SQLiteOpenHelper {
 
         try
         {
-            if (users.size()>0) {
+            if (users.size()==1) {
                 cv.put(COLUMN_USER_EMAIL, model_user.getEmail());
                 cv.put(COLUMN_PREF, model_user.getUserPreference());
                 cv.put(COLUMN_UNIT, model_user.getUnitOfMeasurement());
