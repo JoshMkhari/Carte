@@ -34,6 +34,7 @@ import com.google.android.libraries.places.api.model.OpeningHours;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
 import java.util.List;
@@ -93,21 +94,29 @@ public class Fragment_nearby_info extends Fragment {
         });
 
         favourite.setOnClickListener(view -> {
-            EndPoint endPoint = new EndPoint();
-            endPoint.setLat(Fragment_Direction_Options.currentLocation.latitude);
-            endPoint.setLng(Fragment_Direction_Options.currentLocation.longitude);
-            List<Address> addresses = null;
-            Geocoder geocoder = new Geocoder(requireContext());
-            try {
-                addresses = geocoder.getFromLocation(Fragment_Direction_Options.currentLocation.latitude, Fragment_Direction_Options.currentLocation.longitude, 1);
-            }catch (Exception ignored)
+            if(FirebaseAuth.getInstance().getCurrentUser() == null)
             {
+                Toast.makeText(requireContext(), "Sign in or login to favourite landmarks", Toast.LENGTH_SHORT).show();
+            }else
+            {
+                EndPoint endPoint = new EndPoint();
+                endPoint.setLat(Fragment_Direction_Options.currentLocation.latitude);
+                endPoint.setLng(Fragment_Direction_Options.currentLocation.longitude);
+                List<Address> addresses = null;
+                Geocoder geocoder = new Geocoder(requireContext());
+                try {
+                    addresses = geocoder.getFromLocation(Fragment_Direction_Options.currentLocation.latitude, Fragment_Direction_Options.currentLocation.longitude, 1);
+                }catch (Exception ignored)
+                {
+                }
+                Model_User_Collections model_user_collections = new Model_User_Collections(addresses.get(0).getAddressLine(0),endPoint);
+                if(MainActivity._currentModelUser.getModel_user_collections() == null)
+                    MainActivity._currentModelUser.initializeUserCollections();
+                //Check Duplicates
+                Model_User.checkDuplicates(model_user_collections);
+                Toast.makeText(requireContext(), "Landmark has been stored", Toast.LENGTH_SHORT).show();
             }
-            Model_User_Collections model_user_collections = new Model_User_Collections(addresses.get(0).getAddressLine(0),endPoint);
-            if(MainActivity._currentModelUser.getModel_user_collections() == null)
-                MainActivity._currentModelUser.initializeUserCollections();
-            //Check Duplicates
-            Model_User.checkDuplicates(model_user_collections);
+
         });
 
         return nearbyInfoView;

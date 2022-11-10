@@ -67,16 +67,25 @@ public class Fragment_Marker_Information extends Fragment {
 
         List<Address> finalAddresses = addresses;
         favourite.setOnClickListener(view -> {
-            EndPoint endPoint = new EndPoint();
-            endPoint.setLat(marker.getPosition().latitude);
-            endPoint.setLng(marker.getPosition().longitude);
-            Model_User_Collections model_user_collections = new Model_User_Collections(finalAddresses.get(0).getAddressLine(0),endPoint);
 
-            if(MainActivity._currentModelUser.getModel_user_collections() == null)
+            if(FirebaseAuth.getInstance().getCurrentUser() == null)
             {
-                MainActivity._currentModelUser.initializeUserCollections();
+                Toast.makeText(requireContext(), "Sign in or login to favourite landmarks", Toast.LENGTH_SHORT).show();
+            }else
+            {
+                EndPoint endPoint = new EndPoint();
+                endPoint.setLat(marker.getPosition().latitude);
+                endPoint.setLng(marker.getPosition().longitude);
+                Model_User_Collections model_user_collections = new Model_User_Collections(finalAddresses.get(0).getAddressLine(0),endPoint);
+
+                if(MainActivity._currentModelUser.getModel_user_collections() == null)
+                {
+                    MainActivity._currentModelUser.initializeUserCollections();
+                }
+                Model_User.checkDuplicates(model_user_collections);
+                Toast.makeText(requireContext(), "Landmark has been stored", Toast.LENGTH_SHORT).show();
             }
-            Model_User.checkDuplicates(model_user_collections);
+
         });
 
         directions.setOnClickListener(view -> {
