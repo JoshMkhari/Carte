@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.carte.navigator.MainActivity;
 import com.carte.navigator.dataAccessLayer.Database_Lite;
+import com.carte.navigator.menu.trueway_directions_json.EndPoint;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -103,6 +104,13 @@ public class Model_User {
                 MainActivity._currentModelUser = new Model_User(snapshot.child("email").getValue(String.class)
                         ,(snapshot.child("unitOfMeasurement").getValue(int.class))
                         ,(snapshot.child("userPreference").getValue(int.class)));
+                List<Model_User_Collections> model_user_collectionsList = new ArrayList<>();
+                for (DataSnapshot postSnapshot: snapshot.child("model_user_collections").getChildren()
+                     ) {
+                    Model_User_Collections model_user_collections = new Model_User_Collections(postSnapshot.child("placeShortName").getValue(String.class),postSnapshot.child("endPoints").getValue(EndPoint.class));
+                    model_user_collectionsList.add(model_user_collections);
+                }
+                MainActivity._currentModelUser.setModel_user_collections(model_user_collectionsList);
                 Database_Lite db = new Database_Lite(context);
                 MainActivity._textView_userName.setText(MainActivity._currentModelUser.getEmail());
                 db.addUser(MainActivity._currentModelUser,pass);
@@ -115,7 +123,6 @@ public class Model_User {
     }
 
     public static void uploadData(Model_User model_user){
-
         try
         {
             FirebaseDatabase.getInstance().getReference("Users")
